@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  checkpoint:
+    container_name: checkpoint
+    image: csunmetalab/environment:checkpoint
+    ports:
+      - 8080:80
+    volumes:
+      - .:/var/www/html
+  composer:
+    container_name: composer
+    image: composer:latest
+    command: update
+    volumes:
+      - .:/app
