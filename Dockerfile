@@ -1,11 +1,4 @@
-FROM php:7.3-rc-apache
+FROM csunmetalab/environment:checkpoint
 
-# Install php extensions
-RUN docker-php-ext-install pdo_mysql \
-# Enable apache modules
-  && a2enmod headers rewrite \
-# Add user local dev env groups to www-data group
-  && usermod -u 1000 www-data && usermod -G staff www-data 
-
-# Expose port 80 and 443
-EXPOSE 80 443
+# Retrieve the composer installer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
