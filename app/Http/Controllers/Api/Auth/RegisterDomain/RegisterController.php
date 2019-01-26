@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Api\Auth\RegisterDomain;
 
 use App\User;
 use Illuminate\Http\Request;
