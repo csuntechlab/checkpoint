@@ -175,10 +175,16 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*********** Domain Service Providers **************/
 
         /** Login Domain Service provider */
         App\Providers\LoginServiceProvider::class,
+
+        /** Logout Domain Service provider */
         App\Providers\LogoutServiceProvider::class,
+
+        /** Register Domain Service provider */
+        App\Providers\RegiserServiceProvider::class,
 
     ],
 
