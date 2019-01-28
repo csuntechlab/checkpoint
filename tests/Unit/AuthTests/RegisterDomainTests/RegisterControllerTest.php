@@ -25,9 +25,9 @@ class RegisterControllerTest extends TestCase
 
 
     /**
-     * A basic test example.
+     * A Mockery Test for Register Contoller
      *
-     * @return void
+     * @return userCreds
      */
     public function test_register_controller_with_mockery()
     {
