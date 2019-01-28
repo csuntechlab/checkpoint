@@ -3,13 +3,19 @@ namespace App\Http\Controllers\Api\Auth\LogoutDomain;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Auth\LogoutDomain\Contracts\LogoutContract;
 
 class LogoutController extends Controller
 {
+    protected $logoutRetriever;
+
+    public function __construct(LogoutContract $logoutContract)
+    {
+        $this->logoutRetriever = $logoutContract;
+    }
+
     public function logout(Request $request)
     {
-        auth()->user()->tokens->each(function ($token, $key) { $token->delete(); });
-
-        return response()->json("Logout was succesful!");
+        return $this->logoutRetriever->logout($request);
     }
 }

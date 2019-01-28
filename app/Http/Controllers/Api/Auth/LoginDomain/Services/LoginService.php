@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Api\Auth\LoginDomain\Services;
 
 use App\User;
-use App\Http\Controllers\Api\Auth\LoginDomain\Contacts\LoginContract;
+use App\Http\Controllers\Api\Auth\LoginDomain\Contracts\LoginContract;
 
 
 class LoginService implements LoginContract

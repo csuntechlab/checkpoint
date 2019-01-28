@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Auth\LoginDomain;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Api\Auth\LoginDomain\Contacts\LoginContract;
+use App\Http\Controllers\Api\Auth\LoginDomain\Contracts\LoginContract;
 
 class LoginController extends Controller
 {

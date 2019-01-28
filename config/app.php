@@ -178,6 +178,7 @@ return [
 
         /** Login Domain Service provider */
         App\Providers\LoginServiceProvider::class,
+        App\Providers\LogoutServiceProvider::class,
 
     ],
 
