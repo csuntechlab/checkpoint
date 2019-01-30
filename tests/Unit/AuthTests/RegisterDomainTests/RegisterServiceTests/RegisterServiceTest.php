@@ -36,4 +36,18 @@ class RegisterServiceTest extends TestCase
         $this->assertArrayHasKey('name', $response);
         $this->assertArrayHasKey('email', $response);
     }
+
+    public function test_register_service_fails_throws_an_exception_undefined_index()
+    {
+        $input = [
+            "name23" => "tes3t@email.com",
+            "email" => "tes3t@email.com",
+            "password" => "tes3t@email.com",
+            "password_confirmation" => "tes3t@email.com"
+        ];
+
+        $response = $this->service->register($input);
+
+        $this->assertArrayHasKey('message_error', $response);
+    }
 }
