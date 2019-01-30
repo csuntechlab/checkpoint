@@ -43,9 +43,6 @@ class RegisterControllerTest extends TestCase
         $expectedResponse = [
             "name" => "tes3t@email.com",
             "email" => "tes3t@email.com",
-            "updated_at" => "2019-01-28 17:55:46",
-            "created_at" => "2019-01-28 17:55:46",
-            "id" => 3
         ];
 
         $this->retriever
