@@ -3,12 +3,13 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Api\Auth\RegisterDomain\Services\RegisterService;
 
 class RegisterServiceTest extends TestCase
 {
+    use DatabaseMigrations;
     private $service;
 
     public function setUp()
@@ -30,17 +31,9 @@ class RegisterServiceTest extends TestCase
             "password_confirmation" => "tes3t@email.com"
         ];
 
-        $expectedResponse = [
-            "name" => "tes3t@email.com",
-            "email" => "tes3t@email.com",
-            "updated_at" => "2019-01-28 17:55:46",
-            "created_at" => "2019-01-28 17:55:46",
-            "id" => 3
-        ];
-
         $response = $this->service->register($input);
 
-        // dd($response);
-
+        $this->assertArrayHasKey('name', $response);
+        $this->assertArrayHasKey('email', $response);
     }
 }

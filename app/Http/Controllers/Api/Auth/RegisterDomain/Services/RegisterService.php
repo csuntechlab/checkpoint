@@ -12,9 +12,9 @@ class RegisterService implements RegisterContract
     public function register($request)
     {
         $user = User::create([
-            'name' => request('name'),
-            'email' => request('email'),
-            'password' => Hash::make(request('password')),
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
         ]);
 
         return $user;
