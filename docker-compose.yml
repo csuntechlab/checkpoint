@@ -2,17 +2,12 @@ version: '3.3'
 services:
   checkpoint:
     container_name: checkpoint-server
-    image: csunmetalab/environment:checkpoint
+    build:
+      context: .
     ports:
       - 8080:80
     volumes:
       - .:/var/www/html
-  composer:
-    container_name: composer-install
-    image: composer:latest
-    command: install
-    volumes:
-      - .:/app
   db:
     container_name: checkpoint-mysql
     image: mysql:5.6.41
