@@ -1,5 +1,5 @@
 <?php 
-namespace App\Http\Controllers\Api\Auth\LoginDomain\Services;
+namespace App\Http\Controllers\Api\Auth\LoginDomain\Services\GuzzleLogin;
 
 use \GuzzleHttp\Client as Guzzle;
 

@@ -64,36 +64,4 @@ class LoginControllerTest extends TestCase
 
         $this->assertEquals($expectedResponse, $response);
     }
-
-    public function test_login_controller_http()
-    {
-        $user = factory(\App\User::class)->make();
-        $insert = \DB::insert(
-            'insert into oauth_clients (id, user_id, name, secret, redirect, personal_access_client, password_client, revoked ) 
-            values (?, ?, ?, ?, ?, ?, ?, ?)',
-            [1, null, 'Laravel Password Grant Client', config('services.passport.client_secret'), 'http ://localhost', 0, 1, 0]
-        );
-
-        dd($insert);
-
-        // $input = ['username' => $user->email, 'password' => $user->password];
-
-        // $response = $this->json('POST', "/api/login", $input);
-
-        // dd($response);
-
-        // $response = $response->getOriginalContent();
-
-        // $response = json_encode($response);
-
-        // dd($response);
-
-        // $expectedResponse = [
-        //     "token_type" => "Bearer", "expires_in" => 31536000, "access_token" => "serializedToken", "refresh_token" => "serializedToken"
-        // ];
-
-        // $actualResponse = json_encode($actualResponse);
-        // $this->assertEquals($response, $actualResponse);
-        // $this->assertEquals($expectedResponse, $response);
-    }
 }
