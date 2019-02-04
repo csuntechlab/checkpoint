@@ -12,19 +12,18 @@ use Mockery;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Auth\LoginDomain\LoginController;
 use App\Http\Controllers\Api\Auth\LoginDomain\Contracts\LoginContract;
+use App\Http\Controllers\Api\Auth\LoginDomain\Services\LoginService;
 
 
-class LoginControllerTest extends TestCase
+class LoginServiceTest extends TestCase
 {
     use DatabaseMigrations;
-    private $controller;
-    private $retriever;
+    private $service;
 
     public function setUp()
     {
         parent::setUp();
-        $this->retriever = Mockery::mock(LoginContract::class);
-        $this->controller = new LoginController($this->retriever);
+        $this->service = Mockery::mock(LoginService::class);
     }
 
 
@@ -33,22 +32,20 @@ class LoginControllerTest extends TestCase
      *
      * @return json
      */
-    public function test_login_controller_with_mockery()
+    public function test_login_service_with_mockery()
     {
         $input = ["username" => "tes3t@email.com", "password" => "tes3t@email.com"];
-
-        $request = new Request($input);
 
         $expectedResponse = [
             "token_type" => "Bearer", "expires_in" => 31536000, "access_token" => "serializedToken", "refresh_token" => "serializedToken"
         ];
 
-        $this->retriever
+        $this->service
             ->shouldReceive('login')
-            ->with($request)
+            ->with($input)
             ->once()->andReturn($expectedResponse);
 
-        $response = $this->retriever->login($request);
+        $response = $this->service->login($input);
 
         $this->assertEquals($expectedResponse, $response);
     }
