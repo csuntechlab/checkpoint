@@ -52,32 +52,4 @@ class LogoutControllerTest extends TestCase
 
         $this->assertEquals($expectedResponse, $response);
     }
-
-    public function test_logout_end_to_end()
-    {
-        $user = factory(User::class)->create();
-
-        $insert = \DB::insert(
-            'insert into oauth_access_tokens (id, user_id, client_id, name, scopes, revoked, created_at, updated_at, expires_at ) 
-            values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            ['serializedToken', $user->id, 1, null, null, 0, '2019-02-04 18:51:36', '2019-02-04 18:51:36', '2019-02-04 18:51:36']
-        );
-
-
-
-        $expectedResponse = response()->json("Logout was succesful!");
-
-        $this->actingAs($user);
-
-        $this->withHeaders([
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer serializedToken'
-        ]);
-
-        $response = $this->json('POST', "/api/logout");
-
-        dd($response);
-
-        $this->assertEquals($expectedResponse, $response);
-    }
 }
