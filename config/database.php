@@ -55,11 +55,21 @@ return [
             'strict' => true,
             'engine' => null,
         ],
-
         'sqlite_testing' => [
             'driver' => 'sqlite',
             'database' => ':memory:',
             'prefix' => '',
+        ],
+        'travis' => [
+            'driver' => 'mysql',
+            'host' => env('DB_TEST_HOST', 'localhost'),
+            'database' => env('DB_TEST_DATABASE', 'test_db'),
+            'username' => env('DB_TEST_USERNAME', 'travis'),
+            'password' => env('DB_TEST_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
         ],
 
         'pgsql' => [
