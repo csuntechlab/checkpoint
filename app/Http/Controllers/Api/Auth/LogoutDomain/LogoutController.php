@@ -16,6 +16,8 @@ class LogoutController extends Controller
 
     public function logout(Request $request)
     {
+        dd('check');
+        dd($request);
         return $this->logoutRetriever->logout($request);
     }
 }
