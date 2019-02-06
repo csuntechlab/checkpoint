@@ -13,7 +13,7 @@ RUN composer install \
     --prefer-dist
 
 # Frontend
-FROM node:8-alpine as frontend
+FROM node:10-alpine as frontend
 
 RUN mkdir -p /app/public
 
@@ -22,8 +22,8 @@ COPY resources/ /app/resources/
 
 WORKDIR /app
 
-RUN npm install \
-    && npm run prod
+RUN yarn \
+    && yarn run prod
 
 # PHP/Apache 
 FROM csunmetalab/environment:base-20190130
