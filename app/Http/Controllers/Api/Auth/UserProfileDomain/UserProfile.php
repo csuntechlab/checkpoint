@@ -33,10 +33,10 @@ class UserProfile
     {
         if ($this->userId == null || $this->userId == '') throw new UserIdNotDefined();
         //TODO: Get Program Object From db 
-        $program = null;
         if ($this->programId == null) {
             throw new ProgramIdNotDefined();
         } else {
+            $program = null;
             $this->programLocation = $this->validateProgramLocation($program);
             $this->currentTimeFrame = $this->validateProgramTimeFrame($program);
         }
