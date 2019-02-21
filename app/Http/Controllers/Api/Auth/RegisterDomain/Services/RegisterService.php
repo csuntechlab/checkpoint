@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Api\Auth\RegisterDomain\Services;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 
+use App\Http\Controllers\Api\UUIDGenerator\UUID;
+
 use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
 
-use App\Http\Controllers\Api\UUIDGenerator\UUIDGenerator as UUIDGenerator;
 
 class RegisterService implements RegisterContract
 {
-    private $name_of_domain = "user";
+    private $domainName = "user";
 
     public function register($request)
     {
@@ -22,14 +23,15 @@ class RegisterService implements RegisterContract
             return ['message_error' => 'User was not successfully created.'];
         }
 
-        $uuid = UUIDGenerator::generate_uuid_5($this->name_of_domain);
+        $UUID = new UUID($this->domainName);
 
         try {
             $user = User::create([
-                'id' => $uuid,
+                'id' => $UUID->toString,
                 'name' => $name,
                 'email' => $email,
                 'password' => Hash::make($password),
+                'user_profile' => 'place holder',
             ]);
         } catch (Illuminate\Database\QueryException $e) {
             return ['message_error' => 'User was not successfully created.'];
