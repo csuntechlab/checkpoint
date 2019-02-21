@@ -23,11 +23,11 @@ class RegisterService implements RegisterContract
             return ['message_error' => 'User was not successfully created.'];
         }
 
-        $UUID = new UUID($this->domainName);
+        $uuid = new UUID($this->domainName);
 
         try {
             $user = User::create([
-                'id' => $UUID->toString,
+                'id' => $uuid->toString,
                 'name' => $name,
                 'email' => $email,
                 'password' => Hash::make($password),

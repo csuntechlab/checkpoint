@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Exceptions\UUIDExceptions;
+namespace App\Exceptions\ProgramExceptions;
 
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class GenerateUUID5Failed extends Exception
+class ProgramTimeFrameNotDefined extends Exception
 {
     public function __construct()
     {
@@ -19,7 +19,7 @@ class GenerateUUID5Failed extends Exception
      */
     public function render()
     {
-        $message = 'Generating a UUID failed.';
+        $message = 'Program time frame was not defined.';
         $status_code = 409;
         return BuildResponse::build_response($message, $status_code);
     }

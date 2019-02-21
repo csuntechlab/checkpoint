@@ -23,7 +23,7 @@ class UUID
 
     private function validation()
     {
-        if ($this->domainName == null) throw new GennerateUUID5NameNotDefined();
+        if ($this->domainName == null || $this->domainName == '') throw new GennerateUUID5NameNotDefined();
     }
 
 
@@ -36,7 +36,6 @@ class UUID
         } catch (\Exception $e) {
             throw new GenerateUUID5Failed();
         }
-
         if ($uuid == null) throw new GenerateUUID5Failed();
 
         return (string)$uuid;
