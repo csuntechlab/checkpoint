@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\Http\Controllers\Api\UUIDGenerator\UUIDGenerator as UUIDGenerator;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,10 +12,14 @@ use Faker\Generator as Faker;
 | your application. Factories provide a convenient way to generate new
 | model instances for testing / seeding your application's database.
 |
-*/
+ */
+
+
 
 $factory->define(App\User::class, function (Faker $faker) {
+    $uuid = UUIDGenerator::generate_uuid_5('user');
     return [
+        'id' => $uuid,
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),

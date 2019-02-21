@@ -76,6 +76,4 @@ class RegisterControllerTest extends TestCase
         $actualResponse = json_encode($actualResponse);
         $this->assertEquals($response, $actualResponse);
     }
-
-
 }
