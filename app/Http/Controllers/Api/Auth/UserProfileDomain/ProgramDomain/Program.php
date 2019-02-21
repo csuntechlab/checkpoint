@@ -2,7 +2,11 @@
 declare (strict_types = 1);
 namespace App\Http\Controllers\Api\Auth\UserProfileDomain\ProgramDomain;
 
+//Objects used
+
 use App\Http\Controllers\Api\UUIDGenerator\UUID;
+use App\Http\Controllers\UserProfileDomain\LocationDomain\Location;
+use App\Http\Controllers\UserProfileDomain\TimeFrameDomain\TimeFrame;
 
 //Exceptions
 //UUID
