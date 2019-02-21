@@ -16,7 +16,7 @@ class BuildResponse
      */
     private static function build_response_array(
         string $collection,
-        $success = true,
+        bool $success = true,
         int $status_code = 200
     ): array {
         return [

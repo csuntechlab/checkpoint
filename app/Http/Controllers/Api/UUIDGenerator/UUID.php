@@ -18,7 +18,7 @@ class UUID
     {
         $this->domainName = $domainName;
         $this->validation();
-        $this->toString = $this->generate_uuid_5();
+        $this->toString = $this->generateUUID5();
     }
 
     private function validation()
@@ -27,7 +27,7 @@ class UUID
     }
 
 
-    private function generate_uuid_5(): string
+    private function generateUUID5(): string
     {
         $uuid = null;
 
@@ -36,7 +36,7 @@ class UUID
         } catch (\Exception $e) {
             throw new GenerateUUID5Failed();
         }
-        if ($uuid == null) throw new GenerateUUID5Failed();
+        if ($uuid == null || $uuid == '') throw new GenerateUUID5Failed();
 
         return (string)$uuid;
     }
