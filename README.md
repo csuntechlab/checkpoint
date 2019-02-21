@@ -1,6 +1,7 @@
 # CalStatePays
 
-[![Build Status](https://travis-ci.com/csun-metalab/CSU-Metro-LA.svg?token=e9qZAYzzq9K9MQ8bgdpF&branch=dev)](https://travis-ci.com/csun-metalab/CSU-Metro-LA) [![Build Status](https://travis-ci.com/csun-metalab/CSU-Metro-LA.svg?token=e9qZAYzzq9K9MQ8bgdpF&branch=demo)](https://travis-ci.com/csun-metalab/CSU-Metro-LA)
+<!--
+[![Build Status](https://travis-ci.com/csun-metalab/CSU-Metro-LA.svg?token=e9qZAYzzq9K9MQ8bgdpF&branch=dev)](https://travis-ci.com/csun-metalab/CSU-Metro-LA) [![Build Status](https://travis-ci.com/csun-metalab/CSU-Metro-LA.svg?token=e9qZAYzzq9K9MQ8bgdpF&branch=demo)](https://travis-ci.com/csun-metalab/CSU-Metro-LA) -->
 
 > A data visualization application for discovering, exploring, and analyzing your potential financial earnings after graduation from 7 different Cal State Universities.
 
@@ -50,7 +51,7 @@ Once you have successfully served the application, you will need to seed the dat
 $ docker exec -it checkpoint-server bash
 ```
 
-This will drop you into the `csumetro` container which allows you to run any commands inside the web server. Since we are seeding the database for the very first time, we want to run the following command:
+This will drop you into the `checkpoint-server` container which allows you to run any commands inside the web server. Since we are seeding the database for the very first time, we want to run the following command:
 
 ```
 $ php artisan migrate:refresh --seed
