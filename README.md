@@ -1,9 +1,9 @@
-# CalStatePays
+# Checkpoint
 
 <!--
 [![Build Status](https://travis-ci.com/csun-metalab/CSU-Metro-LA.svg?token=e9qZAYzzq9K9MQ8bgdpF&branch=dev)](https://travis-ci.com/csun-metalab/CSU-Metro-LA) [![Build Status](https://travis-ci.com/csun-metalab/CSU-Metro-LA.svg?token=e9qZAYzzq9K9MQ8bgdpF&branch=demo)](https://travis-ci.com/csun-metalab/CSU-Metro-LA) -->
 
-> A data visualization application for discovering, exploring, and analyzing your potential financial earnings after graduation from 7 different Cal State Universities.
+> A clock-in application
 
 ## Table of Contents
 
