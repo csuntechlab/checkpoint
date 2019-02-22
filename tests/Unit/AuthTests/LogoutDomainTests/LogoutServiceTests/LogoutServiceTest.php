@@ -40,4 +40,26 @@ class LogoutServiceTest extends TestCase
 
         $this->assertEquals($expectedResponse, $response);
     }
+
+    /**
+     * logout test try-catch
+     *
+     * @return json
+     */
+    public function test_logout_validation_catches_failed_logout()
+    {
+        $request = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer serializedToken'
+          ]);
+
+        $response = $this->service->logout($request);
+
+        $expectedResponse = [
+          'status_code' => 403,
+          'message_error' => 'Logout failed',
+        ];
+
+        $this->assertEquals($expectedResponse, $response);
+    }
 }
