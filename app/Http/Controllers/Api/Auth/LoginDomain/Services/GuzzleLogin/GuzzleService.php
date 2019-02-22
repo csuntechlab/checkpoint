@@ -19,7 +19,6 @@ class GuzzleService
     {
         try {
             $response = $this->http->post($this->loginParam->endPoint(), $this->loginParam->formParams());
-            dd($response);
             return $response->getBody();
         } catch (\GuzzleHttp\Exception\BadResponseException $e) {
             if ($e->getCode() == 400) {
