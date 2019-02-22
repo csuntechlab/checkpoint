@@ -15,7 +15,11 @@ class RegisterOrganizationController extends Controller
 
     public function register(Request $request)
     {
-        $this->validate($request, ['name' => 'required', 'email' => 'required|email|unique:users,email', 'password' => 'required|min:6|confirmed']);
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed'
+        ]);
 
         return $this->registerRetriever->register($request);
     }
