@@ -1,31 +1,30 @@
 <?php
 declare (strict_types = 1);
-namespace App\Http\Controllers\Api\Auth\UserProfileDomain;
+namespace DomainValueObjects\UserProfile;
+
+use App\Http\Controllers\Api\Auth\UserProfileDomain\ProgramDomain\ProgramCode\ProgramCode;
 
 //Exceptions
-// List
 //User Profile
-
 use App\Exceptions\UserProfileExceptions\UserIdNotDefined;
-
 //Program Exceptions
 use App\Exceptions\ProgramExceptions\ProgramNotDefined;
+use App\Exceptions\ProgramExceptions\ProgramCodeNotDefined;
 use App\Exceptions\ProgramExceptions\ProgramLocationNotDefined;
-
 
 class UserProfile
 {
     private $userId = null; // UUID
-    private $programId = null; // Program
+    private $programCode = null; // Program
     private $programLocation = null; // Location
     private $currentTimeFrame = null; // Time Frame
 
     private $studentLocation = null; // Location
 
-    public function __construct(string $userId = null, ProgramId $programId = null)
+    public function __construct(string $userId = null, ProgramCode $programCode = null)
     {
         $this->userId = $userId;
-        $this->programId = $programId;
+        $this->programCode = $programCode;
         $this->validate();
     }
 
@@ -33,8 +32,8 @@ class UserProfile
     {
         if ($this->userId == null || $this->userId == '') throw new UserIdNotDefined();
         //TODO: Get Program Object From db 
-        if ($this->programId == null) {
-            throw new ProgramIdNotDefined();
+        if ($this->programCode == null) {
+            throw new ProgramCodeNotDefined();
         } else {
             $program = null;
             $this->programLocation = $this->validateProgramLocation($program);

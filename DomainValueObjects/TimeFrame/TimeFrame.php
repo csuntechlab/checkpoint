@@ -1,6 +1,6 @@
 <?php
 declare (strict_types = 1);
-namespace App\Http\Controllers\Api\Auth\UserProfileDomain\TimeFrameDomain;
+namespace DomainValueObjects\TimeFrame;
 
 use App\Http\Controllers\Api\UUIDGenerator\UUID;
 

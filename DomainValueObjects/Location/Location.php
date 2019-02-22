@@ -1,6 +1,6 @@
 <?php
 declare (strict_types = 1);
-namespace App\Http\Controllers\Api\Auth\UserProfileDomain\TimeFrameDomain;
+namespace DomainValueObjects\Location;
 
 use App\Http\Controllers\Api\UUIDGenerator\UUID;
 
@@ -10,7 +10,7 @@ use App\Exceptions\UUIDExceptions\GenerateUUID5Failed;
 
 
 
-class location
+class Location
 {
     private $uuid;
     private $location = null;

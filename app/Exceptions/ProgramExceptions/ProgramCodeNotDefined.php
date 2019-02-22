@@ -5,7 +5,7 @@ namespace App\Exceptions\ProgramExceptions;
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class ProgramIdNotDefined extends Exception
+class ProgramCodedNotDefined extends Exception
 {
     public function __construct()
     {
@@ -19,7 +19,7 @@ class ProgramIdNotDefined extends Exception
      */
     public function render()
     {
-        $message = 'Program id was not defined.';
+        $message = 'Program code was not defined.';
         $status_code = 409;
         return BuildResponse::build_response($message, $status_code);
     }

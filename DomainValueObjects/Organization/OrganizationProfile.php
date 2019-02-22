@@ -1,10 +1,11 @@
 <?php
 declare (strict_types = 1);
-namespace App\Http\Controllers\Api\Auth\UserProfileDomain\ProgramDomain;
+namespace DomainValueObjects\Program;
 
 //Objects used
 
 use App\Http\Controllers\Api\UUIDGenerator\UUID;
+use App\Http\Controllers\UserProfileDomain\ProgramDomain\ProgramCode\ProgramCode;
 use App\Http\Controllers\UserProfileDomain\LocationDomain\Location;
 use App\Http\Controllers\UserProfileDomain\TimeFrameDomain\TimeFrame;
 
@@ -18,21 +19,21 @@ use App\Exceptions\ProgramExceptions\ProgramNameNotDefined;
 use App\Exceptions\ProgramExceptions\ProgramLocationNotDefined;
 use App\Exceptions\ProgramExceptions\ProgramTimeFrameNotDefined;
 
-class Program
+class ProgramProfile
 {
     private $uuid;
-    private $programId;
+    private $programCode;
     private $programLocation = null;
     private $currentTimeFrame;
 
     public function __construct(
         UUID $uuid = null,
-        ProgramId $programId = null,
+        ProgramCode $programCode = null,
         Location $programLocation = null,
         TimeFrame $time_frame = null
     ) {
         $this->uuid = $uuid->toString;
-        $this->programId = $programId;
+        $this->programCode = $programCode;
         $this->programLocation = $programLocation;
         $this->currentTimeFrame = $time_frame;
         $this->validate();
@@ -41,7 +42,7 @@ class Program
     private function validate()
     {
         if ($this->uuid == null || $this->uuid == '') throw new GenerateUUID5Failed();
-        if ($this->programId == null || $this->programId == '') throw new ProgramNameNotDefined();
+        if ($this->programCode == null || $this->programCode == '') throw new ProgramNameNotDefined();
         if ($this->programLocation == null) throw new ProgramLocationNotDefined();
         if ($this->time_frame == null) throw new ProgramTimeFrameNotDefined();
     }
