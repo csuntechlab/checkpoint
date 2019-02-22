@@ -1,8 +1,8 @@
 <?php
 declare (strict_types = 1);
-namespace DomainValueObjects\Organization\OrganizationCode;
+namespace App\DomainValueObjects\Organization\OrganizationCode;
 
-use DomainValueObjects\UUIDGenerator\UUID;
+use App\DomainValueObjects\UUIDGenerator\UUID;
 
 //UUID
 use App\Exceptions\UUIDExceptions\GenerateUUID5Failed;

@@ -2,7 +2,7 @@
 declare (strict_types = 1);
 namespace DomainValueObjects\Location;
 
-use DomainValueObjects\UUIDGenerator\UUID;
+use App\DomainValueObjects\UUIDGenerator\UUID;
 
 //Exceptions
 //UUID

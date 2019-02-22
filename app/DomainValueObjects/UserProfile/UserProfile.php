@@ -2,7 +2,7 @@
 declare (strict_types = 1);
 namespace DomainValueObjects\UserProfile;
 
-use DomainValueObjects\Organization\OrganizationCode;
+use App\DomainValueObjects\Organization\OrganizationCode;
 //Exceptions
 //User Profile
 use App\Exceptions\UserProfileExceptions\UserIdNotDefined;

@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Api\Auth\RegisterDomain\Services;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 
-use DomainValueObjects\UUIDGenerator\UUID;
-
 use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
+use App\DomainValueObjects\UUIDGenerator\UUID;
 
 
 class RegisterService implements RegisterContract

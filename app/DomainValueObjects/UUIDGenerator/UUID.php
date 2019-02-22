@@ -1,6 +1,6 @@
 <?php 
 declare (strict_types = 1);
-namespace DomainValueObjects\UUIDGenerator;
+namespace App\DomainValueObjects\UUIDGenerator;
 
 use Webpatser\Uuid\Uuid as UUIDPackage;
 //Exceptions

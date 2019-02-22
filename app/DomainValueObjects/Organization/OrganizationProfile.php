@@ -1,13 +1,13 @@
 <?php
 declare (strict_types = 1);
-namespace DomainValueObjects\Organization;
+namespace App\DomainValueObjects\Organization;
 
 //Objects used
 
-use DomainValueObjects\UUIDGenerator\UUID;
-use DomainValueObjects\Organization\OrganizationCode\OrganizationCode;
-use DomainValueObjects\Location\Location;
-use DomainValueObjects\TimeFrame\TimeFrame;
+use App\DomainValueObjects\UUIDGenerator\UUID;
+use App\DomainValueObjects\Organization\OrganizationCode\OrganizationCode;
+use App\DomainValueObjects\Location\Location;
+use App\DomainValueObjects\TimeFrame\TimeFrame;
 
 //Exceptions
 //UUID

@@ -1,8 +1,8 @@
 <?php
 declare (strict_types = 1);
-namespace DomainValueObjects\TimeFrame;
+namespace App\DomainValueObjects\TimeFrame;
 
-use DomainValueObjects\UUIDGenerator\UUID;
+use App\DomainValueObjects\UUIDGenerator\UUID;
 
 //Exceptions
 //UUID
