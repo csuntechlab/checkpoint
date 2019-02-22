@@ -1,7 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\Http\Controllers\Api\UUIDGenerator\UUID;
+use DomainValueObjects\UUIDGenerator\UUID;
 
 /*
 |--------------------------------------------------------------------------
