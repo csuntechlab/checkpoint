@@ -1,11 +1,11 @@
 <?php
 declare (strict_types = 1);
-namespace DomainValueObjects\Program;
+namespace DomainValueObjects\Organization;
 
 //Objects used
 
 use App\Http\Controllers\Api\UUIDGenerator\UUID;
-use App\Http\Controllers\UserProfileDomain\ProgramDomain\ProgramCode\ProgramCode;
+use App\Http\Controllers\UserProfileDomain\OrganizationDomain\OrganizationCode\OrganizationCode;
 use App\Http\Controllers\UserProfileDomain\LocationDomain\Location;
 use App\Http\Controllers\UserProfileDomain\TimeFrameDomain\TimeFrame;
 
@@ -13,13 +13,13 @@ use App\Http\Controllers\UserProfileDomain\TimeFrameDomain\TimeFrame;
 //UUID
 use App\Exceptions\UUIDExceptions\GenerateUUID5Failed;
 
-//Program Exceptions
-use App\Exceptions\ProgramExceptions\ProgramNotDefined;
-use App\Exceptions\ProgramExceptions\ProgramNameNotDefined;
-use App\Exceptions\ProgramExceptions\ProgramLocationNotDefined;
-use App\Exceptions\ProgramExceptions\ProgramTimeFrameNotDefined;
+//Organization Exceptions
+use App\Exceptions\OrganizationExceptions\OrganizationNotDefined;
+use App\Exceptions\OrganizationExceptions\OrganizationNameNotDefined;
+use App\Exceptions\OrganizationExceptions\OrganizationLocationNotDefined;
+use App\Exceptions\OrganizationExceptions\OrganizationTimeFrameNotDefined;
 
-class ProgramProfile
+class OrganizationProfile
 {
     private $uuid;
     private $programCode;
@@ -28,7 +28,7 @@ class ProgramProfile
 
     public function __construct(
         UUID $uuid = null,
-        ProgramCode $programCode = null,
+        OrganizationCode $programCode = null,
         Location $programLocation = null,
         TimeFrame $time_frame = null
     ) {
@@ -42,12 +42,12 @@ class ProgramProfile
     private function validate()
     {
         if ($this->uuid == null || $this->uuid == '') throw new GenerateUUID5Failed();
-        if ($this->programCode == null || $this->programCode == '') throw new ProgramNameNotDefined();
-        if ($this->programLocation == null) throw new ProgramLocationNotDefined();
-        if ($this->time_frame == null) throw new ProgramTimeFrameNotDefined();
+        if ($this->programCode == null || $this->programCode == '') throw new OrganizationNameNotDefined();
+        if ($this->programLocation == null) throw new OrganizationLocationNotDefined();
+        if ($this->time_frame == null) throw new OrganizationTimeFrameNotDefined();
     }
 
-    public function getProgramLocation()
+    public function getOrganizationLocation()
     {
         //TODO: Add a try catch validation
         return $this->programLocation;

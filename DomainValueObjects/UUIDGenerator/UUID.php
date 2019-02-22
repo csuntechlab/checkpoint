@@ -3,7 +3,7 @@ declare (strict_types = 1);
 namespace DomainValueObjects\UUIDGenerator;
 
 use Webpatser\Uuid\Uuid as UUIDPackage;
-
+//Exceptions
 use App\Exceptions\UUIDExceptions\GenerateUUID5Failed;
 use App\Exceptions\UUIDExceptions\GennerateUUID5NameNotDefined;
 

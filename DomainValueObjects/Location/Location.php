@@ -2,11 +2,12 @@
 declare (strict_types = 1);
 namespace DomainValueObjects\Location;
 
-use App\Http\Controllers\Api\UUIDGenerator\UUID;
+use DomainValueObjects\UUIDGenerator\UUID;
 
 //Exceptions
 //UUID
 use App\Exceptions\UUIDExceptions\GenerateUUID5Failed;
+use App\Exceptions\LocationExceptions\LocationNotDefined;
 
 
 

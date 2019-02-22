@@ -2,26 +2,25 @@
 declare (strict_types = 1);
 namespace DomainValueObjects\UserProfile;
 
-use App\Http\Controllers\Api\Auth\UserProfileDomain\ProgramDomain\ProgramCode\ProgramCode;
-
+use DomainValueObjects\Organization\OrganizationCode;
 //Exceptions
 //User Profile
 use App\Exceptions\UserProfileExceptions\UserIdNotDefined;
-//Program Exceptions
-use App\Exceptions\ProgramExceptions\ProgramNotDefined;
-use App\Exceptions\ProgramExceptions\ProgramCodeNotDefined;
-use App\Exceptions\ProgramExceptions\ProgramLocationNotDefined;
+//Organization Exceptions
+use App\Exceptions\OrganizationExceptions\OrganizationNotDefined;
+use App\Exceptions\OrganizationExceptions\OrganizationCodeNotDefined;
+use App\Exceptions\OrganizationExceptions\OrganizationLocationNotDefined;
 
 class UserProfile
 {
     private $userId = null; // UUID
-    private $programCode = null; // Program
+    private $programCode = null; // Organization
     private $programLocation = null; // Location
     private $currentTimeFrame = null; // Time Frame
 
     private $studentLocation = null; // Location
 
-    public function __construct(string $userId = null, ProgramCode $programCode = null)
+    public function __construct(string $userId = null, OrganizationCode $programCode = null)
     {
         $this->userId = $userId;
         $this->programCode = $programCode;
@@ -31,27 +30,27 @@ class UserProfile
     private function validate()
     {
         if ($this->userId == null || $this->userId == '') throw new UserIdNotDefined();
-        //TODO: Get Program Object From db 
+        //TODO: Get Organization Object From db 
         if ($this->programCode == null) {
-            throw new ProgramCodeNotDefined();
+            throw new OrganizationCodeNotDefined();
         } else {
             $program = null;
-            $this->programLocation = $this->validateProgramLocation($program);
-            $this->currentTimeFrame = $this->validateProgramTimeFrame($program);
+            $this->programLocation = $this->validateOrganizationLocation($program);
+            $this->currentTimeFrame = $this->validateOrganizationTimeFrame($program);
         }
     }
 
-    private function validateProgramLocation($program)
+    private function validateOrganizationLocation($program)
     {
-        $programLocation = $program->getProgramLocation();
-        if ($programLocation == null) throw new ProgramLocationNotDefined();
+        $programLocation = $program->getOrganizationLocation();
+        if ($programLocation == null) throw new OrganizationLocationNotDefined();
         return $programLocation;
     }
 
-    private function validateProgramTimeFrame($program)
+    private function validateOrganizationTimeFrame($program)
     {
         $currentTimeFrame = $program->getCurrentTimeFrame();
-        if ($currentTimeFrame == null) throw new ProgramTimeFrameNotDefined();
+        if ($currentTimeFrame == null) throw new OrganizationTimeFrameNotDefined();
         return $currentTimeFrame;
     }
 

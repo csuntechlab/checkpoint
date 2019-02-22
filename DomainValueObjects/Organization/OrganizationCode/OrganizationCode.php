@@ -2,8 +2,7 @@
 declare (strict_types = 1);
 namespace DomainValueObjects\Organization\OrganizationCode;
 
-use App\Http\Controllers\Api\UUIDGenerator\UUID;
-
+use DomainValueObjects\UUIDGenerator\UUID;
 
 //UUID
 use App\Exceptions\UUIDExceptions\GenerateUUID5Failed;
