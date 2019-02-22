@@ -13,19 +13,19 @@ use App\Exceptions\OrganizationExceptions\OrganizationIdNotDefined;
 class OrganizationCode
 {
     public $uuid;
-    public $programCode;
+    public $code;
 
-    public function __construct(UUID $uuid = null, string $programCode = null)
+    public function __construct(UUID $uuid = null, string $code = null)
     {
         $this->uuid = $uuid;
-        //TODO: do a query to get program id 
-        $this->programCode = $programCode;
+        //TODO: do a query to get organization id 
+        $this->code = $code;
         $this->validate();
     }
 
     private function validate()
     {
         if ($this->uuid == null || $this->uuid == '') throw new GenerateUUID5Failed();
-        if ($this->programCode == null || $this->programCode == '') throw new OrganizationIdNotDefined();
+        if ($this->code == null || $this->code == '') throw new OrganizationIdNotDefined();
     }
 }

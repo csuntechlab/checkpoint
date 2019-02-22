@@ -16,9 +16,10 @@ $factory->define(Organization::class, function (Faker $faker) {
     $location = new Location(new UUID('organizationCode'), 'MetaLab');
     $timeFrame = new TimeFrame(new UUID('timeFrame'), '01-01-2019', '01-30-2019');
     $organizationProfile = new OrganizationProfile($uuid, $organizationCode, $location, $timeFrame);
+    $organizationProfile = serialize($organizationProfile);
     return [
-        'uuid' => $uuid,
-        'organization_code' => $organizationCode,
+        'id' => $uuid->toString,
+        'organization_code' => $organizationCode->code,
         'organization_profile' => $organizationProfile
     ];
 });

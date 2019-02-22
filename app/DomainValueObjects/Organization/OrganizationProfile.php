@@ -47,6 +47,12 @@ class OrganizationProfile
         if ($this->currentTimeFrame == null) throw new OrganizationTimeFrameNotDefined();
     }
 
+    public function getOrganizationCode()
+    {
+        //TODO: Add a try catch validation
+        return $this->organizationCode;
+    }
+
     public function getOrganizationLocation()
     {
         //TODO: Add a try catch validation

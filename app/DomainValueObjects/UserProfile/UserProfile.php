@@ -1,8 +1,9 @@
 <?php
 declare (strict_types = 1);
-namespace DomainValueObjects\UserProfile;
+namespace App\DomainValueObjects\UserProfile;
 
-use App\DomainValueObjects\Organization\OrganizationCode;
+use App\DomainValueObjects\UUIDGenerator\UUID;
+use App\DomainValueObjects\Organization\OrganizationCode\OrganizationCode;
 //Exceptions
 //User Profile
 use App\Exceptions\UserProfileExceptions\UserIdNotDefined;
@@ -10,50 +11,52 @@ use App\Exceptions\UserProfileExceptions\UserIdNotDefined;
 use App\Exceptions\OrganizationExceptions\OrganizationNotDefined;
 use App\Exceptions\OrganizationExceptions\OrganizationCodeNotDefined;
 use App\Exceptions\OrganizationExceptions\OrganizationLocationNotDefined;
+use App\DomainValueObjects\Organization\OrganizationProfile;
+
 
 class UserProfile
 {
     private $userId = null; // UUID
-    private $programCode = null; // Organization
-    private $programLocation = null; // Location
+    private $organizationCode = null; // Organization
+    private $organizationLocation = null; // Location
     private $currentTimeFrame = null; // Time Frame
 
     private $studentLocation = null; // Location
 
-    public function __construct(string $userId = null, OrganizationCode $programCode = null)
+    public function __construct(UUID $userId = null, OrganizationProfile $organizationProfile = null)
     {
         $this->userId = $userId;
-        $this->programCode = $programCode;
-        $this->validate();
+        $this->validate($organizationProfile);
     }
 
-    private function validate()
+    private function validate(OrganizationProfile $organizationProfile)
     {
         if ($this->userId == null || $this->userId == '') throw new UserIdNotDefined();
-        //TODO: Get Organization Object From db 
-        if ($this->programCode == null) {
-            throw new OrganizationCodeNotDefined();
+        if ($organizationProfile  == null) {
+            throw new OrganizationNotDefined();
         } else {
-            $program = null;
-            $this->programLocation = $this->validateOrganizationLocation($program);
-            $this->currentTimeFrame = $this->validateOrganizationTimeFrame($program);
+            $this->organizationLocation = $this->validateOrganizationLocation($organizationProfile);
+            $this->currentTimeFrame = $this->validateOrganizationTimeFrame($organizationProfile);
         }
     }
 
-    private function validateOrganizationLocation($program)
+    private function validateOrganizationLocation(OrganizationProfile $organizationProfile)
     {
-        $programLocation = $program->getOrganizationLocation();
-        if ($programLocation == null) throw new OrganizationLocationNotDefined();
-        return $programLocation;
+        $organizationLocation = $organizationProfile->getOrganizationLocation();
+        if ($organizationLocation == null) throw new OrganizationLocationNotDefined();
+        return $organizationLocation;
     }
 
-    private function validateOrganizationTimeFrame($program)
+    private function validateOrganizationTimeFrame(OrganizationProfile $organizationProfile)
     {
-        $currentTimeFrame = $program->getCurrentTimeFrame();
+        $currentTimeFrame = $organizationProfile->getCurrentTimeFrame();
         if ($currentTimeFrame == null) throw new OrganizationTimeFrameNotDefined();
         return $currentTimeFrame;
     }
 
     public function getProfileLocation()
-    { }
+    {
+        //add try catch validation
+        return $this->organizationLocation;
+    }
 }
