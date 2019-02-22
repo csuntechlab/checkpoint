@@ -13,14 +13,13 @@ use \GuzzleHttp\Client as Guzzle;
 class LoginService implements LoginContract
 {
 
-	public function login($request)
-	{
-		$username = $request->username;
-		$password = $request->password;
+    public function login($request)
+    {
+        $username = $request->username;
+        $password = $request->password;
 
-		$guzzle = new GuzzleService(new Guzzle, new LoginGuzzleParam($username, $password));
+        $guzzle = new GuzzleService(new Guzzle, new LoginGuzzleParam($username, $password));
 
-		return $guzzle->login();
-	}
-
+        return $guzzle->login();
+    }
 }

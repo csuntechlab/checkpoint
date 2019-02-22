@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers\ApiProviders\Auth;
 
 use Illuminate\Support\ServiceProvider;
 
-class LogoutServiceProvider extends ServiceProvider
+class RegiserServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -24,8 +24,8 @@ class LogoutServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Http\Controllers\Api\Auth\LogoutDomain\Contracts\LogoutContract',
-            'App\Http\Controllers\Api\Auth\LogoutDomain\Services\LogoutService'
+            'App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract',
+            'App\Http\Controllers\Api\Auth\RegisterDomain\Services\RegisterService'
         );
     }
 }

@@ -22,5 +22,4 @@ Route::post('/login', 'Api\Auth\LoginDomain\LoginController@login');
 
 Route::middleware('auth:api')->post('/logout', 'Api\Auth\LogoutDomain\LogoutController@logout');
 Route::post('/register', 'Api\Auth\RegisterDomain\RegisterController@register');
-
-Route::middleware('auth:api')->post('/create/program', 'Api\Organization\RegisterOrganizationController@register');
+Route::middleware('auth:api')->post('/clock/in', 'Api\Log\ClockInDomain\ClockInController@clockIn');

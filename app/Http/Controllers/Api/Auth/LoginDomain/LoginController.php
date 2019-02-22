@@ -20,4 +20,3 @@ class LoginController extends Controller
         return $this->loginRetriever->login($request);
     }
 }
-
