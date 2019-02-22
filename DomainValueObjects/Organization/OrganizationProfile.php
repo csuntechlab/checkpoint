@@ -4,10 +4,10 @@ namespace DomainValueObjects\Organization;
 
 //Objects used
 
-use App\Http\Controllers\Api\UUIDGenerator\UUID;
-use App\Http\Controllers\UserProfileDomain\OrganizationDomain\OrganizationCode\OrganizationCode;
-use App\Http\Controllers\UserProfileDomain\LocationDomain\Location;
-use App\Http\Controllers\UserProfileDomain\TimeFrameDomain\TimeFrame;
+use DomainValueObjects\UUIDGenerator\UUID;
+use DomainValueObjects\Organization\OrganizationCode\OrganizationCode;
+use DomainValueObjects\Location\Location;
+use DomainValueObjects\TimeFrame\TimeFrame;
 
 //Exceptions
 //UUID
