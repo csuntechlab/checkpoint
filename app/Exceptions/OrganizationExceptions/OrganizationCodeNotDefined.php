@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Exceptions\ProgramExceptions;
+namespace App\Exceptions\OrganizationExceptions;
 
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class ProgramCodedNotDefined extends Exception
+class OrganizationCodedNotDefined extends Exception
 {
     public function __construct()
     {
@@ -19,7 +19,7 @@ class ProgramCodedNotDefined extends Exception
      */
     public function render()
     {
-        $message = 'Program code was not defined.';
+        $message = 'Organization code was not defined.';
         $status_code = 409;
         return BuildResponse::build_response($message, $status_code);
     }
