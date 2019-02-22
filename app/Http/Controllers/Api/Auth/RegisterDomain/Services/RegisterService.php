@@ -53,7 +53,6 @@ class RegisterService implements RegisterContract
     private function getOrganizationProfile($organizationCode)
     {
         //validate organization code 
-
         $organization = Organization::where('organization_code', $organizationCode)->first();
         $organizationProfile = unserialize($organization->organization_profile);
         return $organizationProfile;
