@@ -1,6 +1,6 @@
 <?php
 declare (strict_types = 1);
-namespace DomainValueObjects\Location;
+namespace App\DomainValueObjects\Location;
 
 use App\DomainValueObjects\UUIDGenerator\UUID;
 

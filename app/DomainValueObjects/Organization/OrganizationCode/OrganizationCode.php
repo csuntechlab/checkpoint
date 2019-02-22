@@ -17,7 +17,7 @@ class OrganizationCode
 
     public function __construct(UUID $uuid = null, string $programCode = null)
     {
-        $this->uuid = $uuid->toString;
+        $this->uuid = $uuid;
         //TODO: do a query to get program id 
         $this->programCode = $programCode;
         $this->validate();

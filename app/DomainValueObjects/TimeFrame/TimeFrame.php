@@ -15,15 +15,13 @@ use App\Exceptions\TimeFrameExceptions\TimeFrameNotValid;
 class TimeFrame
 {
     private $uuid;
-    private $programLocation = null;
-    private $currentTimeFrame;
 
     public function __construct(
         UUID $uuid = null,
         string $startDate = null, //Create a Date Class
         string $endDate = null // Create a Date Class
     ) {
-        $this->uuid = $uuid->toString;
+        $this->uuid = $uuid;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->validate();

@@ -22,35 +22,35 @@ use App\Exceptions\OrganizationExceptions\OrganizationTimeFrameNotDefined;
 class OrganizationProfile
 {
     private $uuid;
-    private $programCode;
-    private $programLocation = null;
+    private $organizationCode;
+    private $organizationLocation = null;
     private $currentTimeFrame;
 
     public function __construct(
         UUID $uuid = null,
-        OrganizationCode $programCode = null,
-        Location $programLocation = null,
-        TimeFrame $time_frame = null
+        OrganizationCode $organizationCode = null,
+        Location $organizationLocation = null,
+        TimeFrame $currentTimeFrame = null
     ) {
-        $this->uuid = $uuid->toString;
-        $this->programCode = $programCode;
-        $this->programLocation = $programLocation;
-        $this->currentTimeFrame = $time_frame;
+        $this->uuid = $uuid;
+        $this->organizationCode = $organizationCode;
+        $this->organizationLocation = $organizationLocation;
+        $this->currentTimeFrame = $currentTimeFrame;
         $this->validate();
     }
 
     private function validate()
     {
         if ($this->uuid == null || $this->uuid == '') throw new GenerateUUID5Failed();
-        if ($this->programCode == null || $this->programCode == '') throw new OrganizationNameNotDefined();
-        if ($this->programLocation == null) throw new OrganizationLocationNotDefined();
-        if ($this->time_frame == null) throw new OrganizationTimeFrameNotDefined();
+        if ($this->organizationCode == null || $this->organizationCode == '') throw new OrganizationNameNotDefined();
+        if ($this->organizationLocation == null) throw new OrganizationLocationNotDefined();
+        if ($this->currentTimeFrame == null) throw new OrganizationTimeFrameNotDefined();
     }
 
     public function getOrganizationLocation()
     {
         //TODO: Add a try catch validation
-        return $this->programLocation;
+        return $this->organizationLocation;
     }
 
     public function getCurrentTimeFrame()
