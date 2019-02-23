@@ -37,7 +37,6 @@ class RegisterService implements RegisterContract
 
         try {
             $user = User::create([
-                'id' => $uuid->toString,
                 'name' => $name,
                 'email' => $email,
                 'password' => Hash::make($password),

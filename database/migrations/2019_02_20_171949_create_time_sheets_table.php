@@ -15,10 +15,10 @@ class CreateTimeSheetsTable extends Migration
     {
         Schema::create('time_sheets', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->uuid('user_id');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
+            $table->integer('user_id');
+            // $table->foreign('user_id')
+            //     ->references('id')
+            //     ->on('users');
             $table->text('time_frame');
             $table->text('completed_time_sheet')->nullable();
         });
