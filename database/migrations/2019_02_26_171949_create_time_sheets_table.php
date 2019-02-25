@@ -21,6 +21,7 @@ class CreateTimeSheetsTable extends Migration
                 ->on('users');
             $table->text('time_frame');
             $table->text('completed_time_sheet')->nullable();
+            $table->timestamps();
         });
     }
 
