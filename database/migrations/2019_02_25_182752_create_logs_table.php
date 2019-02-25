@@ -19,6 +19,10 @@ class CreateLogsTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
+            $table->uuid('time_sheet_id');
+            $table->foreign('time_sheet_id')
+                ->references('id')
+                ->on('time_sheets');
             $table->text('clock_in');
             $table->text('clock_out')->nullable();
             $table->text('log_change_stack')->nullable();

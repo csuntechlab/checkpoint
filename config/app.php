@@ -192,6 +192,11 @@ return [
         /** ClockIn Service Provider */
         App\Providers\ApiProviders\Log\ClockInServiceProvider::class,
 
+        /** ClockOut Service Provider */
+        App\Providers\ApiProviders\Log\ClockOutServiceProvider::class,
+
+
+
     ],
 
     /*
