@@ -26,23 +26,22 @@ class ClockInService implements ClockInContract
         
         $uuid = new UUID($this->domainName);
         
+        $userInfo = $this->getUserLocationAndUserTimeSheetId($location);
+        
+        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
+
+        $clockIn = new ClockIn($uuid, $timeStamp, $userInfo['location']);
+        
+    }
+
+    private function getUserLocationAndUserTimeSheetId($location):array
+    {
         $user = Auth::user();
         $userProfile = unserialize($user->user_profile);
         $userLocation = $userProfile->getProfileLocation();
         $this->validateLocation($userLocation,$location);
-        
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
-        // dd($timeStamp);
-
-        $clockIn = new ClockIn($uuid, $timeStamp, $userLocation);
-        dd( $clockIn);
-
-        // Get the currently authenticated user...
-
-
-        
-        dd($request);
-        dd('clockIn');
+        $timeSheetId = 1;
+        return ['location' => $userLocation, 'timeSheet_id' => $timeSheetId];
     }
 
     private function validateLocation(Location $userLocation, string $location){
