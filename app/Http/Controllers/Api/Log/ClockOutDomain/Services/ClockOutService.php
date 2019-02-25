@@ -18,7 +18,7 @@ use App\Logs;
 
 class ClockOutService implements ClockOutContract
 {
-    private $domainName = "ClockOut";
+    private $domainName = "clockOut";
 
     public function clockOut($request)
     {
@@ -39,8 +39,10 @@ class ClockOutService implements ClockOutContract
         $userInfo = $this->getUserLocationAndUserTimeSheetId($user, $location);
         
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
+
+        $clockOutUUid = new UUID($this->domainName);
         
-        $clockOut = new ClockOut(new UUID($this->domainName), $timeStamp, $userInfo['location']);
+        $clockOut = new ClockOut($clockOutUUid, $timeStamp, $userInfo['location']);
          
         try {
             $log->clock_out = serialize($clockOut);

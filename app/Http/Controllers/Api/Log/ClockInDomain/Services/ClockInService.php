@@ -18,7 +18,7 @@ use App\Logs;
 
 class ClockInService implements ClockInContract
 {
-    private $domainName = "Log";
+    private $domainName = "log";
 
     public function clockIn($request)
     {
