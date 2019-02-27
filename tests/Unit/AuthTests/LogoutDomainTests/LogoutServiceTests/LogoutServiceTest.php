@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\User;
+use App\Organization;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Api\Auth\LogoutDomain\Services\LogoutService;
@@ -29,6 +30,8 @@ class LogoutServiceTest extends TestCase
             'Accept' => 'application/json',
             'Authorization' => 'Bearer serializedToken'
         ]);
+
+        factory(Organization::class)->create();
 
         $user = factory(User::class)->create();
 
