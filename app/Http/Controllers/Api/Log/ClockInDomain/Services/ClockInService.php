@@ -5,30 +5,38 @@ namespace App\Http\Controllers\Api\Log\ClockInDomain\Services;
 use function Opis\Closure\serialize;
 use function Opis\Closure\unserialize;
 
+// Auth
 use Illuminate\Support\Facades\Auth;
-
+// DomainValue Objects
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\Log\ClockIn\ClockIn;
 use App\DomainValueObjects\Log\TimeStamp\TimeStamp;
-
-use App\Http\Controllers\Api\Log\ClockInDomain\Contracts\ClockInContract;
-use App\DomainValueObjects\Location\Location;
-use App\TimeSheets;
+// TB Models
 use App\Logs;
+// Contracts
+use App\Http\Controllers\Api\Log\ClockInDomain\Contracts\ClockInContract;
+use App\Http\Controllers\Api\Log\TimePuncher\Contracts\TimePuncherContract;
 
 class ClockInService implements ClockInContract
 {
     private $domainName = "log";
 
+    protected $timePuncherRetriever;
+
+    public function __construct(TimePuncherContract $timePuncherContract)
+    {
+        $this->timePuncherRetriever = $timePuncherContract;
+    }
+
     public function clockIn($request)
     {
-        $location = (string)$request['location'];
+        $currentLocation = (string)$request['location'];
         
         $timeStamp = (string)$request['timeStamp'];
 
         $user = Auth::user();
         
-        $userInfo = $this->getUserLocationAndUserTimeSheetId($user, $location);
+        $userInfo = $this->timePuncherRetriever->getUserLocationAndUserTimeSheetId($user, $currentLocation);
         
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
 
@@ -51,23 +59,7 @@ class ClockInService implements ClockInContract
         
         return ["message_success" => "Clock in was successfull", "log_uuid" => $uuid->toString];  
     }
-
-    private function getUserLocationAndUserTimeSheetId($user,$location):array
-    {
-        $userProfile = unserialize($user->user_profile);
-        
-        $userLocation = $userProfile->getProfileLocation();
-        
-        $this->validateLocation($userLocation,$location);
-        
-        $timeSheet = TimeSheets::where('user_id', 1)->first();
-        
-        return ['location' => $userLocation, 'timeSheetId' => $timeSheet->id];
-    }
-
-    private function validateLocation(Location $userLocation, string $location){
-        return true;
-    }
+    
 }
 
  

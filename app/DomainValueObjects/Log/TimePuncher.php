@@ -11,7 +11,7 @@ use App\DomainValueObjects\Location\Location;
 
 
 
-class Clock
+class TimePuncher
 {
     private $timeStamp =  null;
     private $location = null;

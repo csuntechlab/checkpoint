@@ -5,24 +5,33 @@ namespace App\Http\Controllers\Api\Log\ClockOutDomain\Services;
 use function Opis\Closure\serialize;
 use function Opis\Closure\unserialize;
 
+// Auth
 use Illuminate\Support\Facades\Auth;
 
+// Domain Value Object
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\Log\ClockOut\ClockOut;
 use App\DomainValueObjects\Log\TimeStamp\TimeStamp;
 
-use App\Http\Controllers\Api\Log\ClockOutDomain\Contracts\ClockOutContract;
-use App\DomainValueObjects\Location\Location;
-use App\TimeSheets;
+// TB Models
 use App\Logs;
-
+// Contracts 
+use App\Http\Controllers\Api\Log\ClockOutDomain\Contracts\ClockOutContract;
+use App\Http\Controllers\Api\Log\TimePuncher\Contracts\TimePuncherContract;
 class ClockOutService implements ClockOutContract
 {
     private $domainName = "clockOut";
 
+    protected $timePuncherRetriever;
+
+    public function __construct(TimePuncherContract $timePuncherContract)
+    {
+        $this->timePuncherRetriever = $timePuncherContract;
+    }
+
     public function clockOut($request)
     {
-        $location = (string)$request['location'];
+        $currentLocation = (string)$request['location'];
         
         $timeStamp = (string)$request['timeStamp'];
 
@@ -36,7 +45,7 @@ class ClockOutService implements ClockOutContract
             return ['message_error' => 'User has already clocked out.'];
         }
         
-        $userInfo = $this->getUserLocationAndUserTimeSheetId($user, $location);
+        $userInfo = $this->timePuncherRetriever->getUserLocationAndUserTimeSheetId($user, $currentLocation);
         
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
 
@@ -54,22 +63,6 @@ class ClockOutService implements ClockOutContract
         return ["message_success" => "Clock out was successfull"];  
     }
 
-    private function getUserLocationAndUserTimeSheetId($user,$location):array
-    {
-        $userProfile = unserialize($user->user_profile);
-        
-        $userLocation = $userProfile->getProfileLocation();
-        
-        $this->validateLocation($userLocation,$location);
-        
-        $timeSheet = TimeSheets::where('user_id', 1)->first();
-        
-        return ['location' => $userLocation, 'timeSheet_id' => $timeSheet->id];
-    }
-
-    private function validateLocation(Location $userLocation, string $location){
-        return true;
-    }
 }
 
  

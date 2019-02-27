@@ -43,10 +43,7 @@ class RegisterControllerTest extends TestCase
 
         $request = new Request($input);
 
-        $expectedResponse = [
-            "name" => "tes3t@email.com",
-            "email" => "tes3t@email.com",
-        ];
+        $expectedResponse = [];
 
         $this->retriever
             ->shouldReceive('register')

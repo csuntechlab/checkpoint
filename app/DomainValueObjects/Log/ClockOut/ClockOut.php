@@ -6,14 +6,14 @@ use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\Log\TimeStamp\TimeStamp;
 use App\DomainValueObjects\Location\Location;
 
-use App\DomainValueObjects\Log\Clock;
+use App\DomainValueObjects\Log\TimePuncher;
 
 
 //Exceptions
 
 
 
-class ClockOut extends Clock
+class ClockOut extends TimePuncher
 {
 
     public function __construct(UUID $uuid, TimeStamp $timeStamp, Location $location)
