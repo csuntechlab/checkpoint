@@ -18,7 +18,7 @@ update_ip_unix(){
 
 update_ip_windows(){
   WINDOWS_CURRENT_IP=$(hostname -I | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')
-  PRIMARY_WINDOWS_IP=$(echo "$WINDOWS_CURRENT_IP" | awk '{print $1}')
+  PRIMARY_WINDOWS_IP=$(echo $WINDOWS_CURRENT_IP | awk '{print $1}')
   sed -i '.env' -e "s/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/$PRIMARY_WINDOWS_IP/g"
 }
 
