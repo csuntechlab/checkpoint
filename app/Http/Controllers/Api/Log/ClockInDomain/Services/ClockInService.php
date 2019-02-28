@@ -3,7 +3,6 @@ declare (strict_types = 1);
 namespace App\Http\Controllers\Api\Log\ClockInDomain\Services;
 
 use function Opis\Closure\serialize;
-use function Opis\Closure\unserialize;
 
 // Auth
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +12,9 @@ use App\DomainValueObjects\Log\ClockIn\ClockIn;
 use App\DomainValueObjects\Log\TimeStamp\TimeStamp;
 // TB Models
 use App\Logs;
+
+//Exception
+use App\Exceptions\TimePuncherExceptions\ClockIn\AlreadyClockedIn;
 // Contracts
 use App\Http\Controllers\Api\Log\ClockInDomain\Contracts\ClockInContract;
 use App\Http\Controllers\Api\Log\TimePuncher\Contracts\TimePuncherContract;
@@ -28,6 +30,14 @@ class ClockInService implements ClockInContract
         $this->timePuncherRetriever = $timePuncherContract;
     }
 
+    private function verifyUserHasNotYetLogged($user)
+    {    
+        $hasUserLogged = Logs::where('user_id', 1)->where('clock_out',null)->get();
+        if($hasUserLogged->count()!=0){
+            throw new AlreadyClockedIn();
+        }
+    }
+
     public function clockIn($request)
     {
         $currentLocation = (string)$request['location'];
@@ -35,14 +45,14 @@ class ClockInService implements ClockInContract
         $timeStamp = (string)$request['timeStamp'];
 
         $user = Auth::user();
+
+        $this->verifyUserHasNotYetLogged($user);
         
         $userInfo = $this->timePuncherRetriever->getUserLocationAndUserTimeSheetId($user, $currentLocation);
         
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
-
-        $clockInUuid = new UUID('clockIn');
         
-        $clockIn = new ClockIn($clockInUuid, $timeStamp, $userInfo['location']);
+        $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp, $userInfo['location']);
 
         $uuid = new UUID($this->domainName);
 

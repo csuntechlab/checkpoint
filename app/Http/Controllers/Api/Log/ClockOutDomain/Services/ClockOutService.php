@@ -3,7 +3,6 @@ declare (strict_types = 1);
 namespace App\Http\Controllers\Api\Log\ClockOutDomain\Services;
 
 use function Opis\Closure\serialize;
-use function Opis\Closure\unserialize;
 
 // Auth
 use Illuminate\Support\Facades\Auth;
@@ -12,9 +11,11 @@ use Illuminate\Support\Facades\Auth;
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\Log\ClockOut\ClockOut;
 use App\DomainValueObjects\Log\TimeStamp\TimeStamp;
-
 // TB Models
 use App\Logs;
+
+//Exceptions 
+use App\Exceptions\TimePuncherExceptions\ClockOut\AlreadyClockedOut;
 // Contracts 
 use App\Http\Controllers\Api\Log\ClockOutDomain\Contracts\ClockOutContract;
 use App\Http\Controllers\Api\Log\TimePuncher\Contracts\TimePuncherContract;
@@ -29,6 +30,16 @@ class ClockOutService implements ClockOutContract
         $this->timePuncherRetriever = $timePuncherContract;
     }
 
+    private function getLog($logUuid){
+        $log = Logs::where('id', $logUuid)->first();
+
+        if ($log->clock_out != null) {
+            // throw an exception
+            throw new AlreadyClockedOut();
+        }
+        return $log;
+    }
+
     public function clockOut($request)
     {
         $currentLocation = (string)$request['location'];
@@ -39,19 +50,15 @@ class ClockOutService implements ClockOutContract
 
         $user = Auth::user();
 
-        $log = Logs::where('id', $logUuid)->first();
-
-        if ($log->clock_out != null) {
-            return ['message_error' => 'User has already clocked out.'];
-        }
+        $log = $this->getLog($logUuid);
         
-        $userInfo = $this->timePuncherRetriever->getUserLocationAndUserTimeSheetId($user, $currentLocation);
+        $location = $this->timePuncherRetriever->getUserLocation($user, $currentLocation);
         
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
 
         $clockOutUUid = new UUID($this->domainName);
         
-        $clockOut = new ClockOut($clockOutUUid, $timeStamp, $userInfo['location']);
+        $clockOut = new ClockOut($clockOutUUid, $timeStamp, $location);
          
         try {
             $log->clock_out = serialize($clockOut);
