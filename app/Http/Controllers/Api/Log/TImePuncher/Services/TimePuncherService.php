@@ -16,6 +16,7 @@ use App\DomainValueObjects\UUIDGenerator\UUID;
 
 class TimePuncherService implements TimePuncherContract
 {
+    //TODO: Create unit test hard coded for now
     private function getTimeSheet($user){
         $timeSheet = TimeSheets::where('user_id', 1)->first();
         return $timeSheet;
@@ -26,6 +27,7 @@ class TimePuncherService implements TimePuncherContract
         return $userProfile;
     }
 
+    //TODO create validation
     private function validateLocation(Location $userLocation, string $currentLocation){
    
          return true;
