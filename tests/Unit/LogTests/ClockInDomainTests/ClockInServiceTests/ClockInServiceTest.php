@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+
+use Mockery;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -18,37 +20,35 @@ class ClockInServiceTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        // $this->retriever = Mockery::mock(TimePuncherContract::class);
-        // $this->service = new ClockInService($this->retriever);
+        $this->retriever = Mockery::mock(TimePuncherContract::class);
+        $this->service = new ClockInService($this->retriever);
         $this->seed('OrgnaizationSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
     }
 
     /**
-     * A basic test example.
+     * Clock In test 
      *
      * @return void
      */
-    public function testExample()
+    public function test_clock_in_service_get_user_location_and_user_time_sheet_id_with_mockery()
     {
-        $this->assertEquals("", "");
-        // $input = ["timeStamp" => "2019-02-01 06:30:44", "location" => "blob"];
+        $currentLocation = "blob";
+        $user = "user";
 
-        // $request = new Request($input);
+        $expectedResponse = [
+            "message_success" => "Clock in was successfull",
+            "log_uuid" => "uuid"
+        ];
 
-        // $expectedResponse = [
-        //     "message_success" => "Clock in was successfull",
-        //     "log_uuid" => "uuid"
-        // ];
+        $this->retriever
+            ->shouldReceive('getUserLocationAndUserTimeSheetId')
+            ->with($user, $currentLocation)
+            ->once()->andReturn($expectedResponse);
 
-        // $this->retriever
-        //     ->shouldReceive('clockIn')
-        //     ->with($request)
-        //     ->once()->andReturn($expectedResponse);
+        $response = $this->retriever->getUserLocationAndUserTimeSheetId($user, $currentLocation);
 
-        // $response = $this->retriever->clockIn($request);
-
-        // $this->assertEquals($expectedResponse, $response);
+        $this->assertEquals($expectedResponse, $response);
     }
 }

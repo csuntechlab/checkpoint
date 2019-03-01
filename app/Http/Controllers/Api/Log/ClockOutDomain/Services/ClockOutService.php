@@ -32,8 +32,11 @@ class ClockOutService implements ClockOutContract
 
     private function getLog($logUuid){
         $log = Logs::where('id', $logUuid)->first();
-
-        if ($log->clock_out != null) {
+        if ($log == null) {
+            // TODO: create a new exceptio
+            throw new AlreadyClockedOut();
+        }
+        else if ($log->clock_out != null) {
             // throw an exception
             throw new AlreadyClockedOut();
         }

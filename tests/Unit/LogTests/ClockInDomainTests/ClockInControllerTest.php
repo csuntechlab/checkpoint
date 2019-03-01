@@ -45,8 +45,6 @@ class ClockInControllerTest extends TestCase
     {
         $input = ["timeStamp" => "2019-02-01 06:30:44", "location" => "blob"];
 
-        $request = new Request($input);
-
         $expectedResponse = [
             "message_success" => "Clock in was successfull",
             "log_uuid" => "uuid"
@@ -54,10 +52,10 @@ class ClockInControllerTest extends TestCase
 
         $this->retriever
             ->shouldReceive('clockIn')
-            ->with($request)
+            ->with($input['timeStamp'], $input['location'])
             ->once()->andReturn($expectedResponse);
 
-        $response = $this->retriever->clockIn($request);
+        $response = $this->retriever->clockIn($input['timeStamp'], $input['location']);
 
         $this->assertEquals($expectedResponse, $response);
     }
