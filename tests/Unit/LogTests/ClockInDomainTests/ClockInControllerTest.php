@@ -16,7 +16,6 @@ use \App\User;
 //Contracts 
 use \App\Http\Controllers\Api\Log\ClockInDomain\ClockInController;
 use \App\Http\Controllers\Api\Log\ClockInDomain\Contracts\ClockInContract;
-use \App\Http\Controllers\Api\Log\TimePuncher\Contracts\TimePuncherContract;
 
 class ClockInControllerTest extends TestCase
 {
