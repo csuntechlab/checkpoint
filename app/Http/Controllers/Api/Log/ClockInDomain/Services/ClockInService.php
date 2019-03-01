@@ -1,5 +1,5 @@
 <?php 
-declare (strict_types = 1);
+// declare (strict_types = 1);
 namespace App\Http\Controllers\Api\Log\ClockInDomain\Services;
 
 use function Opis\Closure\serialize;
@@ -37,13 +37,9 @@ class ClockInService implements ClockInContract
             throw new AlreadyClockedIn();
         }
     }
-
-    public function clockIn($request)
+    
+    public function clockIn($currentLocation, $timeStamp)
     {
-        $currentLocation = (string)$request['location'];
-        
-        $timeStamp = (string)$request['timeStamp'];
-
         $user = Auth::user();
 
         $this->verifyUserHasNotYetLogged($user);

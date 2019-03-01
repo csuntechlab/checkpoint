@@ -15,9 +15,18 @@ class ClockInController extends Controller
         $this->clockInRetriever = $clockInContract;
     }
 
+    private function getParam($request): array
+    {
+        $data = array();
+        $data['currentLocation'] = (string)$request['currentLocation'];
+        $data['timeStamp'] = (string)$request['timeStamp'];
+        return $data;
+    }
+
 
     public function clockIn(Request $request)
     {
-        return $this->clockInRetriever->clockIn($request);
+        $data = $this->getParam($request);
+        return $this->clockInRetriever->clockIn($data['currentLocation'], $data['timeStamp'])
     }
 }
