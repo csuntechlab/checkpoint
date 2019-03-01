@@ -16,6 +16,8 @@ class ClockInServiceTest extends TestCase
     use DatabaseMigrations;
     private $retriever;
     private $service;
+    private $classPath = 'App\Http\Controllers\Api\Log\ClockInDomain\Services\ClockInService';
+    private $user;
 
     public function setUp()
     {
@@ -25,6 +27,9 @@ class ClockInServiceTest extends TestCase
         $this->seed('OrgnaizationSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
+
+        $this->user = \App\User::where('id', 1)->first();
+        $this->actingAs($this->user);
     }
 
     /**
@@ -50,5 +55,35 @@ class ClockInServiceTest extends TestCase
         $response = $this->retriever->getUserLocationAndUserTimeSheetId($user, $currentLocation);
 
         $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function test_get_log_param()
+    {
+        $userProfile = unserialize($this->user->user_profile);
+
+        $userLocation = $userProfile->getProfileLocation();
+
+        $timeStamp =  "2019-02-01 06:30:44";
+
+        $function = 'getLogParam';
+
+        $method = $this->get_private_method($this->classPath, $function);
+
+        $response = $method->invoke($this->service, $userLocation, $timeStamp);
+
+        $this->assertInstanceOf('App\DomainValueObjects\UUIDGenerator\UUID', $response['uuid']);
+        $this->assertInstanceOf('App\DomainValueObjects\Log\ClockIn\ClockIn', $response['clockIn']);
+        $this->assertInstanceOf('App\DomainValueObjects\Log\TimeStamp\TimeStamp', $response['timeStamp']);
+    }
+
+    public function test_verify_user_has_not_yet_logged()
+    {
+        $function = 'verifyUserHasNotYetLogged';
+
+        $method = $this->get_private_method($this->classPath, $function);
+
+        $response = $method->invoke($this->service, $this->user->id);
+
+        $this->assertEquals($response, true);
     }
 }

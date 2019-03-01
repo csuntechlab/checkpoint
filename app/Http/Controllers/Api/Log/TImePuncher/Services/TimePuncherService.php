@@ -30,7 +30,7 @@ class TimePuncherService implements TimePuncherContract
         $userProfile = $this->getUserProfile($user);
 
         //Try catach
-        $userLocation = $userProfile->getProfileLocation($user);
+        $userLocation = $userProfile->getProfileLocation();
 
         $this->validateLocation($userLocation,$currentLocation);
 
