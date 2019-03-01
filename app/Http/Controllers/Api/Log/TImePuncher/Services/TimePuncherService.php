@@ -26,6 +26,11 @@ class TimePuncherService implements TimePuncherContract
         return $userProfile;
     }
 
+    private function validateLocation(Location $userLocation, string $currentLocation){
+   
+         return true;
+    }
+
     private function verifyUserLocation($user,$currentLocation){
         $userProfile = $this->getUserProfile($user);
 
@@ -37,10 +42,6 @@ class TimePuncherService implements TimePuncherContract
         return $userLocation;
     }
     
-    private function validateLocation(Location $userLocation, string $currentLocation){
-        return true;
-    }
-
     public function getUserLocation($user,$currentLocation){
         $userLocation = $this->verifyUserLocation($user,$currentLocation);
         return $userLocation;
