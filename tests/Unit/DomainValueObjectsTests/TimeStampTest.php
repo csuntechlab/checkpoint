@@ -21,7 +21,7 @@ class TimeStampTest extends TestCase
 
     public function test_Invalid_timeStamp_throws_exception()
     {
-      $response = new TimeStamp();
-      dd($response);
+      $this->expectException('App\Exceptions\TimePuncherExceptions\TimeStamp\GenerateTimeStampFailed');
+      $exception = new TimeStamp();
     }
 }

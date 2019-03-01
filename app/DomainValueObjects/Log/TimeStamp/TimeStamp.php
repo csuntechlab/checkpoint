@@ -4,7 +4,7 @@ namespace App\DomainValueObjects\Log\TimeStamp;
 
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\Location\Location;
-use App\Excetptions\TimePuncherExceptions\TimeStamp\GenerateTimeStampFailed;
+use App\Exceptions\TimePuncherExceptions\TimeStamp\GenerateTimeStampFailed;
 
 
 class TimeStamp
