@@ -53,7 +53,7 @@ class ClockOutService implements ClockOutContract
     public function clockOut(string $currentLocation, string $timeStamp, string $logUuid)
     {
         $user = Auth::user();
-
+        
         $log = $this->getLog($logUuid);
         
         $userLocation = $this->timePuncherRetriever->getUserLocation($user, $currentLocation);
