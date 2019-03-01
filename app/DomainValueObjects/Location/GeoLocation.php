@@ -5,11 +5,10 @@ namespace App\DomainValueObjects\Location;
 use App\Exceptions\LocationExceptions\InvalidGeoLocation;
 
 
-
 class GeoLocation
 {
-    private $longitude = null;
-    private $latitude = null;
+    private $longitude;
+    private $latitude;
 
     public function __construct(
         $longitude = null,
@@ -23,7 +22,7 @@ class GeoLocation
     private function validate()
     {
         if ($this->longitude == null || $this->latitude == null){
-          throw new GeoLocationNotDefined();
+          throw new InvalidGeoLocation();
         }
     }
 }

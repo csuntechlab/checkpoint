@@ -2,7 +2,7 @@
 declare (strict_types = 1);
 namespace App\DomainValueObjects\Location;
 
-
+use App\Exceptions\LocationExceptions\InvalidAddress;
 
 
 class Address
@@ -14,17 +14,17 @@ class Address
     private $zip;
 
     public function __construct(
-      $address_number = null,
-      $street = null,
-      $city = null,
-      $state = null,
-      $zip = null
+      String $address_number = null,
+      String $street = null,
+      String $city = null,
+      String $state = null,
+      String $zip = null
     ) {
-      $this->$address_number = $address_number;
-      $this->$street = $street;
-      $this->$city = $city;
-      $this->$state = $state;
-      $this->$zip = $zip;
+      $this->address_number = $address_number;
+      $this->street = $street;
+      $this->city = $city;
+      $this->state = $state;
+      $this->zip = $zip;
       $this->validate();
     }
 
@@ -37,7 +37,7 @@ class Address
           $this->state == null ||
           $this->zip == null
         ){
-          throw new AddressNotDefined();
+          throw new InvalidAddress();
         }
     }
 }
