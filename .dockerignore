@@ -1,0 +1,7 @@
+# If these exist, docker will ignore them during the build
+.git/
+vendor/
+node_modules/
+public/js/
+public/css/
+yarn-error.log
