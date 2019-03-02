@@ -29,5 +29,4 @@ class GuzzleService
             return response()->json('Something went wrong with the server', $e->getCode());
         }
     }
-
 }

@@ -23,6 +23,7 @@ class RegisterControllerTest extends TestCase
         parent::setUp();
         $this->retriever = Mockery::mock(RegisterContract::class);
         $this->controller = new RegisterController($this->retriever);
+        $this->seed('OrgnaizationSeeder');
     }
 
 
@@ -42,10 +43,7 @@ class RegisterControllerTest extends TestCase
 
         $request = new Request($input);
 
-        $expectedResponse = [
-            "name" => "tes3t@email.com",
-            "email" => "tes3t@email.com",
-        ];
+        $expectedResponse = [];
 
         $this->retriever
             ->shouldReceive('register')
@@ -76,6 +74,4 @@ class RegisterControllerTest extends TestCase
         $actualResponse = json_encode($actualResponse);
         $this->assertEquals($response, $actualResponse);
     }
-
-
 }

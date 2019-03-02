@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers\ApiProviders\Log;
 
 use Illuminate\Support\ServiceProvider;
 
-class RegiserServiceProvider extends ServiceProvider
+class ClockOutServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -24,8 +24,8 @@ class RegiserServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract',
-            'App\Http\Controllers\Api\Auth\RegisterDomain\Services\RegisterService'
+            'App\Http\Controllers\Api\Log\ClockOutDomain\Contracts\ClockOutContract',
+            'App\Http\Controllers\Api\Log\ClockOutDomain\Services\ClockOutService'
         );
     }
 }

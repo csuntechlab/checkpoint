@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers\ApiProviders\Log;
 
 use Illuminate\Support\ServiceProvider;
 
-class LogoutServiceProvider extends ServiceProvider
+class TimePuncherServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -24,8 +24,8 @@ class LogoutServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Http\Controllers\Api\Auth\LogoutDomain\Contracts\LogoutContract',
-            'App\Http\Controllers\Api\Auth\LogoutDomain\Services\LogoutService'
+            'App\Http\Controllers\Api\Log\TimePuncher\Contracts\TimePuncherContract',
+            'App\Http\Controllers\Api\Log\TimePuncher\Services\TimePuncherService'
         );
     }
 }

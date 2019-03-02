@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers\ApiProviders\Log;
 
 use Illuminate\Support\ServiceProvider;
 
-class LoginServiceProvider extends ServiceProvider
+class ClockInServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -24,8 +24,8 @@ class LoginServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Http\Controllers\Api\Auth\LoginDomain\Contracts\LoginContract',
-            'App\Http\Controllers\Api\Auth\LoginDomain\Services\LoginService'
+            'App\Http\Controllers\Api\Log\ClockInDomain\Contracts\ClockInContract',
+            'App\Http\Controllers\Api\Log\ClockInDomain\Services\ClockInService'
         );
     }
 }

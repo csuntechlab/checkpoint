@@ -16,6 +16,7 @@ class RegisterServiceTest extends TestCase
     {
         parent::setUp();
         $this->service = new RegisterService();
+        $this->seed('OrgnaizationSeeder');
     }
     /**
      * register service test
