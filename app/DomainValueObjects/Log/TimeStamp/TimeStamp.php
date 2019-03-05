@@ -22,12 +22,8 @@ class TimeStamp
 
     private function validation()
     {
-        if($this->timeStamp == null || $this->timeStamp == ''){
-          throw new GenerateTimeStampFailed();
-        }
-
-        if($this->uuid == null){
-          throw new GenerateTimeStampFailed();
-        }
+        if($this->timeStamp == null || $this->timeStamp == '') throw new GenerateTimeStampFailed();
+        
+        if($this->uuid == null) throw new GenerateTimeStampFailed();
     }
 }
