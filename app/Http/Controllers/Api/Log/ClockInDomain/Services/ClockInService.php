@@ -1,5 +1,4 @@
 <?php 
-declare (strict_types = 1);
 namespace App\Http\Controllers\Api\Log\ClockInDomain\Services;
 
 use function Opis\Closure\serialize;
@@ -29,45 +28,59 @@ class ClockInService implements ClockInContract
     {
         $this->timePuncherRetriever = $timePuncherContract;
     }
-
-    private function verifyUserHasNotYetLogged($user)
-    {    
+    
+    private function verifyUserHasNotYetLogged($userId)
+    {
+        $userId = 1;
+        
         $hasUserLogged = Logs::where('user_id', 1)->where('clock_out',null)->get();
-        if($hasUserLogged->count()!=0){
+        
+        if($hasUserLogged->count()!=0 || $hasUserLogged == null){
             throw new AlreadyClockedIn();
         }
+        
+        return true;
     }
 
-    public function clockIn($request)
+    private function getLogParam($userLocation, $timeStamp): array
     {
-        $currentLocation = (string)$request['location'];
+        $logParam = array();
         
-        $timeStamp = (string)$request['timeStamp'];
+        $logParam['uuid'] = new UUID($this->domainName);
 
-        $user = Auth::user();
-
-        $this->verifyUserHasNotYetLogged($user);
-        
-        $userInfo = $this->timePuncherRetriever->getUserLocationAndUserTimeSheetId($user, $currentLocation);
-        
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
         
-        $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp, $userInfo['location']);
+        $logParam['clockIn'] = new ClockIn(new UUID('clockIn'), $timeStamp, $userLocation);
+        
+        $logParam['timeStamp'] = $timeStamp;
+        
+        return $logParam;
+    }
+    
+    public function clockIn(string $currentLocation, string $timeStamp)
+    {
+        $user = Auth::user();
+        
+        $this->verifyUserHasNotYetLogged($user->id);
+        
+        $userInfo = $this->timePuncherRetriever-> getUserLocationAndUserTimeSheetId($user, $currentLocation);
+        
+        $logParam = $this->getLogParam($userInfo[ 'location'], $timeStamp);
 
-        $uuid = new UUID($this->domainName);
+        $uuid = $logParam['uuid']->toString;
 
         try {
             $user = Logs::create([
-                'id' => $uuid->toString,
+                'id' => $uuid,
                 'user_id' => $user->id,
                 'time_sheet_id' => $userInfo['timeSheetId'],
-                'clock_in' => serialize($clockIn),
+                'clock_in' => serialize($logParam['clockIn']),
             ]);
         } catch (Illuminate\Database\QueryException $e) {
             return ['message_error' => 'Clock In was not successfully created.'];
         }
         
-        return ["message_success" => "Clock in was successfull", "log_uuid" => $uuid->toString];  
+        return ["message_success" => "Clock in was successfull", "log_uuid" => $uuid];  
     }
     
 }

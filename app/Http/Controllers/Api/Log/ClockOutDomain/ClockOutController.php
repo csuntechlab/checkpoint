@@ -15,9 +15,24 @@ class ClockOutController extends Controller
         $this->clockOutRetriever = $clockOutContract;
     }
 
+    public function getParam($request): array
+    {
+        $data = array();
+
+        $data['currentLocation'] = (string)$request['currentLocation'];
+
+        $data['timeStamp'] = (string)$request['timeStamp'];
+
+        $data['logUuid'] = $request['logUuid'];
+
+        return $data;
+    }
+
 
     public function clockOut(Request $request)
     {
-        return $this->clockOutRetriever->clockOut($request);
+        $data = $this->getParam($request);
+
+        return $this->clockOutRetriever->clockOut($data['currentLocation'], $data['timeStamp'], $data['logUuid']);
     }
 }

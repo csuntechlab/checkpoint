@@ -1,3 +1,13 @@
+FROM csunmetalab/environment:base-20190130 as dev
+
+COPY . /var/www/html
+
+# Change /var/www permission
+RUN chown -hR www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Expose port 80 and 443
+EXPOSE 80
+
 # Backend
 FROM composer:latest as vendor
 COPY database/ database/
@@ -23,14 +33,13 @@ COPY resources/ /app/resources/
 WORKDIR /app
 
 RUN yarn \
-    && yarn run prod
+    && yarn production
 
 # PHP/Apache 
-FROM csunmetalab/environment:base-20190130
-
-COPY . /var/www/html
+FROM csunmetalab/environment:base-20190130 as prod
 
 # Copy Front/Backend packages
+COPY --from=dev /var/www/html /var/www/html
 COPY --from=vendor /app/vendor/ /var/www/html/vendor/
 COPY --from=frontend /app/public/js/ /var/www/html/public/js/
 COPY --from=frontend /app/public/css/ /var/www/html/public/css/
@@ -39,5 +48,5 @@ COPY --from=frontend /app/mix-manifest.json /var/www/html/mix-manifest.json
 # Change /var/www permission
 RUN chown -hR www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose port 80 and 443
+# Expose port 80
 EXPOSE 80

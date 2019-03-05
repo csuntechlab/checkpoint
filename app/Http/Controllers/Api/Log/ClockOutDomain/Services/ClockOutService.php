@@ -1,5 +1,4 @@
 <?php 
-declare (strict_types = 1);
 namespace App\Http\Controllers\Api\Log\ClockOutDomain\Services;
 
 use function Opis\Closure\serialize;
@@ -33,40 +32,39 @@ class ClockOutService implements ClockOutContract
     private function getLog($logUuid){
         $log = Logs::where('id', $logUuid)->first();
 
-        if ($log->clock_out != null) {
-            // throw an exception
-            throw new AlreadyClockedOut();
-        }
+        if ($log == null) throw new AlreadyClockedOut();
+
+        if ($log->clock_out != null) throw new AlreadyClockedOut();
+        
         return $log;
     }
 
-    public function clockOut($request)
+    private function getLogParam($userLocation,$timeStamp)
     {
-        $currentLocation = (string)$request['location'];
-        
-        $timeStamp = (string)$request['timeStamp'];
-
-        $logUuid = $request['logUuid'];
-
-        $user = Auth::user();
-
-        $log = $this->getLog($logUuid);
-        
-        $location = $this->timePuncherRetriever->getUserLocation($user, $currentLocation);
-        
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
 
         $clockOutUUid = new UUID($this->domainName);
+
+        $clockOut = new ClockOut($clockOutUUid, $timeStamp, $userLocation);
+
+        return $clockOut;
+    }
+
+    public function clockOut(string $currentLocation, string $timeStamp, string $logUuid)
+    {
+        $user = Auth::user();
         
-        $clockOut = new ClockOut($clockOutUUid, $timeStamp, $location);
-         
+        $log = $this->getLog($logUuid);
+        
+        $userLocation = $this->timePuncherRetriever->getUserLocation($user, $currentLocation);
+
+        $clockOut = $this->getLogParam($userLocation, $timeStamp);         
         try {
             $log->clock_out = serialize($clockOut);
             $log->save();
         } catch (Illuminate\Database\QueryException $e) {
             return ['message_error' => 'Clock Out was not successfully created.'];
         }
-
         return ["message_success" => "Clock out was successfull"];  
     }
 
