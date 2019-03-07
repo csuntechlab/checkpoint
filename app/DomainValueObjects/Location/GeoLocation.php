@@ -11,8 +11,8 @@ class GeoLocation
     private $latitude;
 
     public function __construct(
-        $longitude = null,
-        $latitude = null
+        float $longitude = null,
+        float $latitude = null
     ) {
         $this->longitude = $longitude;
         $this->latitude = $latitude;
