@@ -1,4 +1,5 @@
 <?php
+
 declare (strict_types = 1);
 namespace App\DomainValueObjects\Log\TimeStamp;
 
@@ -13,6 +14,7 @@ class TimeStamp
     private $uuid = null;
 
     public function __construct(UUID $uuid = null, string $timeStamp = null)
+
     {
 
         $this->uuid = $uuid;

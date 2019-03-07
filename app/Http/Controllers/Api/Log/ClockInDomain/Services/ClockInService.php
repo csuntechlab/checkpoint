@@ -1,5 +1,4 @@
 <?php 
-declare (strict_types = 1);
 namespace App\Http\Controllers\Api\Log\ClockInDomain\Services;
 
 use function Opis\Closure\serialize;
@@ -29,23 +28,21 @@ class ClockInService implements ClockInContract
     {
         $this->timePuncherRetriever = $timePuncherContract;
     }
-
-    private function verifyUserHasNotYetLogged()
+    
+    private function verifyUserHasNotYetLogged($userId)
     {
-        $user = Auth::user();
-
-        $hasUserLogged = Logs::where('user_id', 1)->where('clock_out',null)->get();
-
-        // if check hasUserLoggedNull
+        $userId = 1;
         
-        if($hasUserLogged->count()!=0){
+        $hasUserLogged = Logs::where('user_id', 1)->where('clock_out',null)->get();
+        
+        if($hasUserLogged->count()!=0 || $hasUserLogged == null){
             throw new AlreadyClockedIn();
         }
         
-        return $user;
+        return true;
     }
 
-    private function getLogParam($userInfo, $timeStamp): array
+    private function getLogParam($userLocation, $timeStamp): array
     {
         $logParam = array();
         
@@ -53,20 +50,22 @@ class ClockInService implements ClockInContract
 
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
         
-        $logParam['clockIn'] = new ClockIn(new UUID('clockIn'), $timeStamp, $userInfo['location']);
+        $logParam['clockIn'] = new ClockIn(new UUID('clockIn'), $timeStamp, $userLocation);
         
         $logParam['timeStamp'] = $timeStamp;
         
         return $logParam;
     }
-    
-    public function clockIn($currentLocation, $timeStamp)
+
+    public function clockIn(string $currentLocation, string $timeStamp)
     {
-        $user = $this->verifyUserHasNotYetLogged();
+        $user = Auth::user();
         
-        $userInfo = $this->timePuncherRetriever->getUserLocationAndUserTimeSheetId($user, $currentLocation);
+        $this->verifyUserHasNotYetLogged($user->id);
         
-        $logParam = $this->getLogParam($userInfo,$timeStamp);
+        $userInfo = $this->timePuncherRetriever-> getUserLocationAndUserTimeSheetId($user, $currentLocation);
+        
+        $logParam = $this->getLogParam($userInfo[ 'location'], $timeStamp);
 
         $uuid = $logParam['uuid']->toString;
 

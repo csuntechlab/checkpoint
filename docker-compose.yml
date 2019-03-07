@@ -1,24 +1,33 @@
-version: '3.3'
+version: '3.7'
 services:
   checkpoint:
     container_name: checkpoint-server
     build:
       context: .
+      target: dev
     ports:
       - 8080:80
     volumes:
       - .:/var/www/html
   db:
     container_name: checkpoint-mysql
+    restart: always
     image: mysql:5.6.41
+    ports: 
+      - 3306:3306
     volumes:
       - db_data:/var/lib/mysql/
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: checkpoint
       MYSQL_DATABASE: checkpoint  
       MYSQL_USER: checkpoint
       MYSQL_PASSWORD: checkpoint
+  composer_install:
+    container_name: composer_install
+    image: composer:latest
+    volumes: 
+      - .:/app/
+    command: install --ignore-platform-reqs --no-interaction --no-plugins --no-scripts --prefer-dist
   adminer:
     container_name: checkpoint-adminer
     image: adminer:latest
