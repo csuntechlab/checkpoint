@@ -14,7 +14,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class LocationTest extends TestCase
 {
 
-    public function test_a_location_is_successfully_created()
+    public function test_a_location_with_address_is_successfully_created()
     {
         //parameters for objects
         $address_number = "9423 #A";
@@ -39,7 +39,7 @@ class LocationTest extends TestCase
 
         $geoLocation = new GeoLocation($longitude, $latitude);
 
-        $locationObject = new Location($UUID, $geoLocation, $address);
+        $locationObject = Location::withAddress($UUID, $geoLocation, $address);
         $this->assertInstanceOf(Location::class, $locationObject);
     }
 
@@ -56,14 +56,39 @@ class LocationTest extends TestCase
       $exception = new Location($UUID);
     }
 
-    public function test_invalid_address_throws_exception()
+    public function test_location_without_address_is_successfully_created()
+    {
+        //parameters for objects
+        $address_number = "9423 #A";
+        $street = "Reseda Blvd";
+        $city = "Northridge";
+        $state = "California";
+        $zip = "91324";
+
+        $longitude = -118.536052;
+        $latitude = 34.197676;
+
+        //object parameters
+        $UUID = new UUID('domainName');
+
+        $geoLocation = new GeoLocation($longitude, $latitude);
+
+        $locationObject = new Location($UUID, $geoLocation);
+
+        $this->assertInstanceOf(Location::class, $locationObject);
+    }
+
+    public function test_location_with_invalid_address_throws_exception()
     {
       $longitude = -118.536052;
       $latitude = 34.197676;
 
-      $UUID = new UUID("domainName");
+      //object parameters
+      $UUID = new UUID('domainName');
+
       $geoLocation = new GeoLocation($longitude, $latitude);
+
       $this->expectException('App\Exceptions\LocationExceptions\AddressNotDefined');
-      $exception = new Location($UUID, $geoLocation);
+      $locationObject = Location::withAddress($UUID, $geoLocation);
     }
 }

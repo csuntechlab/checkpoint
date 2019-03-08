@@ -19,19 +19,38 @@ class Location
 
     public function __construct(
         UUID $uuid = null,
-        GeoLocation $geoLocation = null,
-        Address $address = null
+        GeoLocation $geoLocation = null
     ) {
         $this->uuid = $uuid;
-        $this->location = $geoLocation;
-        $this->address = $address;
+        $this->geoLocation = $geoLocation;
         $this->validate();
+    }
+
+    public static function withAddress(
+      UUID $uuid = null,
+      GeoLocation $geoLocation = null,
+      Address $address = null
+      )
+    {
+      $instance = new self($uuid, $geoLocation);
+      $instance->setAddress($address);
+      $instance->validateWithAddress();
+      return $instance;
+    }
+
+    protected function setAddress($address)
+    {
+      $this->address = $address;
     }
 
     private function validate()
     {
         if ($this->uuid == null || $this->uuid == '') throw new GenerateUUID5Failed();
-        if ($this->location == null) throw new GeoLocationNotDefined();
-        if ($this->address == null) throw new AddressNotDefined();
+        if ($this->geoLocation == null) throw new GeoLocationNotDefined();
+    }
+
+    private function validateWithAddress()
+    {
+        if($this->address == null || !($this->address instanceof Address)) throw new AddressNotDefined();
     }
 }
