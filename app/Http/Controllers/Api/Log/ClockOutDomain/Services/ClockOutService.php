@@ -58,8 +58,7 @@ class ClockOutService implements ClockOutContract
         
         $userLocation = $this->timePuncherRetriever->getUserLocation($user, $currentLocation);
 
-        $clockOut = $this->getLogParam($userLocation, $timeStamp);
-         
+        $clockOut = $this->getLogParam($userLocation, $timeStamp);         
         try {
             $log->clock_out = serialize($clockOut);
             $log->save();
