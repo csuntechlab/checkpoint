@@ -32,11 +32,12 @@ class TimePuncherService implements TimePuncherContract
    
          return true;
     }
-
+  
     private function verifyUserLocation($user,$currentLocation){
         $userProfile = $this->getUserProfile($user);
 
         //Try catach
+
         $userLocation = $userProfile->getProfileLocation();
 
         $this->validateLocation($userLocation,$currentLocation);

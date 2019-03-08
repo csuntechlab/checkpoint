@@ -4,17 +4,15 @@ namespace App\DomainValueObjects\Log\TimeStamp;
 
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\Location\Location;
-
-
-//Exceptions
-
+use App\Exceptions\TimePuncherExceptions\TimeStamp\GenerateTimeStampFailed;
 
 
 class TimeStamp
 {
-    private $timeStamp =  null;
+    private $timeStamp = null;
+    private $uuid = null;
 
-    public function __construct(UUID $uuid, string $timeStamp)
+    public function __construct(UUID $uuid = null, string $timeStamp = null)
     {
 
         $this->uuid = $uuid;
@@ -23,5 +21,9 @@ class TimeStamp
     }
 
     private function validation()
-    { }
+    {
+        if($this->timeStamp == null || $this->timeStamp == '') throw new GenerateTimeStampFailed();
+        
+        if($this->uuid == null) throw new GenerateTimeStampFailed();
+    }
 }

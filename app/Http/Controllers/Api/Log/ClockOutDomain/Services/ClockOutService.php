@@ -58,15 +58,13 @@ class ClockOutService implements ClockOutContract
         
         $userLocation = $this->timePuncherRetriever->getUserLocation($user, $currentLocation);
 
-        $clockOut = $this->getLogParam($userLocation, $timeStamp);
-         
+        $clockOut = $this->getLogParam($userLocation, $timeStamp);         
         try {
             $log->clock_out = serialize($clockOut);
             $log->save();
         } catch (Illuminate\Database\QueryException $e) {
             return ['message_error' => 'Clock Out was not successfully created.'];
         }
-        
         return ["message_success" => "Clock out was successfull"];  
     }
 

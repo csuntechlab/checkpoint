@@ -14,7 +14,7 @@ class ClockInController extends Controller
     {
         $this->clockInRetriever = $clockInContract;
     }
-
+  
     private function getParam($request): array
     {
         $data = array();
