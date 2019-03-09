@@ -34,13 +34,13 @@ class Location
     {
       $instance = new self($uuid, $geoLocation);
       $instance->setAddress($address);
-      $instance->validateWithAddress();
       return $instance;
     }
 
     protected function setAddress($address)
     {
       $this->address = $address;
+      $this->validateWithAddress();
     }
 
     private function validate()
