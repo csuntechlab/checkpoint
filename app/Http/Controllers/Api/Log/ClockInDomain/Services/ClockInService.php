@@ -56,7 +56,7 @@ class ClockInService implements ClockInContract
         
         return $logParam;
     }
-    
+
     public function clockIn(string $currentLocation, string $timeStamp)
     {
         $user = Auth::user();

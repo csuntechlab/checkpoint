@@ -27,7 +27,6 @@ class ClockInServiceTest extends TestCase
         $this->seed('OrgnaizationSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
-
         $this->user = \App\User::where('id', 1)->first();
         $this->actingAs($this->user);
     }

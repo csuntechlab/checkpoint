@@ -74,7 +74,7 @@ class ClockInControllerTest extends TestCase
         $method = $this->get_private_method($this->classPath, $function);
 
         $response = $method->invoke($this->controller, $request);
-
+      
         $this->assertEquals($response, $input);
         $this->assertArrayHasKey('timeStamp', $input);
         $this->assertArrayHasKey('currentLocation', $input);
