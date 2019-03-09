@@ -20,9 +20,12 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
-        "vue": "^2.6.2"
+        "vue": "^2.6.2",
+        "vue-template-compiler": "^2.6.8"
     },
     "dependencies": {
-        "metaphor-theme": "^2.0.12"
+        "metaphor-theme": "^2.0.12",
+        "vue-router": "^3.0.2",
+        "vuex": "^3.1.0"
     }
 }

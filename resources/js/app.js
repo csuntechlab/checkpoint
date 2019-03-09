@@ -18,6 +18,7 @@ const vm = new Vue({
     el: '#app',
     store,
     router,
+    axios,
     render: h => h(App),
 });
 
