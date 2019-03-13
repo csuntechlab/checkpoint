@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Api\Auth\RegisterDomain\Services;
 
 use App\User;
-use App\Organization;
+use App\UserInvitation;
 use Illuminate\Support\Facades\Hash;
 
 use App\DomainValueObjects\UUIDGenerator\UUID;
@@ -19,19 +19,10 @@ class RegisterService implements RegisterContract
 {
     private $domainName = "user";
 
-    public function register($request)
+    public function register($name, $email, $password, $inviteCode)
     {
-        try {
-            $name = (string)$request['name'];
-            $email = (string)$request['email'];
-            $password = (string)$request['password'];
-        } catch (\Exception $e) {
-            return ['message_error' => 'User was not successfully created.'];
-        }
-
-        $organizationCode = 'MetaLab';
         $uuid = new UUID($this->domainName);
-        $organizationProfile  = $this->getOrganizationProfile($organizationCode);
+        $organizationId  = $this->getOrganizationIdByUserInvitation($email, $inviteCode);
 
         $userProfile = new UserProfile($uuid, $organizationProfile);
 
@@ -49,10 +40,9 @@ class RegisterService implements RegisterContract
         return $user;
     }
 
-    private function getOrganizationProfile($organizationCode)
+    private function getOrganizationIdByUserInvitation($email, $inviteCode)
     {
-        //validate organization code 
-        $organization = Organization::where('organization_code', $organizationCode)->first();
+        $organizationId = UserInvitation::where('invite_code', $inviteCode)->first();
         $organizationProfile = unserialize($organization->organization_profile);
         return $organizationProfile;
     }

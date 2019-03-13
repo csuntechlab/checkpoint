@@ -20,7 +20,7 @@ class CreateUserInvitationsTable extends Migration
                 ->references('id')
                 ->on('organizations');
             $table->string('email')->unique();
-            $table->string('token')->unique();
+            $table->string('invite_code')->unique();
             $table->timestamps();
         });
     }
@@ -32,7 +32,7 @@ class CreateUserInvitationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(' user_invitations');
+        Schema::dropIfExists('user_invitations');
     }
 }
 
