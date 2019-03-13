@@ -1770,8 +1770,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "App",
@@ -1791,10 +1789,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -1858,35 +1852,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      organzation: '',
-      organizationRules: [function (v) {
-        return !!v || 'Organization is required';
-      }],
-      firstname: '',
-      firstnameRules: [function (v) {
-        return !!v || 'First name is required';
-      }],
-      lastname: '',
-      lastnameRules: [function (v) {
-        return !!v || 'Last name is required';
-      }],
-      email: '',
-      emailRules: [function (v) {
-        return !!v || 'E-mail is required';
-      }, function (v) {
-        return /.+@.+/.test(v) || 'E-mail must be valid';
-      }]
+      organization: "",
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      validatepassword: "",
+      address1: "",
+      address2: "",
+      city: "",
+      country: "",
+      zip: ""
     };
   },
-  name: 'SignUp'
+  name: "SignUp"
 });
 
 /***/ }),
@@ -36738,9 +36720,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-app", [
-    _c("div", [_c("Navigation"), _vm._v(" "), _c("router-view")], 1)
-  ])
+  return _c("v-app", [_c("Navigation"), _vm._v(" "), _c("router-view")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -36765,29 +36745,20 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-content",
+    "v-toolbar",
     [
+      _c("v-toolbar-title", [_vm._v("Checkpoint")]),
+      _vm._v(" "),
+      _c("v-spacer"),
+      _vm._v(" "),
       _c(
-        "v-toolbar",
+        "v-toolbar-items",
         [
-          _c("v-toolbar-side-icon"),
+          _c("v-btn", { attrs: { to: "/", flat: "" } }, [_vm._v("Login")]),
           _vm._v(" "),
-          _c("v-toolbar-title", [_vm._v("Checkpoint")]),
-          _vm._v(" "),
-          _c("v-spacer"),
-          _vm._v(" "),
-          _c(
-            "v-toolbar-items",
-            { staticClass: "hidden-sm-and-down" },
-            [
-              _c("v-btn", { attrs: { to: "/", flat: "" } }, [_vm._v("Login")]),
-              _vm._v(" "),
-              _c("v-btn", { attrs: { to: "/signup", flat: "" } }, [
-                _vm._v("Sign up")
-              ])
-            ],
-            1
-          )
+          _c("v-btn", { attrs: { to: "/signup", flat: "" } }, [
+            _vm._v("Sign up")
+          ])
         ],
         1
       )
@@ -36818,225 +36789,199 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-container",
+    "v-content",
     [
       _c(
-        "v-layout",
-        { attrs: { "align-start": "", "justify-start": "", "fill-heigh": "" } },
-        [
-          _c("v-flex", { attrs: { md12: "" } }, [_c("h1", [_vm._v("Sign Up")])])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-layout",
-        { attrs: { "align-start": "", "justify-start": "", "fill-heigh": "" } },
+        "v-container",
         [
           _c(
-            "v-flex",
-            { attrs: { md: "" } },
+            "v-layout",
+            {
+              attrs: {
+                "align-start": "",
+                "justify-start": "",
+                "fill-heigh": ""
+              }
+            },
+            [
+              _c("v-flex", { attrs: { md12: "" } }, [
+                _c("h1", [_vm._v("Sign Up")])
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
             [
               _c(
-                "v-form",
-                {
-                  ref: "form",
-                  attrs: { "lazy-validation": "" },
-                  model: {
-                    value: _vm.valid,
-                    callback: function($$v) {
-                      _vm.valid = $$v
-                    },
-                    expression: "valid"
-                  }
-                },
+                "v-flex",
+                { attrs: { "pa-1": "", grow: "" } },
                 [
-                  _c("v-text-field", {
-                    attrs: {
-                      rules: _vm.organizationRules,
-                      label: "Organization Name",
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.organization,
-                      callback: function($$v) {
-                        _vm.organization = $$v
-                      },
-                      expression: "organization"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: {
-                      rules: _vm.firstnameRules,
-                      label: "First Name",
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.firstname,
-                      callback: function($$v) {
-                        _vm.firstname = $$v
-                      },
-                      expression: "firstname"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: {
-                      rules: _vm.lastnameRules,
-                      label: "Last Name",
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.lastname,
-                      callback: function($$v) {
-                        _vm.lastname = $$v
-                      },
-                      expression: "lastname"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: {
-                      rules: _vm.emailRules,
-                      label: "E-mail",
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.email,
-                      callback: function($$v) {
-                        _vm.email = $$v
-                      },
-                      expression: "email"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: {
-                      type: "password",
-                      label: "Password",
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.password,
-                      callback: function($$v) {
-                        _vm.password = $$v
-                      },
-                      expression: "password"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: {
-                      type: "password",
-                      label: "Re-Type Password",
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.validatepassword,
-                      callback: function($$v) {
-                        _vm.validatepassword = $$v
-                      },
-                      expression: "validatepassword"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: { label: "Address 1" },
-                    model: {
-                      value: _vm.address1,
-                      callback: function($$v) {
-                        _vm.address1 = $$v
-                      },
-                      expression: "address1"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: { label: "Address 2" },
-                    model: {
-                      value: _vm.address2,
-                      callback: function($$v) {
-                        _vm.address2 = $$v
-                      },
-                      expression: "address2"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: { label: "City" },
-                    model: {
-                      value: _vm.city,
-                      callback: function($$v) {
-                        _vm.city = $$v
-                      },
-                      expression: "city"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: { label: "Country" },
-                    model: {
-                      value: _vm.Country,
-                      callback: function($$v) {
-                        _vm.Country = $$v
-                      },
-                      expression: "Country"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: { label: "Zip Code" },
-                    model: {
-                      value: _vm.zip,
-                      callback: function($$v) {
-                        _vm.zip = $$v
-                      },
-                      expression: "zip"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-checkbox", {
-                    attrs: {
-                      rules: [
-                        function(v) {
-                          return !!v || "You must agree to continue!"
+                  _c(
+                    "v-form",
+                    { ref: "form" },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "Organization Name", required: "" },
+                        model: {
+                          value: _vm.organization,
+                          callback: function($$v) {
+                            _vm.organization = $$v
+                          },
+                          expression: "organization"
                         }
-                      ],
-                      label: "Do you agree?",
-                      required: ""
-                    },
-                    model: {
-                      value: _vm.checkbox,
-                      callback: function($$v) {
-                        _vm.checkbox = $$v
-                      },
-                      expression: "checkbox"
-                    }
-                  }),
-                  _vm._v(" "),
+                      }),
+                      _vm._v(" "),
+                      _c("v-text-field", {
+                        attrs: { label: "First Name", required: "" },
+                        model: {
+                          value: _vm.firstname,
+                          callback: function($$v) {
+                            _vm.firstname = $$v
+                          },
+                          expression: "firstname"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-text-field", {
+                        attrs: { label: "Last Name", required: "" },
+                        model: {
+                          value: _vm.lastname,
+                          callback: function($$v) {
+                            _vm.lastname = $$v
+                          },
+                          expression: "lastname"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-text-field", {
+                        attrs: {
+                          label: "E-mail (This will be your username)",
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.email,
+                          callback: function($$v) {
+                            _vm.email = $$v
+                          },
+                          expression: "email"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-text-field", {
+                        attrs: {
+                          type: "password",
+                          label: "Password",
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.password,
+                          callback: function($$v) {
+                            _vm.password = $$v
+                          },
+                          expression: "password"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-text-field", {
+                        attrs: {
+                          type: "password",
+                          label: "Re-Type Password",
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.validatepassword,
+                          callback: function($$v) {
+                            _vm.validatepassword = $$v
+                          },
+                          expression: "validatepassword"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-text-field", {
+                        attrs: { label: "Address 1" },
+                        model: {
+                          value: _vm.address1,
+                          callback: function($$v) {
+                            _vm.address1 = $$v
+                          },
+                          expression: "address1"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-text-field", {
+                        attrs: { label: "Address 2" },
+                        model: {
+                          value: _vm.address2,
+                          callback: function($$v) {
+                            _vm.address2 = $$v
+                          },
+                          expression: "address2"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-text-field", {
+                        attrs: { label: "City" },
+                        model: {
+                          value: _vm.city,
+                          callback: function($$v) {
+                            _vm.city = $$v
+                          },
+                          expression: "city"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-text-field", {
+                        attrs: { label: "Country" },
+                        model: {
+                          value: _vm.country,
+                          callback: function($$v) {
+                            _vm.country = $$v
+                          },
+                          expression: "country"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-text-field", {
+                        attrs: { label: "Zip Code" },
+                        model: {
+                          value: _vm.zip,
+                          callback: function($$v) {
+                            _vm.zip = $$v
+                          },
+                          expression: "zip"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-btn", { attrs: { color: "primary" } }, [
+                        _vm._v("Submit")
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                { attrs: { "pa-1": "", shrink: "" } },
+                [
                   _c(
                     "v-btn",
                     {
-                      attrs: { disabled: !_vm.valid, color: "success" },
-                      on: { click: _vm.validate }
+                      staticClass: "white--text",
+                      attrs: { color: "blue-grey" }
                     },
-                    [_vm._v("Validate")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    { attrs: { color: "error" }, on: { click: _vm.reset } },
-                    [_vm._v("Reset Form")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "warning" },
-                      on: { click: _vm.resetValidation }
-                    },
-                    [_vm._v("Reset Validation")]
+                    [
+                      _vm._v("Upload Logo\n          "),
+                      _c("v-icon", { attrs: { right: "", dark: "" } }, [
+                        _vm._v("cloud_upload")
+                      ])
+                    ],
+                    1
                   )
                 ],
                 1
