@@ -19,7 +19,8 @@ class CreateTimeSheetsTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
-            $table->text('time_frame_id');
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
             $table->text('completed_time_sheet')->nullable();
             $table->timestamps();
         });
