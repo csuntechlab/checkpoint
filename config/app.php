@@ -187,16 +187,16 @@ return [
         /** Register Domain Service provider */
         App\Providers\ApiProviders\Auth\RegiserServiceProvider::class,
 
-        /*********** Log Service Providers **************/
+        /*********** TimeLog Service Providers **************/
 
         /** ClockIn Service Provider */
-        App\Providers\ApiProviders\Log\ClockInServiceProvider::class,
+        App\Providers\ApiProviders\TimeLog\ClockInServiceProvider::class,
 
         /** ClockOut Service Provider */
-        App\Providers\ApiProviders\Log\ClockOutServiceProvider::class,
+        App\Providers\ApiProviders\TimeLog\ClockOutServiceProvider::class,
 
         /** TimePuncher Service Provider */
-        App\Providers\ApiProviders\Log\TimePuncherServiceProvider::class,
+        App\Providers\ApiProviders\TimeLog\TimePuncherServiceProvider::class,
 
 
 
