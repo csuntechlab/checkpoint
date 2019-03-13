@@ -14,8 +14,8 @@ use Illuminate\Http\Request;
 use \App\User;
 
 //Contracts 
-use \App\Http\Controllers\Api\Log\ClockOutDomain\ClockOutController;
-use \App\Http\Controllers\Api\Log\ClockOutDomain\Contracts\ClockOutContract;
+use \App\Http\Controllers\Api\TimeLog\ClockOutDomain\ClockOutController;
+use \App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutContract;
 
 class ClockOutControllerTest extends TestCase
 {
@@ -23,7 +23,7 @@ class ClockOutControllerTest extends TestCase
     private $controller;
     private $retriever;
 
-    private $classPath = '\App\Http\Controllers\Api\Log\ClockOutDomain\ClockOutController';
+    private $classPath = '\App\Http\Controllers\Api\TimeLog\ClockOutDomain\ClockOutController';
 
     public function setUp()
     {

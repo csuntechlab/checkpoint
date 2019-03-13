@@ -8,15 +8,15 @@ use Mockery;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-use App\Http\Controllers\Api\Log\TimePuncher\Contracts\TimePuncherContract;
-use App\Http\Controllers\Api\Log\ClockInDomain\Services\ClockInService;
+use App\Http\Controllers\Api\TimeLog\TimePuncher\Contracts\TimePuncherContract;
+use App\Http\Controllers\Api\TimeLog\ClockInDomain\Services\ClockInService;
 
 class ClockInServiceTest extends TestCase
 {
     use DatabaseMigrations;
     private $retriever;
     private $service;
-    private $classPath = 'App\Http\Controllers\Api\Log\ClockInDomain\Services\ClockInService';
+    private $classPath = 'App\Http\Controllers\Api\TimeLog\ClockInDomain\Services\ClockInService';
     private $user;
 
     public function setUp()
@@ -64,20 +64,20 @@ class ClockInServiceTest extends TestCase
 
         $timeStamp =  "2019-02-01 06:30:44";
 
-        $function = 'getLogParam';
+        $function = 'getTimeLogParam';
 
         $method = $this->get_private_method($this->classPath, $function);
 
         $response = $method->invoke($this->service, $userLocation, $timeStamp);
 
         $this->assertInstanceOf('App\DomainValueObjects\UUIDGenerator\UUID', $response['uuid']);
-        $this->assertInstanceOf('App\DomainValueObjects\Log\ClockIn\ClockIn', $response['clockIn']);
-        $this->assertInstanceOf('App\DomainValueObjects\Log\TimeStamp\TimeStamp', $response['timeStamp']);
+        $this->assertInstanceOf('App\DomainValueObjects\TimeLog\ClockIn\ClockIn', $response['clockIn']);
+        $this->assertInstanceOf('App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp', $response['timeStamp']);
     }
 
     public function test_verify_user_has_not_yet_logged()
     {
-        $function = 'verifyUserHasNotYetLogged';
+        $function = 'verifyUserHasNotYetTimeLogged';
 
         $method = $this->get_private_method($this->classPath, $function);
 

@@ -8,13 +8,13 @@ use Mockery;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-use App\Http\Controllers\Api\Log\TimePuncher\Services\TimePuncherService;
+use App\Http\Controllers\Api\TimeLog\TimePuncher\Services\TimePuncherService;
 
 class TimePuncherServiceTest extends TestCase
 {
     use DatabaseMigrations;
     private $service;
-    private $classPath = 'App\Http\Controllers\Api\Log\TimePuncher\Services\TimePuncherService';
+    private $classPath = 'App\Http\Controllers\Api\TimeLog\TimePuncher\Services\TimePuncherService';
     private $user;
 
     public function setUp()

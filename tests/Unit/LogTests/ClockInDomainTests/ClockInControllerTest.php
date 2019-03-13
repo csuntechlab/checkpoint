@@ -14,8 +14,8 @@ use Illuminate\Http\Request;
 use \App\User;
 
 //Contracts 
-use \App\Http\Controllers\Api\Log\ClockInDomain\ClockInController;
-use \App\Http\Controllers\Api\Log\ClockInDomain\Contracts\ClockInContract;
+use \App\Http\Controllers\Api\TimeLog\ClockInDomain\ClockInController;
+use \App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;
 
 class ClockInControllerTest extends TestCase
 {
@@ -23,7 +23,7 @@ class ClockInControllerTest extends TestCase
     private $controller;
     private $retriever;
 
-    private $classPath = '\App\Http\Controllers\Api\Log\ClockInDomain\ClockInController';
+    private $classPath = '\App\Http\Controllers\Api\TimeLog\ClockInDomain\ClockInController';
 
     public function setUp()
     {
@@ -74,7 +74,7 @@ class ClockInControllerTest extends TestCase
         $method = $this->get_private_method($this->classPath, $function);
 
         $response = $method->invoke($this->controller, $request);
-      
+
         $this->assertEquals($response, $input);
         $this->assertArrayHasKey('timeStamp', $input);
         $this->assertArrayHasKey('currentLocation', $input);
