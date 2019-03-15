@@ -1,5 +1,12 @@
 <?php
 
+use App\User;
+use App\TimeSheets;
+use App\DomainValueObjects\UUIDGenerator\UUID;
+use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
+use App\DomainValueObjects\TimeLog\ClockOut\ClockOut;
+use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
+
 use Faker\Generator as Faker;
 
 $factory->define(App\TimeLog::class, function (Faker $faker) {
@@ -14,11 +21,8 @@ $factory->define(App\TimeLog::class, function (Faker $faker) {
     $timeStamp =  "2019-02-01 09:30:44";
     $timeStampClockOut = new TimeStamp(new UUID('timeStamp'), $timeStamp);
 
-    $userProfile = unserialize($user->user_profile);
-    $userLocation = $userProfile->getProfileLocation();
-
-    $clockIn = new ClockIn(new UUID('clockIn'), $timeStampClockIn, $userLocation);
-    $clockOut = new ClockOut(new UUID('clockOut'), $timeStampClockOut, $userLocation);
+    $clockIn = new ClockIn(new UUID('clockIn'), $timeStampClockIn);
+    $clockOut = new ClockOut(new UUID('clockOut'), $timeStampClockOut);
 
     return [
         'id' => $uuid->toString,

@@ -60,22 +60,18 @@ class ClockOutServiceTest extends TestCase
 
     public function test_get_log_param()
     {
-        $userProfile = unserialize($this->user->user_profile);
-
-        $userLocation = $userProfile->getProfileLocation();
-
         $timeStamp =  "2019-02-01 06:30:44";
 
-        $function = 'getTimeLogParam';
+        $function = 'getClockOut';
 
         $method = $this->get_private_method($this->classPath, $function);
 
-        $response = $method->invoke($this->service, $userLocation, $timeStamp);
+        $response = $method->invoke($this->service, $timeStamp);
 
         $this->assertInstanceOf('App\DomainValueObjects\TimeLog\ClockOut\ClockOut', $response);
     }
 
-    public function test_get_log()
+    public function test_get_time_log()
     {
         $expectedResponse = factory(TimeLog::class)->create();
         $expectedResponse->clock_out = null;
@@ -85,7 +81,7 @@ class ClockOutServiceTest extends TestCase
 
         $method = $this->get_private_method($this->classPath, $function);
 
-        $response = $method->invoke($this->service, $expectedResponse->id);
+        $response = $method->invoke($this->service, $this->user, $expectedResponse->id);
 
         $responseId = $response->id;
         $responseUserId = $response->user_id;
@@ -118,7 +114,7 @@ class ClockOutServiceTest extends TestCase
 
         $method = $this->get_private_method($this->classPath, $function);
 
-        $method->invoke($this->service, 'wrong_uuid');
+        $method->invoke($this->service, $this->user, 'wrong_uuid');
     }
 
     public function test_get_log_fails_log_is_not_null()
@@ -132,6 +128,7 @@ class ClockOutServiceTest extends TestCase
 
         $method = $this->get_private_method($this->classPath, $function);
 
-        $response = $method->invoke($this->service, $expectedResponse->id);
+        $response = $method->invoke($this->service, $this->user, $expectedResponse->id);
+        dd($response);
     }
 }

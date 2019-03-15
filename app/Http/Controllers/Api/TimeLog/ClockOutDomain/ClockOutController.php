@@ -19,8 +19,6 @@ class ClockOutController extends Controller
     {
         $data = array();
 
-        $data['currentLocation'] = (string)$request['currentLocation'];
-
         $data['timeStamp'] = (string)$request['timeStamp'];
 
         $data['logUuid'] = $request['logUuid'];
@@ -33,6 +31,6 @@ class ClockOutController extends Controller
     {
         $data = $this->getParam($request);
 
-        return $this->clockOutRetriever->clockOut($data['currentLocation'], $data['timeStamp'], $data['logUuid']);
+        return $this->clockOutRetriever->clockOut($data['timeStamp'], $data['logUuid']);
     }
 }

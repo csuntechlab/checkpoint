@@ -66,7 +66,7 @@ class ClockInControllerTest extends TestCase
      */
     public function test_get_param()
     {
-        $input = ["timeStamp" => "2019-02-01 06:30:44", "currentLocation" => "blob"];
+        $input = ["timeStamp" => "2019-02-01 06:30:44"];
         $request = new Request($input);
 
         $function = 'getParam';
@@ -77,7 +77,6 @@ class ClockInControllerTest extends TestCase
 
         $this->assertEquals($response, $input);
         $this->assertArrayHasKey('timeStamp', $input);
-        $this->assertArrayHasKey('currentLocation', $input);
         $this->assertInternalType('array', $response);
     }
 }

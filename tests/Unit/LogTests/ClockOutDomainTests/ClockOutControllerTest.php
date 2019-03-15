@@ -58,7 +58,7 @@ class ClockOutControllerTest extends TestCase
      */
     public function test_get_param()
     {
-        $data = ["timeStamp" => "2019-02-01 06:30:44", "currentLocation" => "blob", "logUuid" => "uuid"];
+        $data = ["timeStamp" => "2019-02-01 06:30:44", "logUuid" => "uuid"];
         $request = new Request($data);
 
         $function = 'getParam';
@@ -69,7 +69,6 @@ class ClockOutControllerTest extends TestCase
 
         $this->assertEquals($response, $data);
         $this->assertArrayHasKey('timeStamp', $data);
-        $this->assertArrayHasKey('currentLocation', $data);
         $this->assertInternalType('array', $response);
     }
 }

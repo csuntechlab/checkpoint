@@ -24,11 +24,6 @@ class ClockOutService implements ClockOutContract
 
     protected $timePuncherRetriever;
 
-    public function __construct(TimePuncherContract $timePuncherContract)
-    {
-        $this->timePuncherRetriever = $timePuncherContract;
-    }
-
     private function getTimeLog($user, $logUuid){
         
         $log = TimeLog::where('id', $logUuid)->first();
