@@ -191,6 +191,7 @@ return [
 
         /** ClockIn Service Provider */
         App\Providers\ApiProviders\TimeLog\ClockInServiceProvider::class,
+        App\Providers\ApiProviders\TimeLog\ClockInLogicServiceProvider::class,
 
         /** ClockOut Service Provider */
         App\Providers\ApiProviders\TimeLog\ClockOutServiceProvider::class,

@@ -6,9 +6,9 @@ use function Opis\Closure\serialize;
 // Auth
 use Illuminate\Support\Facades\Auth;
 
+//Models
+use App\TimeLog;
 
-//Exception
-use App\Exceptions\TimePuncherExceptions\ClockIn\AlreadyClockedIn;
 // Contracts
 use App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;
 use App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInLogicContract;

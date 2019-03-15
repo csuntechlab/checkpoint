@@ -1,38 +1,39 @@
 <?php 
 namespace App\Http\Controllers\api\TimeLog\ClockInDomain\Services;
 
-
-
-
-
 // DomainValue Objects
 
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
 use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
+
 // TB Models
-use App\TimeLog;
 use App\TimeSheets;
 
 //Exceptions
+use App\Exceptions\TimePuncherExceptions\ClockIn\AlreadyClockedIn;
 use App\Exceptions\TimeSheetExceptions\TimeSheetNotFound;
+use App\Exceptions\GeneralExceptions\DataBaseQueryFailed;
+use App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInLogicContract;
 
-
-
-class ClockLogicService implements ClockInLogicContract
+class ClockInLogicService implements ClockInLogicContract
 {
 
     private $domainName = "TimeLog";
 
-    //TODO: hard code fix
+    //TODO: hard Code fix
     public function verifyUserHasNotYetTimeLogged($userId)
     {
         $userId = 1;
 
-        // add try catch
-        $hasUserTimeLogged = TimeLog::where('user_id', $userId)->where('clock_out', null)->get();
+        try {
+            $hasUserTimeLogged = \App\TimeLog::where('user_id', $userId)->where('clock_out', null)->get();
+        } catch (Illuminate\Database\QueryException $e) {
+            $subject = 'TimeLog ';
+            throw new DataBaseQueryFailed($subject);
+        }
 
-        if ($hasUserTimeLogged->count() != 0 || $hasUserTimeLogged == null) {
+        if ($hasUserTimeLogged->count() != 0) {
             throw new AlreadyClockedIn();
         }
 
@@ -54,7 +55,7 @@ class ClockLogicService implements ClockInLogicContract
         return $logParam;
     }
 
-    //TODO hard Code fix
+    //TODO: hard Code fix
     private function getTimeSheetId($user)
     {
         $userId = 1;
@@ -62,10 +63,11 @@ class ClockLogicService implements ClockInLogicContract
         try {
             $timeSheet = TimeSheets::where('user_id', $userId)->first();
         } catch (Illuminate\Database\QueryException $e) {
-            throw new TimeSheetNotFound();
+            $subject = 'Time Sheet ';
+            throw new DataBaseQueryFailed($subject);
         }
 
-        if ($timeSheet->count() != 0 || $timeSheet == null) {
+        if ($timeSheet == null || $timeSheet->count() == 0) {
             throw new TimeSheetNotFound();
         }
 
