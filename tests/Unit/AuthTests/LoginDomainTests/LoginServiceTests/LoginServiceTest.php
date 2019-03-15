@@ -34,7 +34,8 @@ class LoginServiceTest extends TestCase
      */
     public function test_login_service_with_mockery()
     {
-        $input = ["username" => "tes3t@email.com", "password" => "tes3t@email.com"];
+        $username = "tes3t@email.com";
+        $password = "tes3t@email.com";
 
         $expectedResponse = [
             "token_type" => "Bearer", "expires_in" => 31536000, "access_token" => "serializedToken", "refresh_token" => "serializedToken"
@@ -42,10 +43,10 @@ class LoginServiceTest extends TestCase
 
         $this->service
             ->shouldReceive('login')
-            ->with($input)
+            ->with($username, $password)
             ->once()->andReturn($expectedResponse);
 
-        $response = $this->service->login($input);
+        $response = $this->service->login($username, $password);
 
         $this->assertEquals($expectedResponse, $response);
     }

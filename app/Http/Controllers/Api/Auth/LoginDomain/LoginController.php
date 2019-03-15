@@ -16,8 +16,19 @@ class LoginController extends Controller
         $this->loginRetriever = $loginContract;
     }
 
-    public function login(LoginLogoutRequest $request)
+    private function getParam($request): array
     {
-        return $this->loginRetriever->login($request);
+        $data = array();
+        $data['username'] =  $request->username;
+        $data['password'] = $request->password;
+        return $data;
+    }
+
+
+    public function login(Request $request)
+    {
+        $data = $this->getParam($request);
+
+        return $this->loginRetriever->login($data['username'], $data['password']);
     }
 }

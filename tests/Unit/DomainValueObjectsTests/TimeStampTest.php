@@ -3,7 +3,7 @@
 namespace Tests\Unit\DomainValueObjectsTests;
 
 use Tests\TestCase;
-use \App\DomainValueObjects\Log\TimeStamp\TimeStamp;
+use \App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 use \App\Excetptions\TimePuncherExceptions\TimeStamp\GenerateTimeStampFailed;
 use \App\DomainValueObjects\UUIDGenerator\UUID;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -21,7 +21,7 @@ class TimeStampTest extends TestCase
 
     public function test_Invalid_timeStamp_throws_exception()
     {
-      $this->expectException('App\Exceptions\TimePuncherExceptions\TimeStamp\GenerateTimeStampFailed');
-      $exception = new TimeStamp();
+        $this->expectException('App\Exceptions\TimePuncherExceptions\TimeStamp\GenerateTimeStampFailed');
+        $exception = new TimeStamp();
     }
 }

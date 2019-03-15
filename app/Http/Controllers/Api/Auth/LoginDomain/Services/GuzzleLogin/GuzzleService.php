@@ -1,7 +1,7 @@
 <?php 
 namespace App\Http\Controllers\Api\Auth\LoginDomain\Services\GuzzleLogin;
 
-use \GuzzleHttp\Client as Guzzle;
+use \GuzzleHttp\Client as HttpClient;
 
 class GuzzleService
 {
@@ -9,7 +9,7 @@ class GuzzleService
     protected $http;
     protected $loginParam;
 
-    public function __construct(Guzzle $http, LoginGuzzleParam $loginParam)
+    public function __construct(HttpClient $http, LoginGuzzleParam $loginParam)
     {
         $this->http = $http;
         $this->loginParam = $loginParam;

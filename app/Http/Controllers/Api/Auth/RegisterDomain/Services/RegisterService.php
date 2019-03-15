@@ -2,58 +2,44 @@
 namespace App\Http\Controllers\Api\Auth\RegisterDomain\Services;
 
 use App\User;
-use App\Organization;
+use App\UserInvitation;
 use Illuminate\Support\Facades\Hash;
 
-use App\DomainValueObjects\UUIDGenerator\UUID;
-use App\DomainValueObjects\UserProfile\UserProfile;
-use App\DomainValueObjects\Organization\OrganizationCode\OrganizationCode;
+use App\Exceptions\AuthExceptions\UserCreatedFailed;
 
 
 use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
-use function Opis\Closure\unserialize;
-use function Opis\Closure\serialize;
 
 
 class RegisterService implements RegisterContract
 {
-    private $domainName = "user";
-
-    public function register($request)
+    public function register($name, $email, $password, $inviteCode)
     {
-        try {
-            $name = (string)$request['name'];
-            $email = (string)$request['email'];
-            $password = (string)$request['password'];
-        } catch (\Exception $e) {
-            return ['message_error' => 'User was not successfully created.'];
-        }
-
-        $organizationCode = 'MetaLab';
-        $uuid = new UUID($this->domainName);
-        $organizationProfile  = $this->getOrganizationProfile($organizationCode);
-
-        $userProfile = new UserProfile($uuid, $organizationProfile);
+        $organizationId  = $this->getOrganizationIdByUserInvitation($email, $inviteCode);
 
         try {
             $user = User::create([
                 'name' => $name,
                 'email' => $email,
                 'password' => Hash::make($password),
-                'user_profile' => serialize($userProfile)
+                'organization_id' => $organizationId
             ]);
-        } catch (Illuminate\Database\QueryException $e) {
-            return ['message_error' => 'User was not successfully created.'];
+        } catch (\Exception $e) {
+            throw new UserCreatedFailed();
         }
 
         return $user;
     }
 
-    private function getOrganizationProfile($organizationCode)
+
+
+    private function getOrganizationIdByUserInvitation($email, $inviteCode)
     {
-        //validate organization code 
-        $organization = Organization::where('organization_code', $organizationCode)->first();
-        $organizationProfile = unserialize($organization->organization_profile);
-        return $organizationProfile;
+        $organizationId = UserInvitation::where('email', $email)->where('invite_code', $inviteCode)->first();
+
+        //TODO HardCode
+        $organizationId = \App\Organization::first();
+
+        return $organizationId->id;
     }
 }

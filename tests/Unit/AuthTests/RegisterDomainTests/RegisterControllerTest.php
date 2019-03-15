@@ -17,6 +17,7 @@ class RegisterControllerTest extends TestCase
     use DatabaseMigrations;
     private $controller;
     private $retriever;
+    private $classPath = "\App\Http\Controllers\Api\Auth\RegisterDomain\RegisterController";
 
     public function setUp()
     {
@@ -26,6 +27,43 @@ class RegisterControllerTest extends TestCase
         $this->seed('OrgnaizationSeeder');
     }
 
+    /**
+     * A Mockery Test for get_param in ClockIn Contoller
+     *
+     * @return array
+     */
+    public function test_get_param()
+    {
+        $input = [
+            "name" => "tes3t@email.com",
+            "email" => "tes3t@email.com",
+            "password" => "tes3t@email.com",
+            "password_confirmation" => "tes3t@email.com",
+            "invite_code" => "000-000"
+        ];
+
+        $expectedResponse = [
+            "name" => "tes3t@email.com",
+            "email" => "tes3t@email.com",
+            "password" => "tes3t@email.com",
+            "invite_code" => "000-000"
+        ];
+
+        $request = new Request($input);
+
+        $function = 'getParam';
+
+        $method = $this->get_private_method($this->classPath, $function);
+
+        $response = $method->invoke($this->controller, $request);
+
+        $this->assertEquals($response, $expectedResponse);
+        $this->assertArrayHasKey('name', $expectedResponse);
+        $this->assertArrayHasKey('email', $expectedResponse);
+        $this->assertArrayHasKey('password', $expectedResponse);
+        $this->assertArrayHasKey('password', $expectedResponse);
+        $this->assertArrayHasKey('invite_code', $response);
+    }
 
     /**
      * A Mockery Test for Register Contoller
@@ -34,23 +72,20 @@ class RegisterControllerTest extends TestCase
      */
     public function test_register_controller_with_mockery()
     {
-        $input = [
-            "name" => "tes3t@email.com",
-            "email" => "tes3t@email.com",
-            "password" => "tes3t@email.com",
-            "password_confirmation" => "tes3t@email.com"
-        ];
 
-        $request = new Request($input);
+        $name = "tes3t@email.com";
+        $email = "tes3t@email.com";
+        $password = "tes3t@email.com";
+        $inviteCode = "000-000";
 
         $expectedResponse = [];
 
         $this->retriever
             ->shouldReceive('register')
-            ->with($request)
+            ->with($name, $email, $password, $inviteCode)
             ->once()->andReturn($expectedResponse);
 
-        $response = $this->retriever->register($request);
+        $response = $this->retriever->register($name, $email, $password, $inviteCode);
 
         $this->assertEquals($expectedResponse, $response);
     }
