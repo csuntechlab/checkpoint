@@ -63,7 +63,9 @@ class ClockInService implements ClockInContract
         
         $this->verifyUserHasNotYetTimeLogged($user->id);
         
-        $userInfo = $this->timePuncherRetriever-> getUserLocationAndUserTimeSheetId($user, $currentLocation);
+        $userInfo = $this->timePuncherRetriever->getUserLocationAndUserTimeSheetId($user, $currentLocation);
+
+        dd($userInfo);
         
         $logParam = $this->getTimeLogParam($userInfo[ 'location'], $timeStamp);
 

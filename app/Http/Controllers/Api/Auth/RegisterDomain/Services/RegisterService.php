@@ -38,8 +38,8 @@ class RegisterService implements RegisterContract
         $organizationId = UserInvitation::where('email', $email)->where('invite_code', $inviteCode)->first();
 
         //TODO HardCode
-        $organizationId = "000-000";
+        $organizationId = \App\Organization::first();
 
-        return $organizationId;
+        return $organizationId->id;
     }
 }
