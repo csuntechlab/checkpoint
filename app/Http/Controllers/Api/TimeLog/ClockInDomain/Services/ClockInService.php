@@ -5,77 +5,30 @@ use function Opis\Closure\serialize;
 
 // Auth
 use Illuminate\Support\Facades\Auth;
-// DomainValue Objects
-use App\DomainValueObjects\UUIDGenerator\UUID;
-use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
-use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
-// TB Models
-use App\TimeLog;
-use App\TimeSheets;
+
 
 //Exception
 use App\Exceptions\TimePuncherExceptions\ClockIn\AlreadyClockedIn;
 // Contracts
 use App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;
-use App\Http\Controllers\Api\TimeLog\TimePuncher\Contracts\TimePuncherContract;
+use App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInLogicContract;
 
 class ClockInService implements ClockInContract
 {
-    private $domainName = "TimeLog";
+    protected $clockInLogic;
 
-    protected $timePuncherRetriever;
-
-    public function __construct(TimePuncherContract $timePuncherContract)
+    public function __construct(ClockInLogicContract $clockInLogic)
     {
-        $this->timePuncherRetriever = $timePuncherContract;
-    }
-
-    //TODO: hard code fix
-    private function verifyUserHasNotYetTimeLogged($userId)
-    {
-        $userId = 1;
-        
-        $hasUserTimeLogged = TimeLog::where('user_id', $userId)->where('clock_out',null)->get();
-        
-        if($hasUserTimeLogged->count()!=0 || $hasUserTimeLogged == null){
-            throw new AlreadyClockedIn();
-        }
-        
-        return true;
-    }
-
-    //TODO hard Code fix
-    private function getTimeSheetId($user)
-    {
-        $userId = 1;
-        //add try catch
-        $timeSheet = TimeSheets::where('user_id', $userId)->first();
-        
-        return $timeSheet->id;
-    }
-
-    private function getTimeLogParam($user,$timeStamp): array
-    {
-        $logParam = array();
-
-        $logParam['timeSheetId'] = $this->getTimeSheetId($user);
-        
-        $logParam['uuid'] = new UUID($this->domainName);
-
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
-        
-        $logParam['clockIn'] = new ClockIn(new UUID('clockIn'), $timeStamp);
-        
-        return $logParam;
+        $this->clockInLogic = $clockInLogic;
     }
 
     public function clockIn(string $timeStamp)
     {
         $user = Auth::user();
+
+        $this->clockInLogic->verifyUserHasNotYetTimeLogged($user->id);
         
-        $this->verifyUserHasNotYetTimeLogged($user->id);
-        
-        $logParam = $this->getTimeLogParam($user, $timeStamp);
+        $logParam = $this->clockInLogic->getTimeLogParam($user, $timeStamp);
 
         $uuid = $logParam['uuid']->toString;
 

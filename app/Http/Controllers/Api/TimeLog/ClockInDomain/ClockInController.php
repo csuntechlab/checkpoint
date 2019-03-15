@@ -18,13 +18,16 @@ class ClockInController extends Controller
     private function getParam($request): array
     {
         $data = array();
+
         $data['timeStamp'] = (string)$request['timeStamp'];
+
         return $data;
     }
 
     public function clockIn(Request $request)
     {
         $data = $this->getParam($request);
+
         return $this->clockInRetriever->clockIn($data['timeStamp']);
     }
 }
