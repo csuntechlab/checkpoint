@@ -13,7 +13,7 @@ class RegisterRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -33,10 +33,10 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
-          'name.required' => 'Name is required!',
-          'body.required' => 'Email is required!',
-          'password.required' => 'Password is required!',
-          'password.min' => 'Password must be 6 characters long!'
-        ]
+            'name.required' => 'Name is required!',
+            'body.required' => 'Email is required!',
+            'password.required' => 'Password is required!',
+            'password.min' => 'Password must be 6 characters long!'
+        ];
     }
 }
