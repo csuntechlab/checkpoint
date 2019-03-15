@@ -16,8 +16,8 @@ use App\DomainValueObjects\TimeLog\TimePuncher;
 class ClockOut extends TimePuncher
 {
 
-    public function __construct(UUID $uuid, TimeStamp $timeStamp, Location $location)
+    public function __construct(UUID $uuid, TimeStamp $timeStamp)
     {
-        parent::__construct($uuid, $timeStamp, $location);
+        parent::__construct($uuid, $timeStamp);
     }
 }

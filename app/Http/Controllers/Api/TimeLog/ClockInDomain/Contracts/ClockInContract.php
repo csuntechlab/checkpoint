@@ -3,5 +3,5 @@ namespace App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts;
 
 interface ClockInContract
 {
-    public function clockIn(string $currentLocation, string $timeStamp);
+    public function clockIn(string $timeStamp);
 }

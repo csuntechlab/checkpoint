@@ -56,11 +56,19 @@ class ClockInServiceTest extends TestCase
         $this->assertEquals($expectedResponse, $response);
     }
 
-    public function test_get_log_param()
+    public function test_get_time_sheet_id()
     {
-        $userProfile = unserialize($this->user->user_profile);
+        $function = 'getTimeSheetId';
 
-        $userLocation = $userProfile->getProfileLocation();
+        $method = $this->get_private_method($this->classPath, $function);
+
+        $response = $method->invoke($this->service, $this->user);
+
+        $this->assertInternalType('string', $response);
+    }
+
+    public function test_get_time_log_param()
+    {
 
         $timeStamp =  "2019-02-01 06:30:44";
 
@@ -68,11 +76,13 @@ class ClockInServiceTest extends TestCase
 
         $method = $this->get_private_method($this->classPath, $function);
 
-        $response = $method->invoke($this->service, $userLocation, $timeStamp);
+        $response = $method->invoke($this->service, $this->user, $timeStamp);
 
+        $this->assertArrayHasKey('clockIn', $response);
+        $this->assertArrayHasKey('uuid', $response);
+        $this->assertArrayHasKey('timeSheetId', $response);
         $this->assertInstanceOf('App\DomainValueObjects\UUIDGenerator\UUID', $response['uuid']);
         $this->assertInstanceOf('App\DomainValueObjects\TimeLog\ClockIn\ClockIn', $response['clockIn']);
-        $this->assertInstanceOf('App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp', $response['timeStamp']);
     }
 
     public function test_verify_user_has_not_yet_logged()

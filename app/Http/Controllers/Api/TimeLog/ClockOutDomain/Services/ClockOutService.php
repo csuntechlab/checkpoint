@@ -29,7 +29,8 @@ class ClockOutService implements ClockOutContract
         $this->timePuncherRetriever = $timePuncherContract;
     }
 
-    private function getTimeLog($logUuid){
+    private function getTimeLog($user, $logUuid){
+        
         $log = TimeLog::where('id', $logUuid)->first();
 
         if ($log == null) throw new AlreadyClockedOut();
@@ -39,26 +40,25 @@ class ClockOutService implements ClockOutContract
         return $log;
     }
 
-    private function getTimeLogParam($userLocation,$timeStamp)
-    {
+    private function getClockOut($timeStamp)
+    {   
+        $clockOutUUid = new UUID($this->domainName);
+        
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
 
-        $clockOutUUid = new UUID($this->domainName);
-
-        $clockOut = new ClockOut($clockOutUUid, $timeStamp, $userLocation);
+        $clockOut = new ClockOut($clockOutUUid, $timeStamp);
 
         return $clockOut;
     }
 
-    public function clockOut(string $currentLocation, string $timeStamp, string $logUuid)
+    public function clockOut(string $timeStamp, string $logUuid)
     {
         $user = Auth::user();
-        
-        $log = $this->getTimeLog($logUuid);
-        
-        $userLocation = $this->timePuncherRetriever->getUserLocation($user, $currentLocation);
 
-        $clockOut = $this->getTimeLogParam($userLocation, $timeStamp);         
+        $log = $this->getTimeLog($user, $logUuid);
+        
+        $clockOut = $this->getClockOut($timeStamp);         
+
         try {
             $log->clock_out = serialize($clockOut);
             $log->save();

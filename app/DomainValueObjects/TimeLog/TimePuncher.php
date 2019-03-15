@@ -16,11 +16,10 @@ class TimePuncher
     private $timeStamp =  null;
     private $location = null;
 
-    public function __construct(UUID $uuid, TimeStamp $timeStamp, Location $location)
+    public function __construct(UUID $uuid, TimeStamp $timeStamp)
     {
         $this->uuid = $uuid;
         $this->timeStamp = $timeStamp;
-        $this->location = $location;
         $this->validation();
     }
 
