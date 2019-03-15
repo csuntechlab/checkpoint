@@ -54,13 +54,13 @@ class LogoutServiceTest extends TestCase
         $request = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer serializedToken'
-          ]);
+        ]);
 
         $response = $this->service->logout($request);
 
         $expectedResponse = [
-          'status_code' => 403,
-          'message_error' => 'Logout failed',
+            'status_code' => 403,
+            'message_error' => 'Logout failed',
         ];
 
         $this->assertEquals($expectedResponse, $response);

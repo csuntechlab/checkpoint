@@ -25,14 +25,12 @@ class RegisterServiceTest extends TestCase
      */
     public function test_register_service()
     {
-        $input = [
-            "name" => "tes3t@email.com",
-            "email" => "tes3t@email.com",
-            "password" => "tes3t@email.com",
-            "password_confirmation" => "tes3t@email.com"
-        ];
+        $name = "tes3t@email.com";
+        $email = "tes3t@email.com";
+        $password = "tes3t@email.com";
+        $inviteCode = "000-000";
 
-        $response = $this->service->register($input);
+        $response = $this->service->register($name, $email, $password, $inviteCode);
 
         $this->assertArrayHasKey('name', $response);
         $this->assertArrayHasKey('email', $response);
@@ -40,14 +38,14 @@ class RegisterServiceTest extends TestCase
 
     public function test_register_service_fails_throws_an_exception_undefined_index()
     {
-        $input = [
-            "name23" => "tes3t@email.com",
-            "email" => "tes3t@email.com",
-            "password" => "tes3t@email.com",
-            "password_confirmation" => "tes3t@email.com"
-        ];
+        $name = null;
+        $email = "tes3t@email.com";
+        $password = "tes3t@email.com";
+        $inviteCode = "000-000";
 
-        $response = $this->service->register($input);
+        $this->expectException('App\Exceptions\AuthExceptions\UserCreatedFailed');
+
+        $response = $this->service->register($name, $email, $password, $inviteCode);
 
         $this->assertArrayHasKey('message_error', $response);
     }
