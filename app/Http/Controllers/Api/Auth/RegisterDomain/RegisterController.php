@@ -19,9 +19,7 @@ class RegisterController extends Controller
         $data = array();
         $data['name'] = (string)$request['name'];
         $data['email'] = (string)$request['email'];
-        $data['email'] = (string)$request['email'];
         $data['password'] = (string)$request['password'];
-        // $data['organization_code'] = (string)$request['organization_code'];
         $data['invite_code'] = "000-000";
         return $data;
     }
