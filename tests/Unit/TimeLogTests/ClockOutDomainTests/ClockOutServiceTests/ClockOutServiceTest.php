@@ -129,6 +129,5 @@ class ClockOutServiceTest extends TestCase
         $method = $this->get_private_method($this->classPath, $function);
 
         $response = $method->invoke($this->service, $this->user, $expectedResponse->id);
-        dd($response);
     }
 }
