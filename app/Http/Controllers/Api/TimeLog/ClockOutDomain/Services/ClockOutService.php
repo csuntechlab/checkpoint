@@ -13,7 +13,7 @@ use App\TimeLog;
 use App\Exceptions\TimePuncherExceptions\ClockOut\AlreadyClockedOut;
 // Contracts 
 use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutContract;
-use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutLogicContract;
+use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract;
 
 class ClockOutService implements ClockOutContract
 {

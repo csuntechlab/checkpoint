@@ -11,7 +11,7 @@ use App\TimeLog;
 
 // Contracts
 use App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;
-use App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInLogicContract;
+use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockInLogicContract;
 
 class ClockInService implements ClockInContract
 {

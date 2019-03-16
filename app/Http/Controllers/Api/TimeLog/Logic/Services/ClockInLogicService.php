@@ -1,5 +1,5 @@
 <?php 
-namespace App\Http\Controllers\api\TimeLog\ClockInDomain\Services;
+namespace App\Http\Controllers\Api\TimeLog\Logic\Services;
 
 // DomainValue Objects
 
@@ -11,10 +11,12 @@ use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 use App\TimeSheets;
 
 //Exceptions
-use App\Exceptions\TimePuncherExceptions\ClockIn\AlreadyClockedIn;
 use App\Exceptions\TimeSheetExceptions\TimeSheetNotFound;
 use App\Exceptions\GeneralExceptions\DataBaseQueryFailed;
-use App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInLogicContract;
+use App\Exceptions\TimePuncherExceptions\ClockIn\AlreadyClockedIn;
+
+//Contracts
+use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockInLogicContract;
 
 class ClockInLogicService implements ClockInLogicContract
 {

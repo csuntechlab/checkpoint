@@ -1,5 +1,5 @@
 <?php 
-namespace App\Http\Controllers\Api\TimeLog\ClockOutDomain\Services;
+namespace App\Http\Controllers\Api\TimeLog\Logic\Services;
 
 // Domain Value Object
 
@@ -13,7 +13,7 @@ use App\TimeLog;
 //Exceptions 
 use App\Exceptions\TimePuncherExceptions\ClockOut\AlreadyClockedOut;
 // Contracts 
-use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutLogicContract;
+use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract;
 
 class ClockOutLogicService implements ClockOutLogicContract
 {

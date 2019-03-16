@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Providers\ApiProviders\TimeLog;
+namespace App\Providers\ApiProviders\TimeLog\Logic;
 
 use Illuminate\Support\ServiceProvider;
 
-class TimePuncherServiceProvider extends ServiceProvider
+class ClockOutLogicServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -24,8 +24,8 @@ class TimePuncherServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Http\Controllers\Api\TimeLog\TimePuncher\Contracts\TimePuncherContract',
-            'App\Http\Controllers\Api\TimeLog\TimePuncher\Services\TimePuncherService'
+            'App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract',
+            'App\Http\Controllers\Api\TimeLog\Logic\Services\ClockOutLogicService'
         );
     }
 }
