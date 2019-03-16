@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use App\TimeLog;
 
-use App\Http\Controllers\Api\TimeLog\TimePuncher\Contracts\TimePuncherContract;
+use App\Http\Controllers\Api\TimeLog\TimeLog\Contracts\TimeLogContract;
 use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Services\ClockOutService;
 
 class ClockOutServiceTest extends TestCase
@@ -24,7 +24,7 @@ class ClockOutServiceTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->retriever = Mockery::mock(TimePuncherContract::class);
+        $this->retriever = Mockery::mock(TimeLogContract::class);
         $this->service = new ClockOutService($this->retriever);
         $this->seed('OrgnaizationSeeder');
         $this->seed('UsersTableSeeder');
@@ -108,7 +108,7 @@ class ClockOutServiceTest extends TestCase
 
     public function test_get_log_fails_log_is_null()
     {
-        $this->expectException('App\Exceptions\TimePuncherExceptions\ClockOut\AlreadyClockedOut');
+        $this->expectException('App\Exceptions\TimeLogExceptions\ClockOut\AlreadyClockedOut');
 
         $function = 'getTimeLog';
 
@@ -119,7 +119,7 @@ class ClockOutServiceTest extends TestCase
 
     public function test_get_log_fails_log_is_not_null()
     {
-        $this->expectException('App\Exceptions\TimePuncherExceptions\ClockOut\AlreadyClockedOut');
+        $this->expectException('App\Exceptions\TimeLogExceptions\ClockOut\AlreadyClockedOut');
 
         $expectedResponse = factory(TimeLog::class)->create();
         $expectedResponse->save();

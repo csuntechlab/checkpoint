@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Exceptions\TimePuncherExceptions\ClockIn;
+namespace App\Exceptions\TimeLogExceptions\ClockOut;
 
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class AlreadyClockedIn extends Exception
+class AlreadyClockedOut extends Exception
 {
     public function __construct()
     {
@@ -19,7 +19,7 @@ class AlreadyClockedIn extends Exception
      */
     public function render()
     {
-        $message = 'User has already clocked in.';
+        $message = 'User has already clocked out.';
         $status_code = 409;
         return BuildResponse::build_response($message, $status_code);
     }

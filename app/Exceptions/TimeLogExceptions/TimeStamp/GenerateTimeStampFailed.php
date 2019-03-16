@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Exceptions\TimePuncherExceptions\ClockOut;
+namespace App\Exceptions\TimeLogExceptions\TimeStamp;
 
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class AlreadyClockedOut extends Exception
+class GenerateTimeStampFailed extends Exception
 {
-    public function __construct()
+    public function __contruct()
     {
         parent::__construct();
     }
 
     /**
-     * Render an exception into an HTTP response.
-     * 
+     * Render a exception into a HTTP response.
+     *
      * @return \Illuminate\Http\Response
      */
     public function render()
     {
-        $message = 'User has already clocked out.';
+        $message = "Generating a TimeStamp Failed";
         $status_code = 409;
         return BuildResponse::build_response($message, $status_code);
     }

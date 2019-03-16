@@ -11,7 +11,7 @@ use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 use App\TimeLog;
 
 //Exceptions 
-use App\Exceptions\TimePuncherExceptions\ClockOut\AlreadyClockedOut;
+use App\Exceptions\TimeLogExceptions\ClockOut\AlreadyClockedOut;
 // Contracts 
 use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract;
 

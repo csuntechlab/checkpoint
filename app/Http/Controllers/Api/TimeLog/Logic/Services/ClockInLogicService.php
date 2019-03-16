@@ -13,7 +13,7 @@ use App\TimeSheets;
 //Exceptions
 use App\Exceptions\TimeSheetExceptions\TimeSheetNotFound;
 use App\Exceptions\GeneralExceptions\DataBaseQueryFailed;
-use App\Exceptions\TimePuncherExceptions\ClockIn\AlreadyClockedIn;
+use App\Exceptions\TimeLogExceptions\ClockIn\AlreadyClockedIn;
 
 //Contracts
 use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockInLogicContract;
