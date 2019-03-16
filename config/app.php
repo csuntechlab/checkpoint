@@ -195,6 +195,7 @@ return [
 
         /** ClockOut Service Provider */
         App\Providers\ApiProviders\TimeLog\ClockOutServiceProvider::class,
+        App\Providers\ApiProviders\TimeLog\ClockOutLogicServiceProvider::class,
 
         /** TimePuncher Service Provider */
         App\Providers\ApiProviders\TimeLog\TimePuncherServiceProvider::class,

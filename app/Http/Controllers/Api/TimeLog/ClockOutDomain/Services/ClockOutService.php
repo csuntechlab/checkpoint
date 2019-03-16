@@ -6,10 +6,6 @@ use function Opis\Closure\serialize;
 // Auth
 use Illuminate\Support\Facades\Auth;
 
-// Domain Value Object
-use App\DomainValueObjects\UUIDGenerator\UUID;
-use App\DomainValueObjects\TimeLog\ClockOut\ClockOut;
-use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 // TB Models
 use App\TimeLog;
 
@@ -17,42 +13,25 @@ use App\TimeLog;
 use App\Exceptions\TimePuncherExceptions\ClockOut\AlreadyClockedOut;
 // Contracts 
 use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutContract;
-use App\Http\Controllers\Api\TimeLog\TimePuncher\Contracts\TimePuncherContract;
+use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutLogicContract;
+
 class ClockOutService implements ClockOutContract
 {
-    private $domainName = "clockOut";
 
-    protected $timePuncherRetriever;
+    protected $clockOutLogic;
 
-    private function getTimeLog($user, $logUuid){
-        
-        $log = TimeLog::where('id', $logUuid)->first();
-
-        if ($log == null) throw new AlreadyClockedOut();
-
-        if ($log->clock_out != null) throw new AlreadyClockedOut();
-        
-        return $log;
-    }
-
-    private function getClockOut($timeStamp)
-    {   
-        $clockOutUUid = new UUID($this->domainName);
-        
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
-
-        $clockOut = new ClockOut($clockOutUUid, $timeStamp);
-
-        return $clockOut;
+    public function __construct(ClockOutLogicContract $clockOutLogic)
+    {
+        $this->clockOutLogic = $clockOutLogic;
     }
 
     public function clockOut(string $timeStamp, string $logUuid)
     {
         $user = Auth::user();
 
-        $log = $this->getTimeLog($user, $logUuid);
+        $log = $this->clockOutLogic->getTimeLog($user, $logUuid);
         
-        $clockOut = $this->getClockOut($timeStamp);         
+        $clockOut = $this->clockOutLogic->getClockOut($timeStamp);         
 
         try {
             $log->clock_out = serialize($clockOut);
