@@ -7,7 +7,7 @@ use function Opis\Closure\serialize;
 use Illuminate\Support\Facades\Auth;
 
 //Models
-use App\TimeLog;
+use App\Models\TimeLog;
 
 // Contracts
 use App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;

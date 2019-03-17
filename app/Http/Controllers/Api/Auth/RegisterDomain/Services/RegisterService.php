@@ -1,13 +1,16 @@
 <?php 
 namespace App\Http\Controllers\Api\Auth\RegisterDomain\Services;
 
-use App\User;
-use App\UserInvitation;
 use Illuminate\Support\Facades\Hash;
 
+//Models
+use App\User;
+use App\Models\UserInvitation;
+
+//Exceptions
 use App\Exceptions\AuthExceptions\UserCreatedFailed;
 
-
+//Contracts
 use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
 
 

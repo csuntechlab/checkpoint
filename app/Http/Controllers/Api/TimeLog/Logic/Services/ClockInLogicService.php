@@ -8,7 +8,8 @@ use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
 use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 
 // TB Models
-use App\TimeSheets;
+use App\Models\TimeSheets;
+use App\Models\TimeLog;
 
 //Exceptions
 use App\Exceptions\TimeSheetExceptions\TimeSheetNotFound;
@@ -29,7 +30,7 @@ class ClockInLogicService implements ClockInLogicContract
         $userId = 1;
 
         try {
-            $hasUserTimeLogged = \App\TimeLog::where('user_id', $userId)->where('clock_out', null)->get();
+            $hasUserTimeLogged = TimeLog::where('user_id', $userId)->where('clock_out', null)->get();
         } catch (Illuminate\Database\QueryException $e) {
             $subject = 'TimeLog ';
             throw new DataBaseQueryFailed($subject);

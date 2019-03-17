@@ -1,8 +1,9 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\Models\OrganizationLocation;
 
-$factory->define(App\OrganizationLocation::class, function (Faker $faker) {
+$factory->define(OrganizationLocation::class, function (Faker $faker) {
     return [
         //
     ];

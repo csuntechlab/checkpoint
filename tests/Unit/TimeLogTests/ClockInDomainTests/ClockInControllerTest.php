@@ -42,7 +42,7 @@ class ClockInControllerTest extends TestCase
      */
     public function test_clock_in_controller_with_mockery()
     {
-        $input = ["timeStamp" => "2019-02-01 06:30:44", "location" => "blob"];
+        $input = ["timeStamp" => "2019-02-01 06:30:44"];
 
         $expectedResponse = [
             "message_success" => "Clock in was successfull",
@@ -51,10 +51,10 @@ class ClockInControllerTest extends TestCase
 
         $this->retriever
             ->shouldReceive('clockIn')
-            ->with($input['timeStamp'], $input['location'])
+            ->with($input['timeStamp'])
             ->once()->andReturn($expectedResponse);
 
-        $response = $this->retriever->clockIn($input['timeStamp'], $input['location']);
+        $response = $this->retriever->clockIn($input['timeStamp']);
 
         $this->assertEquals($expectedResponse, $response);
     }

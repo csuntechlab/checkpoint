@@ -1,8 +1,9 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\Models\OrganizationSettings;
 
-$factory->define(App\OrganizationSettings::class, function (Faker $faker) {
+$factory->define(OrganizationSettings::class, function (Faker $faker) {
     return [
         //
     ];

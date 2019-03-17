@@ -1,7 +1,7 @@
 <?php
 
 use App\User;
-use App\TimeSheets;
+use App\Models\TimeSheets;
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
 use App\DomainValueObjects\TimeLog\ClockOut\ClockOut;

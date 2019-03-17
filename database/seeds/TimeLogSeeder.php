@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Logs;
+use App\Models\TimeLog;
 
-class LogsSeeder extends Seeder
+class TimeLogSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class LogsSeeder extends Seeder
      */
     public function run()
     {
-        factory(Logs::class)->create();
+        factory(TimeLog::class)->create();
     }
 }

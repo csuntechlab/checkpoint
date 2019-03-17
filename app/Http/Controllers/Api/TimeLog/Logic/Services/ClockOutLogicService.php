@@ -8,7 +8,7 @@ use App\DomainValueObjects\TimeLog\ClockOut\ClockOut;
 use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 
 //Models
-use App\TimeLog;
+use App\Models\TimeLog;
 
 //Exceptions 
 use App\Exceptions\TimeLogExceptions\ClockOut\AlreadyClockedOut;

@@ -1,7 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\Organization;
+use App\Models\Organization;
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\UserProfile\UserProfile;
 use App\DomainValueObjects\Organization\OrganizationCode\OrganizationCode;

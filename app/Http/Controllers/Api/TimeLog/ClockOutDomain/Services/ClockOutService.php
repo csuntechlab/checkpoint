@@ -39,7 +39,7 @@ class ClockOutService implements ClockOutContract
         } catch (Illuminate\Database\QueryException $e) {
             return ['message_error' => 'Clock Out was not successfully created.'];
         }
-        return ["message_success" => "Clock out was successfull"];  
+        return ["message_success" => "Clock out was successfull", "time_stamp" => $timeStamp];  
     }
 
 }

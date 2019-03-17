@@ -14,6 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(OrgnaizationSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(TimeSheetSeeder::class);
-        // $this->call(LogsSeeder::class);
+        $this->call(TimeLogSeeder::class);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use App\Organization;
+use App\Models\Organization;
 use Faker\Generator as Faker;
 
 

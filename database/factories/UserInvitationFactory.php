@@ -1,8 +1,9 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\Models\UserInvitation;
 
-$factory->define(App\UserInvitation::class, function (Faker $faker) {
+$factory->define(UserInvitation::class, function (Faker $faker) {
     return [
         //
     ];
