@@ -7,4 +7,6 @@ interface ClockOutLogicContract
     public function getTimeLog($user, $logUuid);
 
     public function getClockOut($timeStamp);
+
+    public function appendClockOutToTimeLog($timelog, $clockOut);
 }

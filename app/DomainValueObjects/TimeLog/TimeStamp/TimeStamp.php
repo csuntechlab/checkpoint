@@ -27,4 +27,9 @@ class TimeStamp
 
         if ($this->uuid == null) throw new GenerateTimeStampFailed();
     }
+
+    public function getTimeStampString()
+    {
+        return $this->timeStamp;
+    }
 }

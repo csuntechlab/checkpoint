@@ -24,4 +24,15 @@ class TimeStampTest extends TestCase
         $this->expectException('App\Exceptions\TimeLogExceptions\TimeStamp\GenerateTimeStampFailed');
         $exception = new TimeStamp();
     }
+
+    public function test_get_Time_Stamp_String()
+    {
+        $expectedResponse = "2019-02-01 06:30:44";
+        $UUID = new UUID("domainName");
+        $timeStamp = new TimeStamp($UUID, "2019-02-01 06:30:44");
+
+        $timeStampString = $timeStamp->getTimeStampString();
+
+        $this->assertEquals($expectedResponse, $timeStampString);
+    }
 }

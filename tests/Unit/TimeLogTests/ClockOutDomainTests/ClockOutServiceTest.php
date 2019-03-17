@@ -3,13 +3,13 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-
 use Mockery;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
+// Models
 use App\Models\TimeLog;
 
+// Contracts
 use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract;
 use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Services\ClockOutService;
 
@@ -43,26 +43,33 @@ class ClockOutServiceTest extends TestCase
      */
     public function test_clock_out_service()
     {
-        $timeLog = TimeLog::first();
+        $timeLog = factory(TimeLog::class)->create();
         $clockOut = unserialize($timeLog->clock_out);
-        dd($clockOut);
-        $timeStamp = "2019-02-01 06:30:44";
-        $logUuid = "uuid";
+
+        $timeStampString = $clockOut->getTimeStamp()->getTimeStampString();
+        $logUuid = $timeLog->id;
 
         $expectedResponse = [
             "message_success" => "Clock out was successfull",
-            "time_stamp" => $timeStamp
+            "time_stamp" => $timeStampString
         ];
 
-        $this->retriever
+        $this->clockOutLogicUtility
             ->shouldReceive('getTimeLog')
             ->with($this->user, $logUuid)
+            ->once()->andReturn($timeLog);
+
+        $this->clockOutLogicUtility
+            ->shouldReceive('getClockOut')
+            ->with($timeStampString)
+            ->once()->andReturn($clockOut);
+
+        $this->clockOutLogicUtility
+            ->shouldReceive('appendClockOutToTimeLog')
+            ->with($timeLog, $clockOut)
             ->once()->andReturn($expectedResponse);
 
-        // dd($this->service);
-
-        $response = $this->service->clockOut($timeStamp, $logUuid);
-        dd($response);
+        $response = $this->service->clockOut($timeStampString, $logUuid);
 
         $this->assertEquals($expectedResponse, $response);
     }
@@ -80,40 +87,6 @@ class ClockOutServiceTest extends TestCase
     //     $this->assertInstanceOf('App\DomainValueObjects\TimeLog\ClockOut\ClockOut', $response);
     // }
 
-    // public function test_get_time_log()
-    // {
-    //     $expectedResponse = factory(TimeLog::class)->create();
-    //     $expectedResponse->clock_out = null;
-    //     $expectedResponse->save();
-
-    //     $function = 'getTimeLog';
-
-    //     $method = $this->get_private_method($this->classPath, $function);
-
-    //     $response = $method->invoke($this->service, $this->user, $expectedResponse->id);
-
-    //     $responseId = $response->id;
-    //     $responseUserId = $response->user_id;
-    //     $responseTimeSheetId = $response->time_sheet_id;
-    //     $responseClockIn = $response->clock_in;
-    //     $responseClockOut = $response->clock_out;
-    //     $responseTimeLogChangeStack = $response->log_change_stack;
-
-    //     $expectedResponseId = $expectedResponse->id;
-    //     $expectedResponseUserId = $expectedResponse->user_id;
-    //     $expectedResponseTimeSheetId = $expectedResponse->time_sheet_id;
-    //     $expectedResponseClockIn = $expectedResponse->clock_in;
-    //     $expectedResponseClockOut = $expectedResponse->clock_out;
-    //     $expectedResponseTimeLogChangeStack = $expectedResponse->log_change_stack;
-
-
-    //     $this->assertEquals($expectedResponseId, $responseId);
-    //     $this->assertEquals($expectedResponseUserId, $responseUserId);
-    //     $this->assertEquals($expectedResponseTimeSheetId, $responseTimeSheetId);
-    //     $this->assertEquals($expectedResponseClockIn, $responseClockIn);
-    //     $this->assertEquals($expectedResponseClockOut, $responseClockOut);
-    //     $this->assertEquals($expectedResponseTimeLogChangeStack, $responseTimeLogChangeStack);
-    // }
 
     // public function test_get_log_fails_log_is_null()
     // {
