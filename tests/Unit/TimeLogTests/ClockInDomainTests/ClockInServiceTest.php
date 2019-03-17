@@ -43,11 +43,9 @@ class ClockInServiceTest extends TestCase
      */
     public function test_clock_in_service_get_user_location_and_user_time_sheet_id_with_mockery()
     {
-        $currentLocation = "blob";
         $userId = $this->user->id;
 
         $timeStampString = "2019-02-01 06:30:44";
-
 
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStampString);
         $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp);
@@ -60,7 +58,6 @@ class ClockInServiceTest extends TestCase
             "uuid" => $logUuid,
             "clockIn" => $clockIn
         ];
-
 
         $expectedResponse = [
             "message_success" => "Clock in was successfull",
@@ -88,44 +85,4 @@ class ClockInServiceTest extends TestCase
 
         $this->assertEquals($expectedResponse, $response);
     }
-
-    // public function test_get_time_sheet_id()
-    // {
-    //     $function = 'getTimeSheetId';
-
-    //     $method = $this->get_private_method($this->classPath, $function);
-
-    //     $response = $method->invoke($this->service, $this->user);
-
-    //     $this->assertInternalType('string', $response);
-    // }
-
-    // public function test_get_time_log_param()
-    // {
-
-    //     $timeStamp =  "2019-02-01 06:30:44";
-
-    //     $function = 'getTimeLogParam';
-
-    //     $method = $this->get_private_method($this->classPath, $function);
-
-    //     $response = $method->invoke($this->service, $this->user, $timeStamp);
-
-    //     $this->assertArrayHasKey('clockIn', $response);
-    //     $this->assertArrayHasKey('uuid', $response);
-    //     $this->assertArrayHasKey('timeSheetId', $response);
-    //     $this->assertInstanceOf('App\DomainValueObjects\UUIDGenerator\UUID', $response['uuid']);
-    //     $this->assertInstanceOf('App\DomainValueObjects\TimeLog\ClockIn\ClockIn', $response['clockIn']);
-    // }
-
-    // public function test_verify_user_has_not_yet_logged()
-    // {
-    //     $function = 'verifyUserHasNotYetTimeLogged';
-
-    //     $method = $this->get_private_method($this->classPath, $function);
-
-    //     $response = $method->invoke($this->service, $this->user->id);
-
-    //     $this->assertEquals($response, true);
-    // }
 }
