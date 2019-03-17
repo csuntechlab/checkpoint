@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth\RegisterDomain;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
+use App\User;
 
 class RegisterController extends Controller
 {

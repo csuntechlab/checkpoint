@@ -27,7 +27,7 @@ class ClockInLogicService implements ClockInLogicContract
     private $domainName = "TimeLog";
 
     //TODO: hard Code fix
-    public function verifyUserHasNotYetTimeLogged($userId): bool
+    public function verifyUserHasNotYetTimeLogged(string $userId): bool
     {
         $userId = 1;
 
@@ -46,7 +46,7 @@ class ClockInLogicService implements ClockInLogicContract
     }
 
     //TODO: hard Code fix
-    private function getTimeSheetId($userId): string
+    private function getTimeSheetId(string $userId): string
     {
         $userId = 1;
 
@@ -62,14 +62,14 @@ class ClockInLogicService implements ClockInLogicContract
         return $timeSheet->id;
     }
 
-    private function getClockIn(string $timeStamp)
+    private function getClockIn(string $timeStamp): ClockIn
     {
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
         $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp);
         return $clockIn;
     }
 
-    public function getTimeLogParam($userId, $timeStamp): array
+    public function getTimeLogParam(string $userId, string $timeStamp): array
     {
         $logParam = array();
 
@@ -83,7 +83,7 @@ class ClockInLogicService implements ClockInLogicContract
         return $logParam;
     }
 
-    public function createClockInEntry(string $uuid, $userId, string $timeSheetId, ClockIn $clockIn, string $timeStamp)
+    public function createClockInEntry(string $uuid, string $userId, string $timeSheetId, ClockIn $clockIn, string $timeStamp): array
     {
         try {
             TimeLog::create([

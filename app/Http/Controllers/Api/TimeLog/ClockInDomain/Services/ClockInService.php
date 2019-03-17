@@ -17,7 +17,7 @@ class ClockInService implements ClockInContract
         $this->clockInLogic = $clockInLogic;
     }
 
-    public function clockIn(string $timeStamp)
+    public function clockIn(string $timeStamp): array
     {
         $user = Auth::user();
         $userId = $user->id;

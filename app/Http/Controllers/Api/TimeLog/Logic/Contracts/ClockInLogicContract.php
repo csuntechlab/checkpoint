@@ -6,9 +6,9 @@ use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
 
 interface ClockInLogicContract
 {
-    public function verifyUserHasNotYetTimeLogged($userId);
+    public function verifyUserHasNotYetTimeLogged(string $userId): bool;
 
-    public function getTimeLogParam($user, $timeStamp): array;
+    public function getTimeLogParam(string $userId, string $timeStamp): array;
 
-    public function createClockInEntry(string $uuid, $userId, string $timeSheetId, ClockIn $clockIn, string $timeStamp);
+    public function createClockInEntry(string $uuid, string $userId, string $timeSheetId, ClockIn $clockIn, string $timeStamp): array;
 }

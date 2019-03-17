@@ -23,7 +23,7 @@ class ClockOutLogicService implements ClockOutLogicContract
 {
     private $domainName = "clockOut";
 
-    public function getTimeLog($userId, string $logUuid)
+    public function getTimeLog(string $userId, string $logUuid): TimeLog
     {
         try {
             $log = TimeLog::where('id', $logUuid)->where('user_id', $userId)->first();
@@ -39,7 +39,7 @@ class ClockOutLogicService implements ClockOutLogicContract
         return $log;
     }
 
-    public function getClockOut(string $timeStamp)
+    public function getClockOut(string $timeStamp): ClockOut
     {
         $clockOutUUid = new UUID($this->domainName);
 
@@ -50,7 +50,7 @@ class ClockOutLogicService implements ClockOutLogicContract
         return $clockOut;
     }
 
-    public function appendClockOutToTimeLog($timeLog, ClockOut $clockOut, string $timeStamp)
+    public function appendClockOutToTimeLog($timeLog, ClockOut $clockOut, string $timeStamp): array
     {
         try {
             $timeLog->clock_out = serialize($clockOut);

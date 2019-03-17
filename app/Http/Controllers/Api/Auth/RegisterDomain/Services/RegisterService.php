@@ -17,7 +17,7 @@ use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
 
 class RegisterService implements RegisterContract
 {
-    public function register($name, $email, $password, $inviteCode)
+    public function register(string $name, string  $email, string $password, string $inviteCode): User
     {
         $organizationId  = $this->getOrganizationIdByUserInvitation($email, $inviteCode);
 
@@ -37,7 +37,7 @@ class RegisterService implements RegisterContract
 
 
 
-    private function getOrganizationIdByUserInvitation($email, $inviteCode)
+    private function getOrganizationIdByUserInvitation(string $email, string $inviteCode): string
     {
         $organizationId = UserInvitation::where('email', $email)->where('invite_code', $inviteCode)->first();
 

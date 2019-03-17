@@ -24,7 +24,7 @@ class ClockInController extends Controller
         return $data;
     }
 
-    public function clockIn(Request $request)
+    public function clockIn(Request $request): array
     {
         $data = $this->getParam($request);
 

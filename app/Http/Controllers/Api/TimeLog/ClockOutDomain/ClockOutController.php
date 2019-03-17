@@ -27,7 +27,7 @@ class ClockOutController extends Controller
     }
 
 
-    public function clockOut(Request $request)
+    public function clockOut(Request $request): array
     {
         $data = $this->getParam($request);
 
