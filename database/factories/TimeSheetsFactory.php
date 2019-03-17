@@ -1,8 +1,10 @@
 <?php
 
+use Faker\Generator as Faker;
+
+// Models
 use App\Models\Organization;
 use App\Models\TimeSheets;
-use Faker\Generator as Faker;
 
 
 use App\DomainValueObjects\UUIDGenerator\UUID;

@@ -41,7 +41,7 @@ class ClockOutServiceTest extends TestCase
      *
      * @return void
      */
-    public function test_clock_in_service()
+    public function test_clock_out_service()
     {
         $timeLog = TimeLog::first();
         $clockOut = unserialize($timeLog->clock_out);

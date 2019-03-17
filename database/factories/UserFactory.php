@@ -1,12 +1,12 @@
 <?php
 
-use Faker\Generator as Faker;
-use App\Models\Organization;
-use App\DomainValueObjects\UUIDGenerator\UUID;
-use App\DomainValueObjects\UserProfile\UserProfile;
-use App\DomainValueObjects\Organization\OrganizationCode\OrganizationCode;
-use function Opis\Closure\unserialize;
 use function Opis\Closure\serialize;
+use function Opis\Closure\unserialize;
+
+use Faker\Generator as Faker;
+
+// Models
+use App\Models\Organization;
 
 /*
 |--------------------------------------------------------------------------
