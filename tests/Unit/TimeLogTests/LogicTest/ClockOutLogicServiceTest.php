@@ -98,9 +98,13 @@ class ClockOutLogicServiceTest extends TestCase
         $timeLog->clock_out = null;
         $timeLog->save();
 
+        $timeSheetId = $timeLog->time_sheet_id;
+        $uuid = $timeLog->id;
 
         $expectedResponse = [
             "message_success" => "Clock out was successfull",
+            "timeSheet_id" => $timeSheetId,
+            "log_uuid" => $uuid,
             "time_stamp" => $timeStampString
         ];
 

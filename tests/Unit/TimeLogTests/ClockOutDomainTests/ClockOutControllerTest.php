@@ -37,16 +37,26 @@ class ClockOutControllerTest extends TestCase
 
     public function test_clock_out_controller_with_mockery()
     {
-        $data = ["timeStamp" => "2019-02-01 06:30:44", "currentLocation" => "blob", "logUuid" => "uuid"];
+        $timeStampString = "2019-02-01 06:30:44";
 
-        $expectedResponse = ["message_success" => "Clock out was successfull"];
+        $data = [
+            "timeStamp" => $timeStampString,
+            "logUuid" => "uuid"
+        ];
+
+        $expectedResponse =  [
+            "message_success" => "Clock out was successfull",
+            "timeSheet_id" => "uuid",
+            "log_uuid" => "uuid",
+            "time_stamp" => $timeStampString
+        ];
 
         $this->retriever
             ->shouldReceive('clockIn')
-            ->with($data['currentLocation'], $data['timeStamp'], $data['logUuid'])
+            ->with($data['timeStamp'], $data['logUuid'])
             ->once()->andReturn($expectedResponse);
 
-        $response = $this->retriever->clockIn($data['currentLocation'], $data['timeStamp'], $data['logUuid']);
+        $response = $this->retriever->clockIn($data['timeStamp'], $data['logUuid']);
 
         $this->assertEquals($expectedResponse, $response);
     }

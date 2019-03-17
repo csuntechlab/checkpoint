@@ -58,6 +58,15 @@ class ClockOutLogicService implements ClockOutLogicContract
         } catch (\Exception $e) {
             throw new ClockOutWasNotSucessfullyAdded();
         }
-        return ["message_success" => "Clock out was successfull", "time_stamp" => $timeStamp];
+
+        $timeSheetId = $timeLog->time_sheet_id;
+        $uuid = $timeLog->id;
+
+        return [
+            "message_success" => "Clock out was successfull",
+            "timeSheet_id" => $timeSheetId,
+            "log_uuid" => $uuid,
+            "time_stamp" => $timeStamp
+        ];
     }
 }
