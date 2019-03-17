@@ -1,8 +1,9 @@
 <?php 
 namespace App\Http\Controllers\Api\TimeLog\Logic\Services;
 
-// Domain Value Object
+use function Opis\Closure\serialize;
 
+// Domain Value Object
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\TimeLog\ClockOut\ClockOut;
 use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
@@ -14,15 +15,15 @@ use App\Models\TimeLog;
 use App\Exceptions\TimeLogExceptions\TimeLogNotFound;
 use App\Exceptions\GeneralExceptions\DataBaseQueryFailed;
 use App\Exceptions\TimeLogExceptions\ClockOut\AlreadyClockedOut;
+use App\Exceptions\TimeLogExceptions\ClockOut\ClockOutWasNotSucessfullyAdded;
 // Contracts 
 use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract;
-use function Opis\Closure\serialize;
 
 class ClockOutLogicService implements ClockOutLogicContract
 {
     private $domainName = "clockOut";
 
-    public function getTimeLog($userId, $logUuid)
+    public function getTimeLog($userId, string $logUuid)
     {
         try {
             $log = TimeLog::where('id', $logUuid)->where('user_id', $userId)->first();
@@ -38,7 +39,7 @@ class ClockOutLogicService implements ClockOutLogicContract
         return $log;
     }
 
-    public function getClockOut($timeStamp)
+    public function getClockOut(string $timeStamp)
     {
         $clockOutUUid = new UUID($this->domainName);
 
@@ -55,7 +56,7 @@ class ClockOutLogicService implements ClockOutLogicContract
             $timeLog->clock_out = serialize($clockOut);
             $timeLog->save();
         } catch (\Exception $e) {
-            return ['message_error' => 'Clock Out was not successfully created.'];
+            throw new ClockOutWasNotSucessfullyAdded();
         }
         return ["message_success" => "Clock out was successfull", "time_stamp" => $timeStamp];
     }

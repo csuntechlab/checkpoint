@@ -10,8 +10,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Models\TimeLog;
 
 // Contracts
-use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract;
 use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Services\ClockOutService;
+use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract;
 
 use function Opis\Closure\unserialize;
 
@@ -41,7 +41,7 @@ class ClockOutServiceTest extends TestCase
      *
      * @return void
      */
-    public function test_clock_out_service()
+    public function test_ClockOutService_passes()
     {
         $timeLog = factory(TimeLog::class)->create();
         $clockOut = unserialize($timeLog->clock_out);
@@ -56,7 +56,7 @@ class ClockOutServiceTest extends TestCase
 
         $this->clockOutLogicUtility
             ->shouldReceive('getTimeLog')
-            ->with($this->user, $logUuid)
+            ->with($this->user->id, $logUuid)
             ->once()->andReturn($timeLog);
 
         $this->clockOutLogicUtility
@@ -66,50 +66,11 @@ class ClockOutServiceTest extends TestCase
 
         $this->clockOutLogicUtility
             ->shouldReceive('appendClockOutToTimeLog')
-            ->with($timeLog, $clockOut)
+            ->with($timeLog, $clockOut, $timeStampString)
             ->once()->andReturn($expectedResponse);
 
         $response = $this->service->clockOut($timeStampString, $logUuid);
 
         $this->assertEquals($expectedResponse, $response);
     }
-
-    // public function test_get_log_param()
-    // {
-    //     $timeStamp =  "2019-02-01 06:30:44";
-
-    //     $function = 'getClockOut';
-
-    //     $method = $this->get_private_method($this->classPath, $function);
-
-    //     $response = $method->invoke($this->service, $timeStamp);
-
-    //     $this->assertInstanceOf('App\DomainValueObjects\TimeLog\ClockOut\ClockOut', $response);
-    // }
-
-
-    // public function test_get_log_fails_log_is_null()
-    // {
-    //     $this->expectException('App\Exceptions\TimeLogExceptions\ClockOut\AlreadyClockedOut');
-
-    //     $function = 'getTimeLog';
-
-    //     $method = $this->get_private_method($this->classPath, $function);
-
-    //     $method->invoke($this->service, $this->user, 'wrong_uuid');
-    // }
-
-    // public function test_get_log_fails_log_is_not_null()
-    // {
-    //     $this->expectException('App\Exceptions\TimeLogExceptions\ClockOut\AlreadyClockedOut');
-
-    //     $expectedResponse = factory(TimeLog::class)->create();
-    //     $expectedResponse->save();
-
-    //     $function = 'getTimeLog';
-
-    //     $method = $this->get_private_method($this->classPath, $function);
-
-    //     $response = $method->invoke($this->service, $this->user, $expectedResponse->id);
-    // }
 }

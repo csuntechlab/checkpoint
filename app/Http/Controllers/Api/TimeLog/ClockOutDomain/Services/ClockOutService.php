@@ -6,8 +6,8 @@ namespace App\Http\Controllers\Api\TimeLog\ClockOutDomain\Services;
 use Illuminate\Support\Facades\Auth;
 
 // Contracts 
-use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract;
 use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutContract;
+use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract;
 
 class ClockOutService implements ClockOutContract
 {
@@ -23,13 +23,11 @@ class ClockOutService implements ClockOutContract
     {
         $user = Auth::user();
 
-        $timelog = $this->clockOutLogicUtility->getTimeLog($user, $logUuid);
+        $timelog = $this->clockOutLogicUtility->getTimeLog($user->id, $logUuid);
         
         $clockOut = $this->clockOutLogicUtility->getClockOut($timeStamp);
 
-        $timeStampString = $clockOut->getTimeStamp()->getTimeStampString();
-
-        return $this->clockOutLogicUtility->appendClockOutToTimeLog($timelog, $clockOut, $timeStampString);
+        return $this->clockOutLogicUtility->appendClockOutToTimeLog($timelog, $clockOut, $timeStamp);
     }
 
 }
