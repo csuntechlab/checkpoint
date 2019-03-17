@@ -12,6 +12,7 @@ use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 
 // Models
 use App\Models\TimeSheets;
+use App\Models\TimeLog;
 
 use App\Http\Controllers\Api\TimeLog\Logic\Services\ClockInLogicService;
 
@@ -31,6 +32,7 @@ class ClockInLogicServiceTest extends TestCase
         $this->seed('OrgnaizationSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
+        $this->seed('TimeLogSeeder');
         $this->user = \App\User::where('id', 1)->first();
         $this->actingAs($this->user);
     }
@@ -41,6 +43,22 @@ class ClockInLogicServiceTest extends TestCase
 
         $this->assertInternalType('bool', $response);
         $this->assertEquals(true, $response);
+    }
+
+    public function test_verifyUserHasNotYetTimeLogged_throws_AlreadyClockedIn_exception()
+    {
+        $this->expectException('App\Exceptions\TimeLogExceptions\ClockIn\AlreadyClockedIn');
+
+        $userId = 1;
+
+        $timeLog = factory(TimeLog::class)->create();
+        $timeLog->user_id = $userId;
+        $timeLog->clock_out = null;
+        $timeLog->save();
+
+        $function = 'verifyUserHasNotYetTimeLogged';
+        $method = $this->get_private_method($this->classPath, $function);
+        $response = $method->invoke($this->service, $userId);
     }
 
     public function test_getTmeSheetId_passes()
@@ -54,6 +72,19 @@ class ClockInLogicServiceTest extends TestCase
 
         $this->assertEquals($timeSheet->id, $response);
         $this->assertInternalType('string', $response);
+    }
+
+    public function test_getTmeSheetId_throws_TimeSheetNotFound_exception()
+    {
+
+        $this->expectException('App\Exceptions\TimeSheetExceptions\TimeSheetNotFound');
+        $userId = 1;
+
+        TimeSheets::where('user_id', $userId)->first()->delete();
+
+        $function = 'getTimeSheetId';
+        $method = $this->get_private_method($this->classPath, $function);
+        $response = $method->invoke($this->service, $userId);
     }
 
     public function test_getClockIn_passes()

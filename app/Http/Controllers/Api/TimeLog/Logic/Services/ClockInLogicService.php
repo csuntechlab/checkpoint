@@ -57,7 +57,7 @@ class ClockInLogicService implements ClockInLogicContract
             throw new DataBaseQueryFailed($subject);
         }
 
-        if ($timeSheet == null || $timeSheet->count() == 0) throw new TimeSheetNotFound();
+        if ($timeSheet == null) throw new TimeSheetNotFound();
 
         return $timeSheet->id;
     }
