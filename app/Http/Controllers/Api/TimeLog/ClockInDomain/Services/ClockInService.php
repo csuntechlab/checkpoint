@@ -24,7 +24,7 @@ class ClockInService implements ClockInContract
 
         $this->clockInLogic->verifyUserHasNotYetTimeLogged($userId);
         
-        $logParam = $this->clockInLogic->getTimeLogParam($user, $timeStamp);
+        $logParam = $this->clockInLogic->getTimeLogParam($userId, $timeStamp);
 
         return $this->clockInLogic->createClockInEntry($logParam['uuid'], $userId, $logParam['timeSheetId'], $logParam['clockIn'], $timeStamp);
     }

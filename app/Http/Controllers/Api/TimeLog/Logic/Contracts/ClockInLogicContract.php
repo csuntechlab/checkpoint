@@ -2,6 +2,8 @@
 namespace App\Http\Controllers\Api\TimeLog\Logic\Contracts;
 
 
+use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
+
 interface ClockInLogicContract
 {
     public function verifyUserHasNotYetTimeLogged($userId);
