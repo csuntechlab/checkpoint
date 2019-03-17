@@ -1,13 +1,8 @@
 <?php 
 namespace App\Http\Controllers\Api\TimeLog\ClockInDomain\Services;
 
-use function Opis\Closure\serialize;
-
 // Auth
 use Illuminate\Support\Facades\Auth;
-
-//Models
-use App\Models\TimeLog;
 
 // Contracts
 use App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;
@@ -25,25 +20,13 @@ class ClockInService implements ClockInContract
     public function clockIn(string $timeStamp)
     {
         $user = Auth::user();
+        $userId = $user->id;
 
-        $this->clockInLogic->verifyUserHasNotYetTimeLogged($user->id);
+        $this->clockInLogic->verifyUserHasNotYetTimeLogged($userId);
         
         $logParam = $this->clockInLogic->getTimeLogParam($user, $timeStamp);
 
-        $uuid = $logParam['uuid']->toString;
-
-        try {
-            $user = TimeLog::create([
-                'id' => $uuid,
-                'user_id' => $user->id,
-                'time_sheet_id' => $logParam['timeSheetId'],
-                'clock_in' => serialize($logParam['clockIn']),
-            ]);
-        } catch (Illuminate\Database\QueryException $e) {
-            return ['message_error' => 'Clock In was not successfully created.'];
-        }
-        
-        return ["message_success" => "Clock in was successfull", "log_uuid" => $uuid];  
+        return $this->clockInLogic->createClockInEntry($logParam['uuid'], $userId, $logParam['timeSheetId'], $logParam['clockIn'], $timeStamp);
     }
     
 }
