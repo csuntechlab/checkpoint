@@ -19,6 +19,7 @@ use App\Exceptions\TimeLogExceptions\ClockIn\AlreadyClockedIn;
 
 //Contracts
 use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockInLogicContract;
+use App\Exceptions\TimeLogExceptions\ClockIn\ClockInWasNotSuccesfullyAdded;
 
 class ClockInLogicService implements ClockInLogicContract
 {
@@ -61,6 +62,13 @@ class ClockInLogicService implements ClockInLogicContract
         return $timeSheet->id;
     }
 
+    private function getClockIn(string $timeStamp)
+    {
+        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
+        $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp);
+        return $clockIn;
+    }
+
     public function getTimeLogParam($userId, $timeStamp): array
     {
         $logParam = array();
@@ -70,9 +78,7 @@ class ClockInLogicService implements ClockInLogicContract
         $uuid = new UUID($this->domainName);
         $logParam['uuid'] = $uuid->toString;
 
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
-
-        $logParam['clockIn'] = new ClockIn(new UUID('clockIn'), $timeStamp);
+        $logParam['clockIn'] = $this->getClockIn($timeStamp);
 
         return $logParam;
     }
@@ -87,7 +93,7 @@ class ClockInLogicService implements ClockInLogicContract
                 'clock_in' => serialize($clockIn),
             ]);
         } catch (Illuminate\Database\QueryException $e) {
-            return ['message_error' => 'Clock In was not successfully created.'];
+            throw new ClockInWasNotSuccesfullyAdded;
         }
 
         return [

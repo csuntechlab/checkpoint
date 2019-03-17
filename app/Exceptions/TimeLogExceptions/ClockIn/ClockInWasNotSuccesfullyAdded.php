@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Exceptions\TimeLogExceptions\ClockOut;
+namespace App\Exceptions\TimeLogExceptions\ClockIn;
 
 use Exception;
-
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class ClockOutWasNotSucessfullyAdded extends Exception
+class ClockInWasNotSuccesfullyAdded extends Exception
 {
     public function __construct()
     {
@@ -20,7 +19,7 @@ class ClockOutWasNotSucessfullyAdded extends Exception
      */
     public function render()
     {
-        $message = 'Clock Out was not successfully created.';
+        $message = 'Clock In was not successfully created.';
         $status_code = 409;
         return BuildResponse::build_response($message, $status_code);
     }
