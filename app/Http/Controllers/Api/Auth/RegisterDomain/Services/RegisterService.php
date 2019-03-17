@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Hash;
 
 //Models
 use App\User;
+use App\Models\Organization;
 use App\Models\UserInvitation;
 
 //Exceptions
@@ -41,7 +42,7 @@ class RegisterService implements RegisterContract
         $organizationId = UserInvitation::where('email', $email)->where('invite_code', $inviteCode)->first();
 
         //TODO HardCode
-        $organizationId = \App\Organization::first();
+        $organizationId = Organization::first();
 
         return $organizationId->id;
     }
