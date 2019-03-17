@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Api\TimeLog\Logic\Contracts;
 
+use App\DomainValueObjects\TimeLog\ClockOut\ClockOut;
 
 interface ClockOutLogicContract
 {
@@ -8,5 +9,5 @@ interface ClockOutLogicContract
 
     public function getClockOut($timeStamp);
 
-    public function appendClockOutToTimeLog($timelog, $clockOut);
+    public function appendClockOutToTimeLog($timelog, ClockOut $clockOut, string $timeStamp);
 }

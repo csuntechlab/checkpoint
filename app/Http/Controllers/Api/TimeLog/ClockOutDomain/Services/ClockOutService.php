@@ -25,9 +25,11 @@ class ClockOutService implements ClockOutContract
 
         $timelog = $this->clockOutLogicUtility->getTimeLog($user, $logUuid);
         
-        $clockOut = $this->clockOutLogicUtility->getClockOut($timeStamp);         
+        $clockOut = $this->clockOutLogicUtility->getClockOut($timeStamp);
 
-        return $this->clockOutLogicUtility->appendClockOutToTimeLog($timelog, $clockOut);
+        $timeStampString = $clockOut->getTimeStamp()->getTimeStampString();
+
+        return $this->clockOutLogicUtility->appendClockOutToTimeLog($timelog, $clockOut, $timeStampString);
     }
 
 }

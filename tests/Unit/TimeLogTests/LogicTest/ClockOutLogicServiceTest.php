@@ -5,10 +5,12 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
+use function Opis\Closure\unserialize;
+
 // Models
 use App\Models\TimeLog;
 
-// Contracts
+// Service
 use App\Http\Controllers\Api\TimeLog\Logic\Services\ClockOutLogicService;
 
 
@@ -30,14 +32,14 @@ class ClockOutLogicServiceTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function test_get_time_log()
+    public function test_getTimeLog_passes()
     {
         $expectedResponse = factory(TimeLog::class)->create();
         $expectedResponse->user_id = $this->user->id;
         $expectedResponse->clock_out = null;
         $expectedResponse->save();
 
-        $response = $this->service->getTimeLog($this->user, $expectedResponse->id);
+        $response = $this->service->getTimeLog($this->user->id, $expectedResponse->id);
 
         $responseId = $response->id;
         $responseUserId = $response->user_id;
@@ -63,27 +65,47 @@ class ClockOutLogicServiceTest extends TestCase
         $this->assertInstanceOf('App\Models\TimeLog', $response);
     }
 
-    public function test_get_time_log_throws_Already_Clocked_Out_Exception()
+    public function test_getTimeLog_throws_AlreadyClockedOutException()
     {
         $this->expectException('App\Exceptions\TimeLogExceptions\ClockOut\AlreadyClockedOut');
 
         $expectedResponse = factory(TimeLog::class)->create();
         $expectedResponse->save();
-        $this->service->getTimeLog($this->user, $expectedResponse->id);
+        $this->service->getTimeLog($this->user->id, $expectedResponse->id);
     }
 
-    public function test_get_time_log_throws_Time_Log_Not_Found_Exception()
+    public function test_getTimeLog_throws_TimeLogNotFoundException()
     {
         $this->expectException('App\Exceptions\TimeLogExceptions\TimeLogNotFound');
         $uuid = 'uuid';
-        $this->service->getTimeLog($this->user, $uuid);
+        $this->service->getTimeLog($this->user->id, $uuid);
     }
 
+    public function test_getClockOut_passes()
+    {
+        $timeStamp =  "2019-02-01 09:30:44";
+        $response = $this->service->getClockOut($timeStamp);
+        $this->assertInstanceOf('App\DomainValueObjects\TimeLog\ClockOut\ClockOut', $response);
+    }
 
-    // public function test_get_time_log_throws_database_query_failed()
-    // {
-    //     $this->expectException('App\Exceptions\GeneralExceptions\DataBaseQueryFailed');
-    //     $uuid = 'uuid';
-    //     $this->service->getTimeLog($this->user, $uuid);
-    // }
+    public function test_appendClockOutToTimeLog_passes()
+    {
+        $timeLog = factory(TimeLog::class)->create();
+        $clockOut =  $timeLog->clock_out;
+        $clockOut = unserialize($clockOut);
+        $timeStampString = $clockOut->getTimeStamp()->getTimeStampString();
+        $timeLog->user_id = $this->user->id;
+        $timeLog->clock_out = null;
+        $timeLog->save();
+
+
+        $expectedResponse = [
+            "message_success" => "Clock out was successfull",
+            "time_stamp" => $timeStampString
+        ];
+
+        $response = $this->service->appendClockOutToTimeLog($timeLog, $clockOut, $timeStampString);
+
+        $this->assertEquals($expectedResponse, $response);
+    }
 }
