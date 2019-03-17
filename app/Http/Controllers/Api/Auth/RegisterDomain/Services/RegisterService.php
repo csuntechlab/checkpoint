@@ -17,7 +17,7 @@ use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
 
 class RegisterService implements RegisterContract
 {
-    public function register(string $name, string  $email, string $password, string $inviteCode): User
+    public function register($name, $email, $password, $inviteCode): User
     {
         $organizationId  = $this->getOrganizationIdByUserInvitation($email, $inviteCode);
 
