@@ -52,7 +52,7 @@ class ClockInLogicService implements ClockInLogicContract
 
         try {
             $timeSheet = TimeSheets::where('user_id', $userId)->first();
-        } catch (Illuminate\Database\QueryException $e) {
+        } catch (\Exception $e) {
             $subject = 'Time Sheet ';
             throw new DataBaseQueryFailed($subject);
         }
@@ -92,7 +92,7 @@ class ClockInLogicService implements ClockInLogicContract
                 'time_sheet_id' => $timeSheetId,
                 'clock_in' => serialize($clockIn),
             ]);
-        } catch (Illuminate\Database\QueryException $e) {
+        } catch (\Exception $e) {
             throw new ClockInWasNotSuccesfullyAdded;
         }
 
