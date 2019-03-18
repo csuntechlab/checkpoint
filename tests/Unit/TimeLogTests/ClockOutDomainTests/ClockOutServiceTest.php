@@ -29,6 +29,7 @@ class ClockOutServiceTest extends TestCase
         $this->clockOutLogicUtility = Mockery::mock(ClockOutLogicContract::class);
         $this->service = new ClockOutService($this->clockOutLogicUtility);
         $this->seed('OrgnaizationSeeder');
+        $this->seed('ProgramSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
         $this->seed('TimeLogSeeder');

@@ -30,6 +30,7 @@ class ClockInServiceTest extends TestCase
         $this->clockInLogicUtility = Mockery::mock(ClockInLogicContract::class);
         $this->service = new ClockInService($this->clockInLogicUtility);
         $this->seed('OrgnaizationSeeder');
+        $this->seed('ProgramSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
         $this->user = \App\User::where('id', 1)->first();
