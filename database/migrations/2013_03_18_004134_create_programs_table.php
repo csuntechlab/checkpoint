@@ -20,6 +20,7 @@ class CreateProgramsTable extends Migration
                 ->references('id')
                 ->on('organizations');
             $table->string('program_name');
+            $table->timestamps();
         });
     }
 
