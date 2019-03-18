@@ -10,11 +10,11 @@ use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockInLogicContract;
 
 class ClockInService implements ClockInContract
 {
-    protected $clockInLogic;
+    protected $clockInLogicUtility;
 
-    public function __construct(ClockInLogicContract $clockInLogic)
+    public function __construct(ClockInLogicContract $clockInLogicUtility)
     {
-        $this->clockInLogic = $clockInLogic;
+        $this->clockInLogicUtility = $clockInLogicUtility;
     }
 
     public function clockIn(string $timeStamp): array
@@ -22,11 +22,11 @@ class ClockInService implements ClockInContract
         $user = Auth::user();
         $userId = $user->id;
 
-        $this->clockInLogic->verifyUserHasNotYetTimeLogged($userId);
+        $this->clockInLogicUtility->verifyUserHasNotYetTimeLogged($userId);
         
-        $logParam = $this->clockInLogic->getTimeLogParam($userId, $timeStamp);
+        $logParam = $this->clockInLogicUtility->getTimeLogParam($userId, $timeStamp);
 
-        return $this->clockInLogic->createClockInEntry($logParam['uuid'], $userId, $logParam['timeSheetId'], $logParam['clockIn'], $timeStamp);
+        return $this->clockInLogicUtility->createClockInEntry($logParam['uuid'], $userId, $logParam['timeSheetId'], $logParam['clockIn'], $timeStamp);
     }
     
 }

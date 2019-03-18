@@ -12,7 +12,7 @@ use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract;
 class ClockOutService implements ClockOutContract
 {
 
-    protected $clockOutLogic;
+    protected $clockOutLogicUtility;
 
     public function __construct(ClockOutLogicContract $clockOutLogicUtility)
     {

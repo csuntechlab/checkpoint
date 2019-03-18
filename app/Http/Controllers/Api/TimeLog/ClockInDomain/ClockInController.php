@@ -8,11 +8,11 @@ use App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;
 
 class ClockInController extends Controller
 {
-    protected $clockInRetriever;
+    protected $clockInUtility;
 
     public function __construct(ClockInContract $clockInContract)
     {
-        $this->clockInRetriever = $clockInContract;
+        $this->clockInUtility = $clockInContract;
     }
 
     private function getParam($request): array
@@ -28,6 +28,6 @@ class ClockInController extends Controller
     {
         $data = $this->getParam($request);
 
-        return $this->clockInRetriever->clockIn($data['timeStamp']);
+        return $this->clockInUtility->clockIn($data['timeStamp']);
     }
 }

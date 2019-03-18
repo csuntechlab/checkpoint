@@ -8,11 +8,11 @@ use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutContract;
 
 class ClockOutController extends Controller
 {
-    protected $clockOutRetriever;
+    protected $clockOutUtility;
 
     public function __construct(ClockOutContract $clockOutContract)
     {
-        $this->clockOutRetriever = $clockOutContract;
+        $this->clockOutUtility = $clockOutContract;
     }
 
     public function getParam($request): array
@@ -31,6 +31,6 @@ class ClockOutController extends Controller
     {
         $data = $this->getParam($request);
 
-        return $this->clockOutRetriever->clockOut($data['timeStamp'], $data['logUuid']);
+        return $this->clockOutUtility->clockOut($data['timeStamp'], $data['logUuid']);
     }
 }
