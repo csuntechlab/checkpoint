@@ -15,10 +15,10 @@ class CreateUserInvitationsTable extends Migration
     {
         Schema::create('user_invitations', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->uuid('organization_id');
-            $table->foreign('organization_id')
+            $table->uuid('program_id');
+            $table->foreign('program_id')
                 ->references('id')
-                ->on('organizations');
+                ->on('programs');
             $table->string('email')->unique();
             $table->string('invite_code')->unique();
             $table->timestamps();

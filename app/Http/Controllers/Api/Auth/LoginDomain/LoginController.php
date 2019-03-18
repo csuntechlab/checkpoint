@@ -8,11 +8,11 @@ use App\Http\Controllers\Api\Auth\LoginDomain\Contracts\LoginContract;
 
 class LoginController extends Controller
 {
-    protected $loginRetriever;
+    protected $loginUtility;
 
     public function __construct(LoginContract $loginContract)
     {
-        $this->loginRetriever = $loginContract;
+        $this->loginUtility = $loginContract;
     }
 
     private function getParam($request): array
@@ -28,6 +28,6 @@ class LoginController extends Controller
     {
         $data = $this->getParam($request);
 
-        return $this->loginRetriever->login($data['username'], $data['password']);
+        return $this->loginUtility->login($data['username'], $data['password']);
     }
 }

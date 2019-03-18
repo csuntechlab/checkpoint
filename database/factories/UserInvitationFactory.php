@@ -2,7 +2,10 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\UserInvitation::class, function (Faker $faker) {
+// Models
+use App\Models\UserInvitation;
+
+$factory->define(UserInvitation::class, function (Faker $faker) {
     return [
         //
     ];

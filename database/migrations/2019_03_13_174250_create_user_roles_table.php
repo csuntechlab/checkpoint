@@ -15,9 +15,13 @@ class CreateUserRolesTable extends Migration
     {
         Schema::create('user_roles', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->boolean('admin');
-            $table->boolean('supervisor');
-            $table->boolean('employee');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
+            $table->boolean('admin')->default(0);
+            $table->boolean('supervisor')->default(0);
+            $table->boolean('employee')->default(0);
             $table->timestamps();
         });
     }

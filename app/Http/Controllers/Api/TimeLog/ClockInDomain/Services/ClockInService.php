@@ -1,96 +1,32 @@
 <?php 
 namespace App\Http\Controllers\Api\TimeLog\ClockInDomain\Services;
 
-use function Opis\Closure\serialize;
-
 // Auth
 use Illuminate\Support\Facades\Auth;
-// DomainValue Objects
-use App\DomainValueObjects\UUIDGenerator\UUID;
-use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
-use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
-// TB Models
-use App\TimeLog;
-use App\TimeSheets;
 
-//Exception
-use App\Exceptions\TimePuncherExceptions\ClockIn\AlreadyClockedIn;
 // Contracts
 use App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;
-use App\Http\Controllers\Api\TimeLog\TimePuncher\Contracts\TimePuncherContract;
+use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockInLogicContract;
 
 class ClockInService implements ClockInContract
 {
-    private $domainName = "TimeLog";
+    protected $clockInLogicUtility;
 
-    protected $timePuncherRetriever;
-
-    public function __construct(TimePuncherContract $timePuncherContract)
+    public function __construct(ClockInLogicContract $clockInLogicUtility)
     {
-        $this->timePuncherRetriever = $timePuncherContract;
+        $this->clockInLogicUtility = $clockInLogicUtility;
     }
 
-    //TODO: hard code fix
-    private function verifyUserHasNotYetTimeLogged($userId)
-    {
-        $userId = 1;
-        
-        $hasUserTimeLogged = TimeLog::where('user_id', $userId)->where('clock_out',null)->get();
-        
-        if($hasUserTimeLogged->count()!=0 || $hasUserTimeLogged == null){
-            throw new AlreadyClockedIn();
-        }
-        
-        return true;
-    }
-
-    //TODO hard Code fix
-    private function getTimeSheetId($user)
-    {
-        $userId = 1;
-        //add try catch
-        $timeSheet = TimeSheets::where('user_id', $userId)->first();
-        
-        return $timeSheet->id;
-    }
-
-    private function getTimeLogParam($user,$timeStamp): array
-    {
-        $logParam = array();
-
-        $logParam['timeSheetId'] = $this->getTimeSheetId($user);
-        
-        $logParam['uuid'] = new UUID($this->domainName);
-
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
-        
-        $logParam['clockIn'] = new ClockIn(new UUID('clockIn'), $timeStamp);
-        
-        return $logParam;
-    }
-
-    public function clockIn(string $timeStamp)
+    public function clockIn(string $timeStamp): array
     {
         $user = Auth::user();
-        
-        $this->verifyUserHasNotYetTimeLogged($user->id);
-        
-        $logParam = $this->getTimeLogParam($user, $timeStamp);
+        $userId = $user->id;
 
-        $uuid = $logParam['uuid']->toString;
-
-        try {
-            $user = TimeLog::create([
-                'id' => $uuid,
-                'user_id' => $user->id,
-                'time_sheet_id' => $logParam['timeSheetId'],
-                'clock_in' => serialize($logParam['clockIn']),
-            ]);
-        } catch (Illuminate\Database\QueryException $e) {
-            return ['message_error' => 'Clock In was not successfully created.'];
-        }
+        $this->clockInLogicUtility->verifyUserHasNotYetTimeLogged($userId);
         
-        return ["message_success" => "Clock in was successfull", "log_uuid" => $uuid];  
+        $logParam = $this->clockInLogicUtility->getTimeLogParam($userId, $timeStamp);
+
+        return $this->clockInLogicUtility->createClockInEntry($logParam['uuid'], $userId, $logParam['timeSheetId'], $logParam['clockIn'], $timeStamp);
     }
     
 }

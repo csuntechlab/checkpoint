@@ -7,15 +7,15 @@ use App\Http\Controllers\Api\Auth\LogoutDomain\Contracts\LogoutContract;
 
 class LogoutController extends Controller
 {
-    protected $logoutRetriever;
+    protected $logoutUtility;
 
     public function __construct(LogoutContract $logoutContract)
     {
-        $this->logoutRetriever = $logoutContract;
+        $this->logoutUtility = $logoutContract;
     }
 
     public function logout(Request $request)
     {
-        return $this->logoutRetriever->logout($request);
+        return $this->logoutUtility->logout($request);
     }
 }
