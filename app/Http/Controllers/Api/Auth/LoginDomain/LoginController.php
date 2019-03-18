@@ -25,7 +25,7 @@ class LoginController extends Controller
     }
 
 
-    public function login(Request $request)
+    public function login(LoginLogoutRequest $request)
     {
         $data = $this->getParam($request);
 
