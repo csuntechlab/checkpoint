@@ -25,7 +25,7 @@ class RegisterController extends Controller
         return $data;
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
         $this->validate($request, [
             'name' => 'required',

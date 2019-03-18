@@ -75,4 +75,22 @@ class LoginControllerTest extends TestCase
 
         $this->assertEquals($expectedResponse, $response);
     }
+
+    public function test_login_controller_fails_with_wrong_parameters()
+    {
+      $input = ["username" => "not_a_email", "password" => "tes3t@email.com"];
+      $request = new LoginLogoutRequest($input);
+
+      $expected = 'username is not a email!';
+
+
+        $this->retriever
+            ->shouldReceive('login')
+            ->with($input['username'], $input['password'])
+            ->once()->andReturn('username is not a email!');
+
+        $response = $this->controller->login($request);
+
+        $this->assertEquals($expected, $response);
+    }
 }
