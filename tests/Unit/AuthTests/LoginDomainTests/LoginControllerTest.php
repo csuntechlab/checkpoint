@@ -93,4 +93,19 @@ class LoginControllerTest extends TestCase
 
         $this->assertEquals($expected, $response);
     }
+
+    public function test_login_controller_fails_with_bad_route_request()
+    {
+        $input = [
+          "username" => "bad_email",
+          "password" => "oof",
+          "password_confirmation" => "oof"
+        ];
+
+        $response = $this->json('POST', "/api/login", $input);
+        $response = $response->getOriginalContent();
+        $expected = [0 => 'Username must be an email!'];
+
+        $this->assertEquals($expected, $response['errors']['username']);
+    }
 }

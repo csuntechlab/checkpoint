@@ -34,7 +34,11 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name.required' => 'Name is required!',
-            'body.required' => 'Email is required!',
+            'email.required' => 'Email is required!',
+            'email.email' => 'Not a valid email',
+            'email' => [
+              'unique' => 'email is not unique'
+            ],
             'password.required' => 'Password is required!',
             'password.min' => 'Password must be 6 characters long!'
         ];
