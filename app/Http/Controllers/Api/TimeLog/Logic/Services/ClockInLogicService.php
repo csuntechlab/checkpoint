@@ -29,8 +29,6 @@ class ClockInLogicService implements ClockInLogicContract
     //TODO: hard Code fix
     public function verifyUserHasNotYetTimeLogged(string $userId): bool
     {
-        $userId = 1;
-
         try {
             $hasUserTimeLogged = TimeLog::where('user_id', $userId)->where('clock_out', null)->get();
         } catch (\Exception $e) {
@@ -48,8 +46,6 @@ class ClockInLogicService implements ClockInLogicContract
     //TODO: hard Code fix
     private function getTimeSheetId(string $userId): string
     {
-        $userId = 1;
-
         try {
             $timeSheet = TimeSheets::where('user_id', $userId)->first();
         } catch (\Exception $e) {

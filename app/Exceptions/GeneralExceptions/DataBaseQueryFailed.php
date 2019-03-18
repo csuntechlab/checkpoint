@@ -3,11 +3,14 @@
 namespace App\Exceptions\GeneralExceptions;
 
 use Exception;
+use App\Exceptions\BuildResponse\BuildResponse;
 
 class DataBaseQueryFailed extends Exception
 {
-    public function __construct()
+    private $subject;
+    public function __construct($subject)
     {
+        $this->subject = $subject;
         parent::__construct();
     }
 
@@ -16,10 +19,9 @@ class DataBaseQueryFailed extends Exception
      * 
      * @return \Illuminate\Http\Response
      */
-    public function render($subject)
+    public function render()
     {
-        $message = $subject . ' query failed.';
-        // dd($message);
+        $message = $this->subject . 'query failed.';
 
         $status_code = 409;
         return BuildResponse::build_response($message, $status_code);
