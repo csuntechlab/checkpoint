@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use Mockery;
 use Illuminate\Http\Request;
-use App\Http\Requests\Auth\LoginLogoutRequest;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Api\Auth\LoginDomain\LoginController;
 use App\Http\Controllers\Api\Auth\LoginDomain\Contracts\LoginContract;
 
@@ -37,7 +37,7 @@ class LoginControllerTest extends TestCase
     public function test_get_param()
     {
         $input = ["username" => "tes3t@email.com", "password" => "tes3t@email.com"];
-        $request = new LoginLogoutRequest($input);
+        $request = new LoginRequest($input);
 
         $function = 'getParam';
 
@@ -79,7 +79,7 @@ class LoginControllerTest extends TestCase
     public function test_login_controller_fails_with_wrong_parameters()
     {
       $input = ["username" => "not_a_email", "password" => "tes3t@email.com"];
-      $request = new LoginLogoutRequest($input);
+      $request = new LoginRequest($input);
 
       $expected = 'username is not a email!';
 
