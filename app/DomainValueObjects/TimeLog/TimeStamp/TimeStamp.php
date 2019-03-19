@@ -5,7 +5,7 @@ namespace App\DomainValueObjects\TimeLog\TimeStamp;
 
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\Location\Location;
-use App\Exceptions\TimePuncherExceptions\TimeStamp\GenerateTimeStampFailed;
+use App\Exceptions\TimeLogExceptions\TimeStamp\GenerateTimeStampFailed;
 
 
 class TimeStamp
@@ -26,5 +26,10 @@ class TimeStamp
         if ($this->timeStamp == null || $this->timeStamp == '') throw new GenerateTimeStampFailed();
 
         if ($this->uuid == null) throw new GenerateTimeStampFailed();
+    }
+
+    public function getTimeStampString()
+    {
+        return $this->timeStamp;
     }
 }

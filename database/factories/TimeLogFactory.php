@@ -1,7 +1,11 @@
 <?php
 
+// Models
 use App\User;
-use App\TimeSheets;
+use App\Models\TimeSheets;
+use App\Models\TimeLog;
+
+// Domain Value Objects
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
 use App\DomainValueObjects\TimeLog\ClockOut\ClockOut;
@@ -9,7 +13,7 @@ use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 
 use Faker\Generator as Faker;
 
-$factory->define(App\TimeLog::class, function (Faker $faker) {
+$factory->define(TimeLog::class, function (Faker $faker) {
     $uuid = new UUID('log');
     $user = User::where('id', 1)->first();
 
