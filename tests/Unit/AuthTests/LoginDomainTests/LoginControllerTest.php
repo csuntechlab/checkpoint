@@ -134,7 +134,7 @@ class LoginControllerTest extends TestCase
         "message" => "The given data was invalid.",
         "errors" => [
           "username" => [
-            0 => "The selected username is invalid."
+            0 => "Invalid username or password."
           ]
         ]
       ];
