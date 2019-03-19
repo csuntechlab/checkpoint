@@ -1,15 +1,17 @@
 <?php
 
-use App\Organization;
 use Faker\Generator as Faker;
+use function Opis\Closure\serialize;
 
+// Models
+use App\Models\Organization;
 
+// Domain Value Objects
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\Location\Location;
 use App\DomainValueObjects\Location\GeoLocation;
 use App\DomainValueObjects\Location\Address;
 
-use function Opis\Closure\serialize;
 
 $factory->define(Organization::class, function (Faker $faker) {
     $organizationName = 'MetaLab';

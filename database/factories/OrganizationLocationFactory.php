@@ -2,7 +2,10 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\OrganizationLocation::class, function (Faker $faker) {
+// Models
+use App\Models\OrganizationLocation;
+
+$factory->define(OrganizationLocation::class, function (Faker $faker) {
     return [
         //
     ];

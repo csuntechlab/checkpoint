@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\User;
-use App\Organization;
+use App\Models\Organization;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Api\Auth\LogoutDomain\Services\LogoutService;
@@ -18,6 +18,8 @@ class LogoutServiceTest extends TestCase
     {
         parent::setUp();
         $this->service = new LogoutService();
+        $this->seed('OrgnaizationSeeder');
+        $this->seed('ProgramSeeder');
     }
     /**
      * register service test

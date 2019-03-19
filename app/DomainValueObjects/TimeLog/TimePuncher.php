@@ -13,6 +13,7 @@ use App\DomainValueObjects\Location\Location;
 
 class TimePuncher
 {
+    private $uuid = null;
     private $timeStamp =  null;
     private $location = null;
 
@@ -25,4 +26,9 @@ class TimePuncher
 
     private function validation()
     { }
+
+    public function getTimeStamp()
+    {
+        return $this->timeStamp;
+    }
 }

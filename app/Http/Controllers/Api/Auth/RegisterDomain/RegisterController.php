@@ -5,14 +5,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
+use App\User;
 
 class RegisterController extends Controller
 {
-    protected $registerRetriever;
+    protected $registerUtility;
 
     public function __construct(RegisterContract $registerContract)
     {
-        $this->registerRetriever = $registerContract;
+        $this->registerUtility = $registerContract;
     }
 
     private function getParam($request): array
@@ -36,6 +37,6 @@ class RegisterController extends Controller
 
         $data = $this->getParam($request);
 
-        return $this->registerRetriever->register($data['name'], $data['email'], $data['password'], $data['invite_code']);
+        return $this->registerUtility->register($data['name'], $data['email'], $data['password'], $data['invite_code']);
     }
 }

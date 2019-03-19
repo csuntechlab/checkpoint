@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\TimeSheets;
+use App\Models\TimeSheets;
 
 class TimeSheetSeeder extends Seeder
 {
