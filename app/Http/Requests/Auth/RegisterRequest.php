@@ -37,7 +37,7 @@ class RegisterRequest extends FormRequest
             'email.required' => 'Email is required!',
             'email.email' => 'Email is invalid.',
             'email' => [
-              'unique' => 'email is not unique'
+                'unique' => 'email is not unique'
             ],
             'password.required' => 'Password is required!',
             'password.min' => 'Password must be 6 characters long!'
