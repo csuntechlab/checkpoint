@@ -19,12 +19,35 @@ class LoginControllerTest extends TestCase
     use DatabaseMigrations;
     private $controller;
     private $retriever;
+    private $classPath = '\App\Http\Controllers\Api\Auth\LoginDomain\LoginController';
 
     public function setUp()
     {
         parent::setUp();
         $this->retriever = Mockery::mock(LoginContract::class);
         $this->controller = new LoginController($this->retriever);
+    }
+
+    /**
+     * A Mockery Test for get_param in ClockIn Contoller
+     *
+     * @return array
+     */
+    public function test_get_param()
+    {
+        $input = ["username" => "tes3t@email.com", "password" => "tes3t@email.com"];
+        $request = new Request($input);
+
+        $function = 'getParam';
+
+        $method = $this->get_private_method($this->classPath, $function);
+
+        $response = $method->invoke($this->controller, $request);
+
+        $this->assertEquals($response, $input);
+        $this->assertArrayHasKey('username', $input);
+        $this->assertArrayHasKey('password', $input);
+        $this->assertInternalType('array', $response);
     }
 
 
@@ -35,9 +58,8 @@ class LoginControllerTest extends TestCase
      */
     public function test_login_controller_with_mockery()
     {
-        $input = ["username" => "tes3t@email.com", "password" => "tes3t@email.com"];
-
-        $request = new Request($input);
+        $username = "tes3t@email.com";
+        $password = "tes3t@email.com";
 
         $expectedResponse = [
             "token_type" => "Bearer", "expires_in" => 31536000, "access_token" => "serializedToken", "refresh_token" => "serializedToken"
@@ -45,10 +67,10 @@ class LoginControllerTest extends TestCase
 
         $this->retriever
             ->shouldReceive('login')
-            ->with($request)
+            ->with($username, $password)
             ->once()->andReturn($expectedResponse);
 
-        $response = $this->retriever->login($request);
+        $response = $this->retriever->login($username, $password);
 
         $this->assertEquals($expectedResponse, $response);
     }

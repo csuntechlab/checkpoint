@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\User;
+use App\Models\Organization;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Api\Auth\LogoutDomain\Services\LogoutService;
@@ -17,6 +18,8 @@ class LogoutServiceTest extends TestCase
     {
         parent::setUp();
         $this->service = new LogoutService();
+        $this->seed('OrgnaizationSeeder');
+        $this->seed('ProgramSeeder');
     }
     /**
      * register service test
@@ -29,6 +32,8 @@ class LogoutServiceTest extends TestCase
             'Accept' => 'application/json',
             'Authorization' => 'Bearer serializedToken'
         ]);
+
+        factory(Organization::class)->create();
 
         $user = factory(User::class)->create();
 
@@ -51,13 +56,13 @@ class LogoutServiceTest extends TestCase
         $request = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer serializedToken'
-          ]);
+        ]);
 
         $response = $this->service->logout($request);
 
         $expectedResponse = [
-          'status_code' => 403,
-          'message_error' => 'Logout failed',
+            'status_code' => 403,
+            'message_error' => 'Logout failed',
         ];
 
         $this->assertEquals($expectedResponse, $response);

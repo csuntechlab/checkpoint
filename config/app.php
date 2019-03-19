@@ -177,14 +177,28 @@ return [
 
         /*********** Domain Service Providers **************/
 
+        /*********** Auth Service Providers **************/
         /** Login Domain Service provider */
-        App\Providers\LoginServiceProvider::class,
+        App\Providers\ApiProviders\Auth\LoginServiceProvider::class,
 
         /** Logout Domain Service provider */
-        App\Providers\LogoutServiceProvider::class,
+        App\Providers\ApiProviders\Auth\LogoutServiceProvider::class,
 
         /** Register Domain Service provider */
-        App\Providers\RegiserServiceProvider::class,
+        App\Providers\ApiProviders\Auth\RegiserServiceProvider::class,
+
+        /*********** TimeLog Service Providers **************/
+
+        /** ClockIn Service Provider */
+        App\Providers\ApiProviders\TimeLog\ClockInServiceProvider::class,
+
+        /** ClockOut Service Provider */
+        App\Providers\ApiProviders\TimeLog\ClockOutServiceProvider::class,
+
+        /** Time Log Logic Service Provider */
+        App\Providers\ApiProviders\TimeLog\Logic\ClockInLogicServiceProvider::class,
+        App\Providers\ApiProviders\TimeLog\Logic\ClockOutLogicServiceProvider::class,
+
 
     ],
 

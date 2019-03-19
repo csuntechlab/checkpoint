@@ -1,35 +1,49 @@
 <?php 
 namespace App\Http\Controllers\Api\Auth\RegisterDomain\Services;
 
-use App\User;
 use Illuminate\Support\Facades\Hash;
 
+//Models
+use App\User;
+use App\Models\Program;
+use App\Models\UserInvitation;
+
+//Exceptions
+use App\Exceptions\AuthExceptions\UserCreatedFailed;
+
+//Contracts
 use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
 
 
 class RegisterService implements RegisterContract
 {
-
-    public function register($request)
+    public function register($name, $email, $password, $inviteCode): User
     {
-        try {
-            $name = $request['name'];
-            $email = $request['email'];
-            $password = $request['password'];
-        } catch (\Exception $e) {
-            return ['message_error' => 'User was not successfully created.'];
-        }
+        $programId  = $this->getPrgramIdByUserInvitation($email, $inviteCode);
 
         try {
             $user = User::create([
                 'name' => $name,
                 'email' => $email,
                 'password' => Hash::make($password),
+                'program_id' => $programId
             ]);
-            return $user;
-        } catch (Illuminate\Database\QueryException $e) {
-            return ['message_error' => 'User was not successfully created.'];
+        } catch (\Exception $e) {
+            throw new UserCreatedFailed();
         }
+
+        return $user;
     }
 
+
+
+    private function getPrgramIdByUserInvitation(string $email, string $inviteCode): string
+    {
+        $programId = UserInvitation::where('email', $email)->where('invite_code', $inviteCode)->first();
+
+        //TODO HardCode
+        $programId = Program::first();
+
+        return $programId->id;
+    }
 }

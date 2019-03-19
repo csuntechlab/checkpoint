@@ -21,6 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login', 'Api\Auth\LoginDomain\LoginController@login');
 
 Route::middleware('auth:api')->post('/logout', 'Api\Auth\LogoutDomain\LogoutController@logout');
-
 Route::post('/register', 'Api\Auth\RegisterDomain\RegisterController@register');
-
+Route::middleware('auth:api')->post('/clock/in', 'Api\TimeLog\ClockInDomain\ClockInController@clockIn');
+Route::middleware('auth:api')->post('/clock/out', 'Api\TimeLog\ClockOutDomain\ClockOutController@clockOut');
