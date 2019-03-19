@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api\Auth\RegisterDomain;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
 use App\User;
@@ -25,15 +26,8 @@ class RegisterController extends Controller
         return $data;
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
-            // 'invite_code' => 'required'
-        ]);
-
         $data = $this->getParam($request);
 
         return $this->registerUtility->register($data['name'], $data['email'], $data['password'], $data['invite_code']);
