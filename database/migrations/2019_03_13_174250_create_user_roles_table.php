@@ -24,8 +24,6 @@ class CreateUserRolesTable extends Migration
                 ->references('id')
                 ->on('roles');
             $table->primary(['user_id', 'role_id']);
-            $table->timestamps();
-            $table->dropTimestamps();
         });
     }
 
