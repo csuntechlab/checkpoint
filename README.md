@@ -23,7 +23,13 @@ Make sure you meet the necessary [Prerequisites](#prerequisites) in order to sta
 To begin, navigate to the project root on your favorite terminal and run the following:
 
 ```
-$ ./start.sh up -d
+$ ./start.sh
+```
+
+Answer the following prompt honestly, after run.
+
+```
+docker-compose up -d
 ```
 
 This will build and run the following containers:
