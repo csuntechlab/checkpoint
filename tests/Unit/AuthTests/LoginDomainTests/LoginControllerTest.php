@@ -118,4 +118,27 @@ class LoginControllerTest extends TestCase
 
         $this->assertEquals($expected, $response);
     }
+
+    public function test_login_controller_fails_with_bad_email()
+    {
+      $input = [
+        "username" => "michael.chann.hello@notaemail.com",
+        "password" => "explorelearngobeyond",
+        "password_confirmation" => "explorelearngobeyond"
+      ];
+
+      $response = $this->json('POST', "/api/login", $input);
+      $response = $response->getOriginalContent();
+
+      $expected = [
+        "message" => "The given data was invalid.",
+        "errors" => [
+          "username" => [
+            0 => "Invalid username or password."
+          ]
+        ]
+      ];
+
+      $this->assertEquals($expected, $response);
+    }
 }
