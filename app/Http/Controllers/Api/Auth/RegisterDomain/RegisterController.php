@@ -28,13 +28,6 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
-            // 'invite_code' => 'required'
-        ]);
-
         $data = $this->getParam($request);
 
         return $this->registerUtility->register($data['name'], $data['email'], $data['password'], $data['invite_code']);
