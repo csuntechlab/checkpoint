@@ -98,14 +98,24 @@ class LoginControllerTest extends TestCase
     {
         $input = [
           "username" => "bad_email",
-          "password" => "oof",
-          "password_confirmation" => "oof"
+          "password" => "",
+          "password_confirmation" => ""
         ];
 
         $response = $this->json('POST', "/api/login", $input);
         $response = $response->getOriginalContent();
-        $expected = [0 => 'Username must be an email!'];
+        $expected = [
+          "message" => "The given data was invalid.",
+          "errors" => [
+            "username" => [
+              0 => "Username must be an email!"
+            ],
+            "password" => [
+              0 => "Invalid username or password."
+            ]
+          ]
+        ];
 
-        $this->assertEquals($expected, $response['errors']['username']);
+        $this->assertEquals($expected, $response);
     }
 }

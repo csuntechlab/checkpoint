@@ -113,16 +113,31 @@ class RegisterControllerTest extends TestCase
     public function test_register_fails_with_wrong_parameters()
     {
       $input = [
-          "name" => "tes3t@email.com",
+          "name" => "",
           "email" => "not_a_email",
-          "password" => "tes3t@email.com",
-          "password_confirmation" => "tes3t@email.com"
+          "password" => "oof",
+          "password_confirmation" => "yikes"
       ];
 
       $response = $this->json('POST', "/api/register", $input);
       $response = $response->getOriginalContent();
-      $expected = [0 => 'Not a valid email'];
+      
+      $expected = [
+        "message" => "The given data was invalid.",
+        "errors" => [
+          "name" => [
+            0 => "Name is required!"
+          ],
+          "email" => [
+            0 => "Email is invalid."
+          ],
+          "password" => [
+            0 => "Password must be 6 characters long!",
+            1 => "The password confirmation does not match."
+          ]
+        ]
+      ];
 
-      $this->assertEquals($expected, $response['errors']['email']);
+      $this->assertEquals($expected, $response);
     }
 }

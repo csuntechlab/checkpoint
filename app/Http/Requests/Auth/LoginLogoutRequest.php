@@ -34,7 +34,7 @@ class LoginLogoutRequest extends FormRequest
         return [
             'username.required' => 'Username is required!',
             'username.email' => 'Username must be an email!',
-            'password.required' => 'Password is required!'
+            'password.required' => 'Invalid username or password.'
         ];
     }
 }

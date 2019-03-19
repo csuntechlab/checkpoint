@@ -35,7 +35,7 @@ class RegisterRequest extends FormRequest
         return [
             'name.required' => 'Name is required!',
             'email.required' => 'Email is required!',
-            'email.email' => 'Not a valid email',
+            'email.email' => 'Email is invalid.',
             'email' => [
               'unique' => 'email is not unique'
             ],
