@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Mockery;
 use Illuminate\Http\Request;
+use App\Http\Requests\Auth\LoginLogoutRequest;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use App\Http\Controllers\Api\Auth\LogoutDomain\LogoutController;

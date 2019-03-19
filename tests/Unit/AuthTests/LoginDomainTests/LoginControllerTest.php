@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use Mockery;
 use Illuminate\Http\Request;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Api\Auth\LoginDomain\LoginController;
 use App\Http\Controllers\Api\Auth\LoginDomain\Contracts\LoginContract;
 
@@ -36,7 +37,7 @@ class LoginControllerTest extends TestCase
     public function test_get_param()
     {
         $input = ["username" => "tes3t@email.com", "password" => "tes3t@email.com"];
-        $request = new Request($input);
+        $request = new LoginRequest($input);
 
         $function = 'getParam';
 
@@ -73,5 +74,71 @@ class LoginControllerTest extends TestCase
         $response = $this->retriever->login($username, $password);
 
         $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function test_login_controller_fails_with_wrong_parameters()
+    {
+      $input = ["username" => "not_a_email", "password" => "tes3t@email.com"];
+      $request = new LoginRequest($input);
+
+      $expected = 'username is not a email!';
+
+
+        $this->retriever
+            ->shouldReceive('login')
+            ->with($input['username'], $input['password'])
+            ->once()->andReturn('username is not a email!');
+
+        $response = $this->controller->login($request);
+
+        $this->assertEquals($expected, $response);
+    }
+
+    public function test_login_controller_fails_with_bad_route_request()
+    {
+        $input = [
+          "username" => "bad_email",
+          "password" => "",
+          "password_confirmation" => ""
+        ];
+
+        $response = $this->json('POST', "/api/login", $input);
+        $response = $response->getOriginalContent();
+        $expected = [
+          "message" => "The given data was invalid.",
+          "errors" => [
+            "username" => [
+              0 => "Username must be an email!"
+            ],
+            "password" => [
+              0 => "Invalid username or password."
+            ]
+          ]
+        ];
+
+        $this->assertEquals($expected, $response);
+    }
+
+    public function test_login_controller_fails_with_bad_email()
+    {
+      $input = [
+        "username" => "michael.chann.hello@notaemail.com",
+        "password" => "explorelearngobeyond",
+        "password_confirmation" => "explorelearngobeyond"
+      ];
+
+      $response = $this->json('POST', "/api/login", $input);
+      $response = $response->getOriginalContent();
+
+      $expected = [
+        "message" => "The given data was invalid.",
+        "errors" => [
+          "username" => [
+            0 => "Invalid username or password."
+          ]
+        ]
+      ];
+
+      $this->assertEquals($expected, $response);
     }
 }
