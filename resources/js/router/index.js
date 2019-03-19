@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../store';
 
-import SignUp from '../views/SignUp.vue'
+import SignUp from './views/signup/index.vue'
 
 
 // INIT VUE-ROUTER

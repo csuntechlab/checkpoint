@@ -41,18 +41,17 @@
 <script>
 export default {
   data: () => ({
-    organization: "",
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    validatepassword: "",
-    address1: "",
-    address2: "",
-    city: "",
-    country: "",
-    zip: ""
+    organization: null,
+    firstname: null,
+    lastname: null,
+    email: null,
+    password: null,
+    validatepassword: null,
+    address1: null,
+    address2: null,
+    city: null,
+    country: null,
+    zip: null
   }),
-  name: "SignUp"
 };
 </script>
