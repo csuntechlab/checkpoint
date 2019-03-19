@@ -19,10 +19,11 @@ class CreateUserRolesTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
-            $table->boolean('admin')->default(0);
-            $table->boolean('supervisor')->default(0);
-            $table->boolean('employee')->default(0);
-            $table->timestamps();
+            $table->unsignedInteger('role_id');
+            $table->foreign('role_id')
+                ->references('id')
+                ->on('roles');
+            $table->primary(['user_id', 'role_id']);
         });
     }
 
