@@ -23,6 +23,7 @@ class CreateTimeLogsTable extends Migration
             $table->foreign('time_sheet_id')
                 ->references('id')
                 ->on('time_sheets');
+            $table->date('date');
             $table->text('clock_in');
             $table->text('clock_out')->nullable();
             $table->text('log_change_stack')->nullable();

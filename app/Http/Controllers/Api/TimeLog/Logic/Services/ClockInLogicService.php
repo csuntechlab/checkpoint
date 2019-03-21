@@ -58,14 +58,14 @@ class ClockInLogicService implements ClockInLogicContract
         return $timeSheet->id;
     }
 
-    private function getClockIn(string $timeStamp): ClockIn
+    private function getClockIn(string $date, string $time): ClockIn
     {
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
+        $timeStamp = new TimeStamp(new UUID('timeStamp'), $date, $time);
         $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp);
         return $clockIn;
     }
 
-    public function getTimeLogParam(string $userId, string $timeStamp): array
+    public function getTimeLogParam(string $userId, string $date, string $time): array
     {
         $logParam = array();
 
@@ -74,18 +74,19 @@ class ClockInLogicService implements ClockInLogicContract
         $uuid = new UUID($this->domainName);
         $logParam['uuid'] = $uuid->toString;
 
-        $logParam['clockIn'] = $this->getClockIn($timeStamp);
+        $logParam['clockIn'] = $this->getClockIn($date, $time);
 
         return $logParam;
     }
 
-    public function createClockInEntry(string $uuid, string $userId, string $timeSheetId, ClockIn $clockIn, string $timeStamp): array
+    public function createClockInEntry(string $uuid, string $userId, string $timeSheetId, ClockIn $clockIn, string $date, string $time): array
     {
         try {
             TimeLog::create([
                 'id' => $uuid,
                 'user_id' => $userId,
                 'time_sheet_id' => $timeSheetId,
+                'date' => $date,
                 'clock_in' => serialize($clockIn),
             ]);
         } catch (\Exception $e) {
@@ -94,9 +95,10 @@ class ClockInLogicService implements ClockInLogicContract
 
         return [
             "message_success" => "Clock in was successfull",
-            "timeSheet_id" => $timeSheetId,
+            "time_sheet_id" => $timeSheetId,
             "log_uuid" => $uuid,
-            "time_stamp" => $timeStamp
+            "date" => $date,
+            "time" => $time
         ];
     }
 }

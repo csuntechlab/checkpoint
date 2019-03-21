@@ -3,5 +3,5 @@ namespace App\Http\Controllers\Api\Auth\LoginDomain\Contracts;
 
 interface LoginContract
 {
-    public function login($username, $passowrd);
+    public function login($request);
 }

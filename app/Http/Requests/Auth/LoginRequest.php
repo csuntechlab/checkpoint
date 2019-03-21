@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|email|exists:users,email',
+            'email' => 'required|email|exists:users,email',
             'password' => 'required'
         ];
     }
@@ -32,10 +32,10 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.required' => 'Username is required!',
-            'username.email' => 'Username must be an email!',
-            'username.exists' => 'Invalid username or password.',
-            'password.required' => 'Invalid username or password.'
+            'email.required' => 'Username is required!',
+            'email.email' => 'Username must be an email!',
+            'email.exists' => 'Invalid email or password.',
+            'password.required' => 'Invalid email or password.'
         ];
     }
 }
