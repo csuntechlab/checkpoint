@@ -17,10 +17,15 @@ class CreateUserInvitationsTable extends Migration
             $table->uuid('id')->unique();
             $table->uuid('program_id');
             $table->foreign('program_id')
-                ->references('id')
-                ->on('programs');
+            ->references('id')
+            ->on('programs');
+            $table->unsignedInteger('role_id');
+            $table->foreign('role_id')
+                    ->references('id')
+                    ->on('roles');
+            $table->string('name')->unique();
             $table->string('email')->unique();
-            $table->string('invite_code')->unique();
+            $table->string('token')->unique();
             $table->timestamps();
         });
     }
@@ -36,4 +41,3 @@ class CreateUserInvitationsTable extends Migration
     }
 }
 
- 
