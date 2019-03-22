@@ -24,7 +24,7 @@ class LoginService implements LoginContract
 
     private function createToken($user, $request): array
     {
-        $tokenResult = $user->createToken('takeoff');
+        $tokenResult = $user->createToken('checkpoint');
 
         $token = $tokenResult->token;
 

@@ -7,6 +7,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use Mockery;
+use Carbon\Carbon;
 
 // TB models
 use App\Http\Requests\ClockInRequest;
@@ -14,13 +15,13 @@ use App\Http\Requests\ClockInRequest;
 //Contracts 
 use \App\Http\Controllers\Api\TimeLog\ClockInDomain\ClockInController;
 use \App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;
-use Carbon\Carbon;
 
 class ClockInControllerTest extends TestCase
 {
     use DatabaseMigrations;
     private $controller;
     private $retriever;
+    private $loginService;
 
     private $classPath = '\App\Http\Controllers\Api\TimeLog\ClockInDomain\ClockInController';
 
@@ -29,6 +30,7 @@ class ClockInControllerTest extends TestCase
         parent::setUp();
         $this->retriever = Mockery::mock(ClockInContract::class);
         $this->controller = new ClockInController($this->retriever);
+        $this->seed('PassportSeeder');
         $this->seed('OrgnaizationSeeder');
         $this->seed('ProgramSeeder');
         $this->seed('UsersTableSeeder');
@@ -72,12 +74,16 @@ class ClockInControllerTest extends TestCase
         $this->assertEquals($expectedResponse, $response);
     }
 
+
+
     public function test_clockIn_controller_http_call()
     {
         $input = [
             "date" => "2019-02-01",
             "time" => "06:30:44"
         ];
+
+        dd($this->getAuthToken($this->user));
 
         $this->assertAuthenticated($guard = null);
         $this->assertAuthenticatedAs($this->user, $guard = null);
