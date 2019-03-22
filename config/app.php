@@ -200,6 +200,11 @@ return [
         App\Providers\ApiProviders\TimeLog\Logic\ClockOutLogicServiceProvider::class,
 
 
+        /*********** UserInvitation Service Providers **************/
+
+        /** UserInvite Service Provider */
+        App\Providers\ApiProviders\UserInvitation\UserInvitationServiceProvider::class,
+
     ],
 
     /*
