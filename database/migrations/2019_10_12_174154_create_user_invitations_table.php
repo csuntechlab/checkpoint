@@ -17,12 +17,12 @@ class CreateUserInvitationsTable extends Migration
             $table->uuid('id')->unique();
             $table->uuid('organization_id');
             $table->foreign('organization_id')
-            ->references('id')
-            ->on('organizations');
+                ->references('id')
+                ->on('organizations');
             $table->unsignedInteger('role_id');
             $table->foreign('role_id')
-                    ->references('id')
-                    ->on('roles');
+                ->references('id')
+                ->on('roles');
             $table->string('name')->unique();
             $table->string('email')->unique();
             $table->string('invite_code')->unique();
@@ -40,4 +40,3 @@ class CreateUserInvitationsTable extends Migration
         Schema::dropIfExists('user_invitations');
     }
 }
-

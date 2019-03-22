@@ -7,8 +7,8 @@ use DirapeToken;
 
 class UserInvitation extends Model
 {
-    protected $DT_Column='invite_code';
-    protected $DT_settings=['type'=>DT_UniqueNum,'size'=>6,'special_chr'=>false];
+    protected $DT_Column = 'invite_code';
+    protected $DT_settings = ['type' => DT_UniqueNum, 'size' => 6, 'special_chr' => false];
 
 
     /**
@@ -17,6 +17,7 @@ class UserInvitation extends Model
      * @var array
      */
     protected $fillable = [
-        'organization_id', 'role_id', 'name', 'email', 'invite_code'
+        'id', 'organization_id', 'role_id', 'name', 'email', 'invite_code'
     ];
+    public $incrementing = false;
 }
