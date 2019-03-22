@@ -16,7 +16,7 @@ $factory->define(UserInvitation::class, function (Faker $faker) {
     $roleId = $role->id;
     $name = $faker->name;
     $email = $faker->email;
-    $inviteCode = Token::UniqueNumber('user_invitations','invite_code', 6);
+    $inviteCode = Token::UniqueNumber('user_invitations', 'invite_code', 6);
 
     return [
         'id' => $uuid->toString,

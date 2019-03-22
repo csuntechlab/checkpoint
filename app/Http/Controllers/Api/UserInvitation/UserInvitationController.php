@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\UserInvitation;
 
 use Illuminate\Http\Request;
+use App\Models\UserInvitation;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\UserInvitation\Contracts\UserInvitationContract;
 
@@ -30,8 +31,9 @@ class UserInvitationController extends Controller
         return $data;
     }
 
-    public function clockIn(Request $request): array
+    public function inviteNewUser(Request $request): UserInvitation
     {
+        // create a Form request object here, you dont have to getParam 
         $data = $this->getParam($request);
 
         return $this->userInvitationUtility->inviteNewUser($data['organizationId'], $data['roleId'], $data['name'], $data['email']);
