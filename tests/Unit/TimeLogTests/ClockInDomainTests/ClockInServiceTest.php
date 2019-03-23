@@ -52,19 +52,19 @@ class ClockInServiceTest extends TestCase
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $date, $time);
         $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp);
 
-        $timeSheetId = "uuid";
-        $logUuid = "uuid";
+        $timeSheetId = "id";
+        $logUuid = "id";
 
         $expectedLogParam = [
             "timeSheetId" => $timeSheetId,
-            "uuid" => $logUuid,
+            "id" => $logUuid,
             "clockIn" => $clockIn
         ];
 
         $expectedResponse = [
             "message_success" => "Clock in was successfull",
             "timeSheet_id" => $timeSheetId,
-            "log_uuid" => $logUuid,
+            "log_id" => $logUuid,
             "date" => $date,
             "time" => $time
         ];

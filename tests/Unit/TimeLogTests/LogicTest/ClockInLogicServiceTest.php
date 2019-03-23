@@ -108,9 +108,9 @@ class ClockInLogicServiceTest extends TestCase
         $response = $this->service->getTimeLogParam($this->user->id, $date, $time);
 
         $this->assertArrayHasKey('clockIn', $response);
-        $this->assertArrayHasKey('uuid', $response);
+        $this->assertArrayHasKey('id', $response);
         $this->assertArrayHasKey('timeSheetId', $response);
-        $this->assertInternalType('string', $response['uuid']);
+        $this->assertInternalType('string', $response['id']);
         $this->assertInstanceOf('App\DomainValueObjects\TimeLog\ClockIn\ClockIn', $response['clockIn']);
     }
 
@@ -122,8 +122,8 @@ class ClockInLogicServiceTest extends TestCase
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $date, $time);
         $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp);
 
-        $timeSheetId = "uuid";
-        $logUuid = "uuid";
+        $timeSheetId = "id";
+        $logUuid = "id";
 
         $response = $this->service->createClockInEntry($logUuid, $this->user->id, $timeSheetId, $clockIn, $date, $time);
 

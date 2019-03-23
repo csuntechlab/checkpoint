@@ -78,8 +78,8 @@ class ClockOutLogicServiceTest extends TestCase
     public function test_getTimeLog_throws_TimeLogNotFoundException()
     {
         $this->expectException('App\Exceptions\TimeLogExceptions\TimeLogNotFound');
-        $uuid = 'uuid';
-        $this->service->getTimeLog($this->user->id, $uuid);
+        $id = 'id';
+        $this->service->getTimeLog($this->user->id, $id);
     }
 
     public function test_getClockOut_passes()
@@ -103,12 +103,12 @@ class ClockOutLogicServiceTest extends TestCase
         $timeLog->save();
 
         $timeSheetId = $timeLog->time_sheet_id;
-        $uuid = $timeLog->id;
+        $id = $timeLog->id;
 
         $expectedResponse = [
             "message_success" => "Clock out was successfull",
             "time_sheet_id" => $timeSheetId,
-            "log_id" => $uuid,
+            "log_id" => $id,
             "date" => $date,
             "time" => $time,
         ];

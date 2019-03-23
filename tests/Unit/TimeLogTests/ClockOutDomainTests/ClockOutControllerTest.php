@@ -52,8 +52,8 @@ class ClockOutControllerTest extends TestCase
 
         $expectedResponse =  [
             "message_success" => "Clock out was successfull",
-            "time_sheet_id" => "uuid",
-            "log_id" => "uuid",
+            "time_sheet_id" => "id",
+            "log_id" => "id",
             "date" => $date,
             "time" => $time,
         ];

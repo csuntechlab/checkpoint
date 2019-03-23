@@ -56,8 +56,8 @@ class ClockInControllerTest extends TestCase
 
         $expectedResponse = [
             "message_success" => "Clock in was successfull",
-            "log_uuid" => "uuid",
-            "time_sheet_id" => "uuid",
+            "log_uuid" => "id",
+            "time_sheet_id" => "id",
             "date" => $date,
             "time" => $time
         ];
