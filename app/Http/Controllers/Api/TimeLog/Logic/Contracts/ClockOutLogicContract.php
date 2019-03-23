@@ -6,9 +6,9 @@ use App\DomainValueObjects\TimeLog\ClockOut\ClockOut;
 
 interface ClockOutLogicContract
 {
-    public function getTimeLog(string $userId, string $logUuid): TimeLog;
+    public function getTimeLog(string $userId, string $logId): TimeLog;
 
-    public function getClockOut(string $timeStamp): ClockOut;
+    public function getClockOut(string $date, string $time): ClockOut;
 
-    public function appendClockOutToTimeLog($timelog, ClockOut $clockOut, string $timeStamp): array;
+    public function appendClockOutToTimeLog(TimeLog $timelog, ClockOut $clockOut, string $date, string $time): array;
 }

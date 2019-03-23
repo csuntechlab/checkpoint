@@ -71,19 +71,25 @@ class ClockInLogicService implements ClockInLogicContract
 
         $logParam['timeSheetId'] = $this->getTimeSheetId($userId);
 
-        $uuid = new UUID($this->domainName);
-        $logParam['uuid'] = $uuid->toString;
+        $id = new UUID($this->domainName);
+        $logParam['id'] = $id->toString;
 
         $logParam['clockIn'] = $this->getClockIn($date, $time);
 
         return $logParam;
     }
 
-    public function createClockInEntry(string $uuid, string $userId, string $timeSheetId, ClockIn $clockIn, string $date, string $time): array
-    {
+    public function createClockInEntry(
+        string $id,
+        string $userId,
+        string $timeSheetId,
+        ClockIn $clockIn,
+        string $date,
+        string $time
+    ): array {
         try {
             TimeLog::create([
-                'id' => $uuid,
+                'id' => $id,
                 'user_id' => $userId,
                 'time_sheet_id' => $timeSheetId,
                 'date' => $date,
@@ -96,7 +102,7 @@ class ClockInLogicService implements ClockInLogicContract
         return [
             "message_success" => "Clock in was successfull",
             "time_sheet_id" => $timeSheetId,
-            "log_id" => $uuid,
+            "log_id" => $id,
             "date" => $date,
             "time" => $time
         ];

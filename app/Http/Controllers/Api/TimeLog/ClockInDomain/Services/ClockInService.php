@@ -26,7 +26,7 @@ class ClockInService implements ClockInContract
         
         $logParam = $this->clockInLogicUtility->getTimeLogParam($userId, $date, $time);
 
-        return $this->clockInLogicUtility->createClockInEntry($logParam['uuid'], $userId, $logParam['timeSheetId'], $logParam['clockIn'], $date, $time);
+        return $this->clockInLogicUtility->createClockInEntry($logParam['id'], $userId, $logParam['timeSheetId'], $logParam['clockIn'], $date, $time);
     }
     
 }
