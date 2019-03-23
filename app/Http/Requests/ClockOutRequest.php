@@ -26,7 +26,7 @@ class ClockOutRequest extends FormRequest
         return [
             'date' => array('required', 'Date'),
             'time' => array('required', 'regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)$/'),
-            'logId' => array('required', 'regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)$/'),
+            'logId' => array('required')
         ];
     }
 }
