@@ -5,8 +5,6 @@ use Illuminate\Database\Seeder;
 class PassportSeeder extends Seeder
 {
 
-    private function getArray()
-    { }
     /**
      * Run the database seeds.
      *

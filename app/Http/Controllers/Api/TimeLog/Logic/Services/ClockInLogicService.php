@@ -96,7 +96,7 @@ class ClockInLogicService implements ClockInLogicContract
         return [
             "message_success" => "Clock in was successfull",
             "time_sheet_id" => $timeSheetId,
-            "log_uuid" => $uuid,
+            "log_id" => $uuid,
             "date" => $date,
             "time" => $time
         ];

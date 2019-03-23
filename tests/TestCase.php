@@ -18,28 +18,4 @@ abstract class TestCase extends BaseTestCase
         $method->setAccessible(true);
         return $method;
     }
-
-    public function getAuthToken($user)
-    {
-
-        $classPath = "App\Http\Controllers\Api\Auth\LoginDomain\Services\LoginService";
-        $function = "createToken";
-
-        $email = $user->email;
-        $password = $user->getAuthPassword();
-
-        $input = [
-            "email" => $email,
-            "password" => $password
-        ];
-
-        $request = new Request($input);
-
-        $loginService = new LoginService();
-
-        $method = $this->get_private_method($classPath, $function);
-        $response = $method->invoke($loginService, $user, $request);
-
-        return $response;
-    }
 }

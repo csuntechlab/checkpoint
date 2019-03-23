@@ -90,20 +90,22 @@ class ClockInLogicServiceTest extends TestCase
 
     public function test_getClockIn_passes()
     {
-        $timeStamp =  "2019-02-01 09:30:44";
+        $date = "2019-02-01";
+        $time = "06:30:44";
 
         $function = 'getClockIn';
         $method = $this->get_private_method($this->classPath, $function);
-        $response = $method->invoke($this->service, $timeStamp);
+        $response = $method->invoke($this->service, $date, $time);
 
         $this->assertInstanceOf('App\DomainValueObjects\TimeLog\ClockIn\ClockIn', $response);
     }
 
     public function test_getTimeLogParam_passes()
     {
-        $timeStamp =  "2019-02-01 06:30:44";
+        $date = "2019-02-01";
+        $time = "06:30:44";
 
-        $response = $this->service->getTimeLogParam($this->user->id, $timeStamp);
+        $response = $this->service->getTimeLogParam($this->user->id, $date, $time);
 
         $this->assertArrayHasKey('clockIn', $response);
         $this->assertArrayHasKey('uuid', $response);
@@ -114,22 +116,26 @@ class ClockInLogicServiceTest extends TestCase
 
     public function test_createClockInEntry_passes()
     {
-        $timeStampString = "2019-02-01 06:30:44";
+        $date = "2019-02-01";
+        $time = "06:30:44";
 
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStampString);
+        $timeStamp = new TimeStamp(new UUID('timeStamp'), $date, $time);
         $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp);
 
         $timeSheetId = "uuid";
         $logUuid = "uuid";
 
-        $response = $this->service->createClockInEntry($logUuid, $this->user->id, $timeSheetId, $clockIn, $timeStampString);
+        $response = $this->service->createClockInEntry($logUuid, $this->user->id, $timeSheetId, $clockIn, $date, $time);
+
         $this->assertArrayHasKey('message_success', $response);
-        $this->assertArrayHasKey('timeSheet_id', $response);
-        $this->assertArrayHasKey('log_uuid', $response);
-        $this->assertArrayHasKey('time_stamp', $response);
-        $this->assertInternalType('string', $response['timeSheet_id']);
-        $this->assertInternalType('string', $response['time_stamp']);
-        $this->assertInternalType('string', $response['log_uuid']);
+        $this->assertArrayHasKey('time_sheet_id', $response);
+        $this->assertArrayHasKey('log_id', $response);
+        $this->assertArrayHasKey('date', $response);
+        $this->assertArrayHasKey('time', $response);
         $this->assertInternalType('string', $response['message_success']);
+        $this->assertInternalType('string', $response['time_sheet_id']);
+        $this->assertInternalType('string', $response['log_id']);
+        $this->assertInternalType('string', $response['date']);
+        $this->assertInternalType('string', $response['time']);
     }
 }

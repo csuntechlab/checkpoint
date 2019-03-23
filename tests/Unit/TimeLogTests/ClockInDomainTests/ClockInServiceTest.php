@@ -46,15 +46,16 @@ class ClockInServiceTest extends TestCase
     {
         $userId = $this->user->id;
 
-        $timeStampString = "2019-02-01 06:30:44";
+        $date = "2019-02-01";
+        $time = "06:30:44";
 
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStampString);
+        $timeStamp = new TimeStamp(new UUID('timeStamp'), $date, $time);
         $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp);
 
         $timeSheetId = "uuid";
         $logUuid = "uuid";
 
-        $logParam = [
+        $expectedLogParam = [
             "timeSheetId" => $timeSheetId,
             "uuid" => $logUuid,
             "clockIn" => $clockIn
@@ -64,7 +65,8 @@ class ClockInServiceTest extends TestCase
             "message_success" => "Clock in was successfull",
             "timeSheet_id" => $timeSheetId,
             "log_uuid" => $logUuid,
-            "time_stamp" => $timeStampString
+            "date" => $date,
+            "time" => $time
         ];
 
         $this->clockInLogicUtility
@@ -74,15 +76,15 @@ class ClockInServiceTest extends TestCase
 
         $this->clockInLogicUtility
             ->shouldReceive('getTimeLogParam')
-            ->with($userId, $timeStampString)
-            ->once()->andReturn($logParam);
+            ->with($userId, $date, $time)
+            ->once()->andReturn($expectedLogParam);
 
         $this->clockInLogicUtility
             ->shouldReceive('createClockInEntry')
-            ->with($logUuid, $userId, $timeSheetId, $clockIn, $timeStampString)
+            ->with($logUuid, $userId, $timeSheetId, $clockIn, $date, $time)
             ->once()->andReturn($expectedResponse);
 
-        $response = $this->service->clockIn($timeStampString);
+        $response = $this->service->clockIn($date, $time);
 
         $this->assertEquals($expectedResponse, $response);
     }
