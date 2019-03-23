@@ -84,8 +84,9 @@ class ClockOutLogicServiceTest extends TestCase
 
     public function test_getClockOut_passes()
     {
-        $timeStamp =  "2019-02-01 09:30:44";
-        $response = $this->service->getClockOut($timeStamp);
+        $date = "2019-02-01";
+        $time = "06:30:44";
+        $response = $this->service->getClockOut($date, $time);
         $this->assertInstanceOf('App\DomainValueObjects\TimeLog\ClockOut\ClockOut', $response);
     }
 
@@ -94,7 +95,9 @@ class ClockOutLogicServiceTest extends TestCase
         $timeLog = factory(TimeLog::class)->create();
         $clockOut =  $timeLog->clock_out;
         $clockOut = unserialize($clockOut);
-        $timeStampString = $clockOut->getTimeStamp()->getTimeStampString();
+        $date = "2019-02-01";
+        $time = "06:30:44";
+
         $timeLog->user_id = $this->user->id;
         $timeLog->clock_out = null;
         $timeLog->save();
@@ -104,12 +107,13 @@ class ClockOutLogicServiceTest extends TestCase
 
         $expectedResponse = [
             "message_success" => "Clock out was successfull",
-            "timeSheet_id" => $timeSheetId,
-            "log_uuid" => $uuid,
-            "time_stamp" => $timeStampString
+            "time_sheet_id" => $timeSheetId,
+            "log_id" => $uuid,
+            "date" => $date,
+            "time" => $time,
         ];
 
-        $response = $this->service->appendClockOutToTimeLog($timeLog, $clockOut, $timeStampString);
+        $response = $this->service->appendClockOutToTimeLog($timeLog, $clockOut, $date, $time);
 
         $this->assertEquals($expectedResponse, $response);
     }

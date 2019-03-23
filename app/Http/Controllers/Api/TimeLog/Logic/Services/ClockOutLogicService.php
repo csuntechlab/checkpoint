@@ -39,7 +39,7 @@ class ClockOutLogicService implements ClockOutLogicContract
         return $log;
     }
 
-    public function getClockOut(string $date, $time): ClockOut
+    public function getClockOut(string $date, string $time): ClockOut
     {
         $clockOutUUid = new UUID($this->domainName);
 
@@ -50,7 +50,7 @@ class ClockOutLogicService implements ClockOutLogicContract
         return $clockOut;
     }
 
-    public function appendClockOutToTimeLog(TimeLog $timeLog, ClockOut $clockOut, string $date, $time): array
+    public function appendClockOutToTimeLog(TimeLog $timeLog, ClockOut $clockOut, string $date, string $time): array
     {
         try {
             $timeLog->clock_out = serialize($clockOut);

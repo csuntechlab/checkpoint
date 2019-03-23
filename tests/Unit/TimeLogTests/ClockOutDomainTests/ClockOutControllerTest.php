@@ -16,6 +16,7 @@ use \App\User;
 //Contracts 
 use \App\Http\Controllers\Api\TimeLog\ClockOutDomain\ClockOutController;
 use \App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutContract;
+use App\Http\Requests\ClockOutRequest;
 
 class ClockOutControllerTest extends TestCase
 {
@@ -37,48 +38,33 @@ class ClockOutControllerTest extends TestCase
 
     public function test_clock_out_controller_with_mockery()
     {
-        $timeStampString = "2019-02-01 06:30:44";
+        $date = "2019-02-01";
+        $time = "06:30:44";
+        $logId = "id";
 
-        $data = [
-            "timeStamp" => $timeStampString,
-            "logUuid" => "uuid"
+        $input = [
+            "date" => $date,
+            "time" => $time,
+            "logId" => $logId
         ];
+
+        $request = new ClockOutRequest($input);
 
         $expectedResponse =  [
             "message_success" => "Clock out was successfull",
-            "timeSheet_id" => "uuid",
-            "log_uuid" => "uuid",
-            "time_stamp" => $timeStampString
+            "time_sheet_id" => "uuid",
+            "log_id" => "uuid",
+            "date" => $date,
+            "time" => $time,
         ];
 
         $this->retriever
             ->shouldReceive('clockIn')
-            ->with($data['timeStamp'], $data['logUuid'])
+            ->with($request['date'], $request['time'], $request['id'])
             ->once()->andReturn($expectedResponse);
 
-        $response = $this->retriever->clockIn($data['timeStamp'], $data['logUuid']);
+        $response = $this->retriever->clockIn($request['date'], $request['time'], $request['id']);
 
         $this->assertEquals($expectedResponse, $response);
-    }
-
-    /**
-     * A Mockery Test for get_param in ClockIn Contoller
-     *
-     * @return array
-     */
-    public function test_get_param()
-    {
-        $data = ["timeStamp" => "2019-02-01 06:30:44", "logUuid" => "uuid"];
-        $request = new Request($data);
-
-        $function = 'getParam';
-
-        $method = $this->get_private_method($this->classPath, $function);
-
-        $response = $method->invoke($this->controller, $request);
-
-        $this->assertEquals($response, $data);
-        $this->assertArrayHasKey('timeStamp', $data);
-        $this->assertInternalType('array', $response);
     }
 }
