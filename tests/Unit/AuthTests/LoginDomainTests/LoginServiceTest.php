@@ -22,6 +22,7 @@ class LoginServiceTest extends TestCase
     use DatabaseMigrations;
     private $mockedService;
     private $service;
+    private $user;
     private $classPath = "App\Http\Controllers\Api\Auth\LoginDomain\Services\LoginService";
 
     public function setUp()
@@ -31,6 +32,8 @@ class LoginServiceTest extends TestCase
         $this->seed('OrgnaizationSeeder');
         $this->seed('ProgramSeeder');
         $this->seed('UsersTableSeeder');
+        $this->user = \App\User::where('id', 1)->first();
+        $this->actingAs($this->user);
         $this->mockedService = Mockery::mock(LoginService::class);
         $this->service = new LoginService();
     }
@@ -43,19 +46,19 @@ class LoginServiceTest extends TestCase
      */
     public function test_login_service_with_mockery()
     {
-        $username = "tes3t@email.com";
+        $email = "tes3t@email.com";
         $password = "tes3t@email.com";
 
         $expectedResponse = [
-            "token_type" => "Bearer", "expires_in" => 31536000, "access_token" => "serializedToken", "refresh_token" => "serializedToken"
+            "token_type" => "Bearer",  "access_token" => "serializedToken"
         ];
 
         $this->mockedService
             ->shouldReceive('login')
-            ->with($username, $password)
+            ->with($email, $password)
             ->once()->andReturn($expectedResponse);
 
-        $response = $this->mockedService->login($username, $password);
+        $response = $this->mockedService->login($email, $password);
 
         $this->assertEquals($expectedResponse, $response);
     }
@@ -74,16 +77,21 @@ class LoginServiceTest extends TestCase
             'program_id' => $programId
         ]);
 
-        $input = [
-            'email' => $email,
-            'password' => $password
-        ];
-
-        $request = new LoginRequest($input);
-
         $function = 'authenticateUser';
         $method = $this->get_private_method($this->classPath, $function);
-        $response = $method->invoke($this->service, $request);
+        $response = $method->invoke($this->service, $email, $password);
+
         $this->assertInstanceOf('App\User', $response);
+    }
+
+    public function test_login_service_create_token_pass()
+    {
+        $function = 'createToken';
+        $method = $this->get_private_method($this->classPath, $function);
+        $response = $method->invoke($this->service, $this->user);
+        $this->assertArrayHasKey('access_token', $response);
+        $this->assertArrayHasKey('token_type', $response);
+        $this->assertNotNull($response['access_token']);
+        $this->assertNotNull($response['token_type']);
     }
 }

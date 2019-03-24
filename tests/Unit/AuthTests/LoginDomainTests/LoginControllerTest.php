@@ -40,7 +40,7 @@ class LoginControllerTest extends TestCase
         $password = "tes3t@email.com";
 
         $expectedResponse = [
-            "token_type" => "Bearer", "expires_in" => 31536000, "access_token" => "serializedToken", "refresh_token" => "serializedToken"
+            "token_type" => "Bearer",  "access_token" => "serializedToken"
         ];
 
         $this->retriever
@@ -63,7 +63,7 @@ class LoginControllerTest extends TestCase
 
         $this->retriever
             ->shouldReceive('login')
-            ->with($request)
+            ->with($request['email'], $request['password'])
             ->once()->andReturn('email is not a email!');
 
         $response = $this->controller->login($request);

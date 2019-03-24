@@ -18,9 +18,6 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        // if ($request->rememberMe) {
-        //     return $this->loginUtility->loginWithRememberMe($request);
-        // }
-        return $this->loginUtility->login($request);
+        return $this->loginUtility->login($request['email'], $request['password']);
     }
 }
