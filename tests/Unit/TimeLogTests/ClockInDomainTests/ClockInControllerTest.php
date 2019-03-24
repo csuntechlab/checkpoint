@@ -29,6 +29,7 @@ class ClockInControllerTest extends TestCase
         parent::setUp();
         $this->utility = Mockery::mock(ClockInContract::class);
         $this->controller = new ClockInController($this->utility);
+        $this->seed('PassportSeeder');
         $this->seed('OrgnaizationSeeder');
         $this->seed('ProgramSeeder');
         $this->seed('UsersTableSeeder');
@@ -70,5 +71,37 @@ class ClockInControllerTest extends TestCase
         $response = $this->controller->clockIn($request);
 
         $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function test_login_http_request()
+    {
+        $date = "2019-02-01";
+        $time = "06:30:44";
+
+        $input = [
+            "date" => $date,
+            "time" => $time
+        ];
+
+        $token = $this->get_auth_token($this->user);
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => $token
+        ])->json('POST', '/api/clock/in', $input);
+        $response = $response->getOriginalContent();
+
+        $this->assertArrayHasKey("message_success", $response);
+        $this->assertArrayHasKey("time_sheet_id", $response);
+        $this->assertArrayHasKey("log_id", $response);
+        $this->assertArrayHasKey("date", $response);
+        $this->assertArrayHasKey("time", $response);
+
+        $this->assertNotNull($response["message_success"]);
+        $this->assertNotNull($response["time_sheet_id"]);
+        $this->assertNotNull($response["log_id"]);
+        $this->assertNotNull($response["date"]);
+        $this->assertNotNull($response["time"]);
     }
 }
