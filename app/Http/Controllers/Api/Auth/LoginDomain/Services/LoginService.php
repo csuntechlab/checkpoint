@@ -14,12 +14,12 @@ class LoginService implements LoginContract
 {
     private function authenticateUser($request): User
     {
-        $credentials = request(['email', 'password']);
+        $credentials = ['email' => $request['email'], 'password' => $request['password']];
 
         if (!Auth::attempt($credentials))
             throw new UnauthenticatedUser();
 
-        return $request->user();
+        return Auth::user();
     }
 
     private function createToken($user, $request): array
