@@ -1,10 +1,10 @@
 <?php 
 namespace App\Http\Controllers\Api\Auth\LoginDomain\Services;
 
-use Carbon\Carbon;
+
 use Illuminate\Support\Facades\Auth;
 
-use App\User;
+use App\User as User;
 
 use App\Exceptions\AuthExceptions\UnauthenticatedUser;
 
@@ -33,7 +33,6 @@ class LoginService implements LoginContract
             'token_type' => 'Bearer'
         ];
     }
-
 
     public function login(string $email, string $password): array
     {

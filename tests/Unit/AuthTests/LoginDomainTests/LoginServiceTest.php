@@ -94,4 +94,25 @@ class LoginServiceTest extends TestCase
         $this->assertNotNull($response['access_token']);
         $this->assertNotNull($response['token_type']);
     }
+
+    public function test_login_service_pass()
+    {
+        $email = "example@emai.com";
+        $password = $email;
+        $programId = Program::first();
+        $programId = $programId->id;
+
+        User::create([
+            'name' => $email,
+            'email' => $email,
+            'password' => Hash::make($password),
+            'program_id' => $programId
+        ]);
+
+        $response = $this->service->login($email, $password);
+        $this->assertArrayHasKey('access_token', $response);
+        $this->assertArrayHasKey('token_type', $response);
+        $this->assertNotNull($response['access_token']);
+        $this->assertNotNull($response['token_type']);
+    }
 }
