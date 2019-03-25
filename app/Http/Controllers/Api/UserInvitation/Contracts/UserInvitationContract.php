@@ -6,5 +6,6 @@ use App\Models\UserInvitation;
 
 interface UserInvitationContract
 {
-    public function inviteNewUser($organizationId, $roleId, $name, $email): UserInvitation;
+    public function inviteNewUser($organizationId, $roleId, $name, $email): String;
+
 }

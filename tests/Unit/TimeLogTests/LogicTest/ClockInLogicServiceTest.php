@@ -29,7 +29,7 @@ class ClockInLogicServiceTest extends TestCase
     {
         parent::setUp();
         $this->service = new ClockInLogicService();
-        $this->seed('OrgnaizationSeeder');
+        $this->seed('OrganizationSeeder');
         $this->seed('ProgramSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');

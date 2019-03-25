@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 // TB models
 use \App\User;
 
-//Contracts 
+//Contracts
 use \App\Http\Controllers\Api\TimeLog\ClockInDomain\ClockInController;
 use \App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;
 
@@ -30,7 +30,7 @@ class ClockInControllerTest extends TestCase
         parent::setUp();
         $this->retriever = Mockery::mock(ClockInContract::class);
         $this->controller = new ClockInController($this->retriever);
-        // $this->seed('OrgnaizationSeeder');
+        // $this->seed('OrganizationSeeder');
         // $this->seed('UsersTableSeeder');
         // $this->seed('TimeSheetSeeder');
     }

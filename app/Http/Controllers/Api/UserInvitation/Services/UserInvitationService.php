@@ -3,22 +3,28 @@ namespace App\Http\Controllers\Api\UserInvitation\Services;
 
 // Models
 
+use App\User;
 use App\Models\UserInvitation;
 use App\DomainValueObjects\UUIDGenerator\UUID;
-// use \Dirape\Token;
 // Contracts
 use App\Http\Controllers\Api\UserInvitation\Contracts\UserInvitationContract;
 // Exceptions
 
 
-use App\Exceptions\UserInvitationExceptions\UserInviteCreatedFailed;
+use App\Exceptions\UserInvitationExceptions\UserInviteCreationFailed;
+use App\Exceptions\UserInvitationExceptions\UserAlreadyRegistered;
 use Dirape\Token\Token as DirapeToken;
 
 
 class UserInvitationService implements UserInvitationContract
 {
-    public function inviteNewUser($organizationId, $roleId, $name, $email): UserInvitation
+    public function inviteNewUser($organizationId, $roleId, $name, $email): String
     {
+         $this->deletePreviouslyCreatedUserInvitation($email);
+        if(!$this->verifyUserIsNotAlreadyRegistered($email)) {
+            throw new UserAlreadyRegistered();
+        }
+
         $token = new DirapeToken();
         $token = $token->uniqueNumber('user_invitations', 'invite_code', 6);
         $id = new UUID('userInvitation');
@@ -31,10 +37,23 @@ class UserInvitationService implements UserInvitationContract
                 'name' => $name,
                 'email' => $email,
                 'invite_code' => $token
-            ]);
-        } catch (\Exception $e) {
-            throw new UserInviteCreatedFailed();
+                ]);
+            } catch (\Exception $e) {
+                throw new UserInviteCreationFailed();
+            }
+            return $userInvitation['email'];
+    }
+
+    private function deletePreviouslyCreatedUserInvitation($email): bool
+    {
+        return UserInvitation::where('email', $email)->delete();
+    }
+
+    private function verifyUserIsNotAlreadyRegistered($email): bool
+    {
+        if(User::where('email', $email)->first()){
+            return false;
         }
-        return $userInvitation;
+        return true;
     }
 }

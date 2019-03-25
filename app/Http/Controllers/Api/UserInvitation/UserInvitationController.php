@@ -16,7 +16,7 @@ class UserInvitationController extends Controller
         $this->userInvitationUtility = $userInvitationContract;
     }
 
-    private function getParam($request): array
+    public function inviteNewUser(Request $request): String
     {
         $data = array();
 
@@ -27,14 +27,6 @@ class UserInvitationController extends Controller
         $data['name'] = (string)$request['name'];
 
         $data['email'] = (string)$request['email'];
-
-        return $data;
-    }
-
-    public function inviteNewUser(Request $request): UserInvitation
-    {
-        // create a Form request object here, you dont have to getParam 
-        $data = $this->getParam($request);
 
         return $this->userInvitationUtility->inviteNewUser($data['organizationId'], $data['roleId'], $data['name'], $data['email']);
     }

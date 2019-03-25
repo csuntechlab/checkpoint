@@ -5,7 +5,7 @@ namespace App\Exceptions\UserInvitationExceptions;
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class UserInviteCreationFailed extends Exception
+class UserAlreadyRegistered extends Exception
 {
     public function __construct()
     {
@@ -19,7 +19,7 @@ class UserInviteCreationFailed extends Exception
      */
     public function render()
     {
-        $message = 'User Invitation was not succesfully created';
+        $message = 'User Already Registered';
         $status_code = 409;
         return BuildResponse::build_response($message, $status_code);
     }
