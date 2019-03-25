@@ -16,7 +16,7 @@ class UserInvitationController extends Controller
         $this->userInvitationUtility = $userInvitationContract;
     }
 
-    public function inviteNewUser(Request $request): String
+    public function inviteNewUser(Request $request): array
     {
         $data = array();
 

@@ -18,7 +18,7 @@ use Dirape\Token\Token as DirapeToken;
 
 class UserInvitationService implements UserInvitationContract
 {
-    public function inviteNewUser($organizationId, $roleId, $name, $email): String
+    public function inviteNewUser($organizationId, $roleId, $name, $email): array
     {
          $this->deletePreviouslyCreatedUserInvitation($email);
         if(!$this->verifyUserIsNotAlreadyRegistered($email)) {
@@ -41,7 +41,11 @@ class UserInvitationService implements UserInvitationContract
             } catch (\Exception $e) {
                 throw new UserInviteCreationFailed();
             }
-            return $userInvitation['email'];
+        return [
+            "message_success" => "User Invite Was Successful",
+            "email" => $email
+        ];
+
     }
 
     private function deletePreviouslyCreatedUserInvitation($email): bool

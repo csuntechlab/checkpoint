@@ -19,7 +19,7 @@ class RegisterService implements RegisterContract
 {
     public function register($name, $email, $password, $inviteCode): User
     {
-        $programId  = $this->getPrgramIdByUserInvitation($email, $inviteCode);
+        $programId  = $this->getProgramIdByUserInvitation($email, $inviteCode);
 
         try {
             $user = User::create([
@@ -37,7 +37,7 @@ class RegisterService implements RegisterContract
 
 
 
-    private function getPrgramIdByUserInvitation(string $email, string $inviteCode): string
+    private function getProgramIdByUserInvitation(string $email, string $inviteCode): string
     {
         $programId = UserInvitation::where('email', $email)->where('invite_code', $inviteCode)->first();
 
