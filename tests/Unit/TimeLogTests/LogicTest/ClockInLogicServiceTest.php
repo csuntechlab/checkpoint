@@ -40,7 +40,9 @@ class ClockInLogicServiceTest extends TestCase
 
     public function test_verifyUserHasNotYetTimeLogged_passes()
     {
-        $response = $this->service->verifyUserHasNotYetTimeLogged($this->user->id);
+        $date = "2019-02-01";
+
+        $response = $this->service->verifyTheUserDoesNotClockInWithOutResolvingThePreviousClockOutOnThisDate($date, $this->user->id);
 
         $this->assertInternalType('bool', $response);
         $this->assertEquals(true, $response);
@@ -57,9 +59,11 @@ class ClockInLogicServiceTest extends TestCase
         $timeLog->clock_out = null;
         $timeLog->save();
 
-        $function = 'verifyUserHasNotYetTimeLogged';
+        $date = "2019-02-01";
+
+        $function = 'verifyTheUserDoesNotClockInWithOutResolvingThePreviousClockOutOnThisDate';
         $method = $this->get_private_method($this->classPath, $function);
-        $response = $method->invoke($this->service, $userId);
+        $response = $method->invoke($this->service, $date, $userId);
     }
 
     public function test_getTmeSheetId_passes()

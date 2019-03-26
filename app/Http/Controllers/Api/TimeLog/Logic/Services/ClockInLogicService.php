@@ -26,11 +26,10 @@ class ClockInLogicService implements ClockInLogicContract
 
     private $domainName = "TimeLog";
 
-    //TODO: hard Code fix
-    public function verifyUserHasNotYetTimeLogged(string $userId): bool
+    public function verifyTheUserDoesNotClockInWithOutResolvingThePreviousClockOutOnThisDate(string $date, string $userId): bool
     {
         try {
-            $hasUserTimeLogged = TimeLog::where('user_id', $userId)->where('clock_out', null)->get();
+            $hasUserTimeLogged = TimeLog::where('user_id', $userId)->where('date', $date)->where('clock_out', null)->get();
         } catch (\Exception $e) {
             $subject = 'TimeLog ';
             throw new DataBaseQueryFailed($subject);

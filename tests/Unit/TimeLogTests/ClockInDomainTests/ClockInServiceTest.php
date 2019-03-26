@@ -70,8 +70,8 @@ class ClockInServiceTest extends TestCase
         ];
 
         $this->clockInLogicUtility
-            ->shouldReceive('verifyUserHasNotYetTimeLogged')
-            ->with($userId)
+            ->shouldReceive('verifyTheUserDoesNotClockInWithOutResolvingThePreviousClockOutOnThisDate')
+            ->with($date, $userId)
             ->once()->andReturn(true);
 
         $this->clockInLogicUtility

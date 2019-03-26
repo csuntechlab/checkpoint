@@ -29,8 +29,8 @@ class ClockInLogicServiceNoDatabaseMigrationsTest extends TestCase
     public function test_verifyUserHasNotYetTimeLogged_fails_throws_DataBaseQueryFailed_exception()
     {
         $this->expectException('App\Exceptions\GeneralExceptions\DataBaseQueryFailed');
-
-        $response = $this->service->verifyUserHasNotYetTimeLogged($this->userId);
+        $date = "2019-02-01";
+        $response = $this->service->verifyTheUserDoesNotClockInWithOutResolvingThePreviousClockOutOnThisDate($date, $this->userId);
     }
 
     public function test_getTmeSheetId_passes()
