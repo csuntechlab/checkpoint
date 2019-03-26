@@ -85,7 +85,7 @@ class LoginControllerTest extends TestCase
             "message" => "The given data was invalid.",
             "errors" => [
                 "email" => [
-                    0 => "Username must be an email!"
+                    0 => "Must use a valid email address."
                 ],
                 "password" => [
                     0 => "Invalid email or password."
