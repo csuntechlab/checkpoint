@@ -70,7 +70,7 @@ class ClockInServiceTest extends TestCase
         ];
 
         $this->clockInLogicUtility
-            ->shouldReceive('verifyTheUserDoesNotClockInWithOutResolvingThePreviousClockOutOnThisDate')
+            ->shouldReceive('checkIfIncompleteTimeLogOnThisDate')
             ->with($date, $userId)
             ->once()->andReturn(true);
 

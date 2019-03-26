@@ -26,7 +26,7 @@ class ClockInLogicService implements ClockInLogicContract
 
     private $domainName = "TimeLog";
 
-    public function verifyTheUserDoesNotClockInWithOutResolvingThePreviousClockOutOnThisDate(string $date, string $userId): bool
+    public function checkIfIncompleteTimeLogOnThisDate(string $date, string $userId): bool
     {
         try {
             $hasUserTimeLogged = TimeLog::where('user_id', $userId)->where('date', $date)->where('clock_out', null)->get();
