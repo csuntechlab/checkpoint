@@ -42,7 +42,7 @@ class ClockInLogicServiceTest extends TestCase
     {
         $date = "2019-02-01";
 
-        $response = $this->service->checkIfIncompleteTimeLogOnThisDate($date, $this->user->id);
+        $response = $this->service->userHasIncompleteTimeLogByDate($date, $this->user->id);
 
         $this->assertInternalType('bool', $response);
         $this->assertEquals(true, $response);
@@ -61,7 +61,7 @@ class ClockInLogicServiceTest extends TestCase
 
         $date = "2019-02-01";
 
-        $function = 'checkIfIncompleteTimeLogOnThisDate';
+        $function = 'userHasIncompleteTimeLogByDate';
         $method = $this->get_private_method($this->classPath, $function);
         $response = $method->invoke($this->service, $date, $userId);
     }

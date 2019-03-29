@@ -30,7 +30,7 @@ class ClockInLogicServiceNoDatabaseMigrationsTest extends TestCase
     {
         $this->expectException('App\Exceptions\GeneralExceptions\DataBaseQueryFailed');
         $date = "2019-02-01";
-        $response = $this->service->checkIfIncompleteTimeLogOnThisDate($date, $this->userId);
+        $response = $this->service->userHasIncompleteTimeLogByDate($date, $this->userId);
     }
 
     public function test_getTmeSheetId_passes()

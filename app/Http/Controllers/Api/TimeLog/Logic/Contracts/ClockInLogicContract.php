@@ -6,7 +6,7 @@ use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
 
 interface ClockInLogicContract
 {
-    public function checkIfIncompleteTimeLogOnThisDate(string $date, string $userId): bool;
+    public function userHasIncompleteTimeLogByDate(string $date, string $userId): bool;
 
     public function getTimeLogParam(string $userId, string $date, string $time): array;
 

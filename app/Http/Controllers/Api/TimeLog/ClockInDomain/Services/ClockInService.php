@@ -23,7 +23,7 @@ class ClockInService implements ClockInContract
         $user = Auth::user();
         $userId = $user->id;
 
-        $this->clockInLogicUtility->checkIfIncompleteTimeLogOnThisDate($date, $userId);
+        $this->clockInLogicUtility->userHasIncompleteTimeLogByDate($date, $userId);
 
         $logParam = $this->clockInLogicUtility->getTimeLogParam($userId, $date, $time);
 

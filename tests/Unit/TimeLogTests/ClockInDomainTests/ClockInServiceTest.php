@@ -70,7 +70,7 @@ class ClockInServiceTest extends TestCase
         ];
 
         $this->clockInLogicUtility
-            ->shouldReceive('checkIfIncompleteTimeLogOnThisDate')
+            ->shouldReceive('userHasIncompleteTimeLogByDate')
             ->with($date, $userId)
             ->once()->andReturn(true);
 
