@@ -19,11 +19,13 @@ $factory->define(TimeLog::class, function (Faker $faker) {
 
     $timeSheet = TimeSheets::where('user_id', $user->id)->first();
 
-    $timeStamp =  "2019-02-01 06:30:44";
-    $timeStampClockIn = new TimeStamp(new UUID('timeStamp'), $timeStamp);
+    $date =  "2019-02-01";
+    $time = "06:30:44";
+    $timeStampClockIn = new TimeStamp(new UUID('timeStamp'), $date, $time);
 
-    $timeStamp =  "2019-02-01 09:30:44";
-    $timeStampClockOut = new TimeStamp(new UUID('timeStamp'), $timeStamp);
+    $date =  "2019-02-01";
+    $time = "09:30:44";
+    $timeStampClockOut = new TimeStamp(new UUID('timeStamp'), $date, $time);
 
     $clockIn = new ClockIn(new UUID('clockIn'), $timeStampClockIn);
     $clockOut = new ClockOut(new UUID('clockOut'), $timeStampClockOut);
@@ -32,6 +34,7 @@ $factory->define(TimeLog::class, function (Faker $faker) {
         'id' => $uuid->toString,
         'user_id' => $user->id,
         'time_sheet_id' => $timeSheet->id,
+        'date' => $date,
         'clock_in' =>  serialize($clockIn),
         'clock_out' => serialize($clockOut)
     ];

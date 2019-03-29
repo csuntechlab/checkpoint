@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api\TimeLog\ClockInDomain\Services;
 
 // Auth
+
 use Illuminate\Support\Facades\Auth;
 
 // Contracts
@@ -17,18 +18,15 @@ class ClockInService implements ClockInContract
         $this->clockInLogicUtility = $clockInLogicUtility;
     }
 
-    public function clockIn(string $timeStamp): array
+    public function clockIn(string $date, string $time): array
     {
         $user = Auth::user();
         $userId = $user->id;
 
-        $this->clockInLogicUtility->verifyUserHasNotYetTimeLogged($userId);
-        
-        $logParam = $this->clockInLogicUtility->getTimeLogParam($userId, $timeStamp);
+        $this->clockInLogicUtility->userHasIncompleteTimeLogByDate($date, $userId);
 
-        return $this->clockInLogicUtility->createClockInEntry($logParam['uuid'], $userId, $logParam['timeSheetId'], $logParam['clockIn'], $timeStamp);
+        $logParam = $this->clockInLogicUtility->getTimeLogParam($userId, $date, $time);
+
+        return $this->clockInLogicUtility->createClockInEntry($logParam['id'], $userId, $logParam['timeSheetId'], $logParam['clockIn'], $date, $time);
     }
-    
 }
-
- 

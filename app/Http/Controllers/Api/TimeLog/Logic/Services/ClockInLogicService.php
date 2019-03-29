@@ -26,11 +26,10 @@ class ClockInLogicService implements ClockInLogicContract
 
     private $domainName = "TimeLog";
 
-    //TODO: hard Code fix
-    public function verifyUserHasNotYetTimeLogged(string $userId): bool
+    public function userHasIncompleteTimeLogByDate(string $date, string $userId): bool
     {
         try {
-            $hasUserTimeLogged = TimeLog::where('user_id', $userId)->where('clock_out', null)->get();
+            $hasUserTimeLogged = TimeLog::where('user_id', $userId)->where('date', $date)->where('clock_out', null)->get();
         } catch (\Exception $e) {
             $subject = 'TimeLog ';
             throw new DataBaseQueryFailed($subject);
@@ -58,34 +57,41 @@ class ClockInLogicService implements ClockInLogicContract
         return $timeSheet->id;
     }
 
-    private function getClockIn(string $timeStamp): ClockIn
+    private function getClockIn(string $date, string $time): ClockIn
     {
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
+        $timeStamp = new TimeStamp(new UUID('timeStamp'), $date, $time);
         $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp);
         return $clockIn;
     }
 
-    public function getTimeLogParam(string $userId, string $timeStamp): array
+    public function getTimeLogParam(string $userId, string $date, string $time): array
     {
         $logParam = array();
 
         $logParam['timeSheetId'] = $this->getTimeSheetId($userId);
 
-        $uuid = new UUID($this->domainName);
-        $logParam['uuid'] = $uuid->toString;
+        $id = new UUID($this->domainName);
+        $logParam['id'] = $id->toString;
 
-        $logParam['clockIn'] = $this->getClockIn($timeStamp);
+        $logParam['clockIn'] = $this->getClockIn($date, $time);
 
         return $logParam;
     }
 
-    public function createClockInEntry(string $uuid, string $userId, string $timeSheetId, ClockIn $clockIn, string $timeStamp): array
-    {
+    public function createClockInEntry(
+        string $id,
+        string $userId,
+        string $timeSheetId,
+        ClockIn $clockIn,
+        string $date,
+        string $time
+    ): array {
         try {
             TimeLog::create([
-                'id' => $uuid,
+                'id' => $id,
                 'user_id' => $userId,
                 'time_sheet_id' => $timeSheetId,
+                'date' => $date,
                 'clock_in' => serialize($clockIn),
             ]);
         } catch (\Exception $e) {
@@ -94,9 +100,10 @@ class ClockInLogicService implements ClockInLogicContract
 
         return [
             "message_success" => "Clock in was successfull",
-            "timeSheet_id" => $timeSheetId,
-            "log_uuid" => $uuid,
-            "time_stamp" => $timeStamp
+            "time_sheet_id" => $timeSheetId,
+            "log_id" => $id,
+            "date" => $date,
+            "time" => $time
         ];
     }
 }

@@ -39,18 +39,18 @@ class ClockOutLogicService implements ClockOutLogicContract
         return $log;
     }
 
-    public function getClockOut(string $timeStamp): ClockOut
+    public function getClockOut(string $date, string $time): ClockOut
     {
         $clockOutUUid = new UUID($this->domainName);
 
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStamp);
+        $timeStamp = new TimeStamp(new UUID('timeStamp'), $date, $time);
 
         $clockOut = new ClockOut($clockOutUUid, $timeStamp);
 
         return $clockOut;
     }
 
-    public function appendClockOutToTimeLog($timeLog, ClockOut $clockOut, string $timeStamp): array
+    public function appendClockOutToTimeLog(TimeLog $timeLog, ClockOut $clockOut, string $date, string $time): array
     {
         try {
             $timeLog->clock_out = serialize($clockOut);
@@ -60,13 +60,14 @@ class ClockOutLogicService implements ClockOutLogicContract
         }
 
         $timeSheetId = $timeLog->time_sheet_id;
-        $uuid = $timeLog->id;
+        $id = $timeLog->id;
 
         return [
             "message_success" => "Clock out was successfull",
-            "timeSheet_id" => $timeSheetId,
-            "log_uuid" => $uuid,
-            "time_stamp" => $timeStamp
+            "time_sheet_id" => $timeSheetId,
+            "log_id" => $id,
+            "date" => $date,
+            "time" => $time
         ];
     }
 }

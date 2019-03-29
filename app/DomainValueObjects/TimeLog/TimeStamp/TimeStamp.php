@@ -10,26 +10,32 @@ use App\Exceptions\TimeLogExceptions\TimeStamp\GenerateTimeStampFailed;
 
 class TimeStamp
 {
-    private $timeStamp = null;
     private $uuid = null;
+    private $date = null;
+    private $time = null;
 
-    public function __construct(UUID $uuid = null, string $timeStamp = null)
+    public function __construct(UUID $uuid = null, string $date = null, string $time = null)
     {
 
         $this->uuid = $uuid;
-        $this->timeStamp = $timeStamp;
+        $this->date = $date;
+        $this->time = $time;
         $this->validation();
     }
 
     private function validation()
     {
-        if ($this->timeStamp == null || $this->timeStamp == '') throw new GenerateTimeStampFailed();
+        $dateBool = $this->date == null || $this->date == '';
 
-        if ($this->uuid == null) throw new GenerateTimeStampFailed();
+        $timeBool = $this->time == null || $this->time == '';
+
+        $uuidBool = $this->uuid == null;
+
+        if ($dateBool || $timeBool || $uuidBool) throw new GenerateTimeStampFailed();
     }
 
     public function getTimeStampString()
     {
-        return $this->timeStamp;
+        return $this->date . " " . $this->time;
     }
 }

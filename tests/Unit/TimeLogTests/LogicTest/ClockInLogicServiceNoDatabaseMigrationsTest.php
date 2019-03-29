@@ -17,7 +17,7 @@ use App\Http\Controllers\Api\TimeLog\Logic\Services\ClockInLogicService;
 
 class ClockInLogicServiceNoDatabaseMigrationsTest extends TestCase
 {
-    private $userId = "uuid";
+    private $userId = "id";
     private $classPath = 'App\Http\Controllers\Api\TimeLog\Logic\Services\ClockInLogicService';
 
     public function setUp()
@@ -29,8 +29,8 @@ class ClockInLogicServiceNoDatabaseMigrationsTest extends TestCase
     public function test_verifyUserHasNotYetTimeLogged_fails_throws_DataBaseQueryFailed_exception()
     {
         $this->expectException('App\Exceptions\GeneralExceptions\DataBaseQueryFailed');
-
-        $response = $this->service->verifyUserHasNotYetTimeLogged($this->userId);
+        $date = "2019-02-01";
+        $response = $this->service->userHasIncompleteTimeLogByDate($date, $this->userId);
     }
 
     public function test_getTmeSheetId_passes()
@@ -47,14 +47,15 @@ class ClockInLogicServiceNoDatabaseMigrationsTest extends TestCase
     {
         $this->expectException('App\Exceptions\TimeLogExceptions\ClockIn\ClockInWasNotSuccesfullyAdded');
 
-        $timeStampString = "2019-02-01 06:30:44";
+        $date = "2019-02-01";
+        $time = "06:30:44";
 
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStampString);
+        $timeStamp = new TimeStamp(new UUID('timeStamp'), $date, $time);
         $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp);
 
-        $timeSheetId = "uuid";
-        $logUuid = "uuid";
+        $timeSheetId = "id";
+        $logUuid = "id";
 
-        $response = $this->service->createClockInEntry($logUuid, $this->userId, $timeSheetId, $clockIn, $timeStampString);
+        $response = $this->service->createClockInEntry($logUuid, $this->userId, $timeSheetId, $clockIn, $date, $time);
     }
 }

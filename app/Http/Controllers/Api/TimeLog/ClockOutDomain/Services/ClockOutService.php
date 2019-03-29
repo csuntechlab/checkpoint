@@ -19,15 +19,15 @@ class ClockOutService implements ClockOutContract
         $this->clockOutLogicUtility = $clockOutLogicUtility;
     }
 
-    public function clockOut(string $timeStamp, string $logUuid): array
+    public function clockOut(string $date, string $time, string $logId): array
     {
         $user = Auth::user();
 
-        $timelog = $this->clockOutLogicUtility->getTimeLog($user->id, $logUuid);
+        $timelog = $this->clockOutLogicUtility->getTimeLog($user->id, $logId);
         
-        $clockOut = $this->clockOutLogicUtility->getClockOut($timeStamp);
+        $clockOut = $this->clockOutLogicUtility->getClockOut($date, $time);
 
-        return $this->clockOutLogicUtility->appendClockOutToTimeLog($timelog, $clockOut, $timeStamp);
+        return $this->clockOutLogicUtility->appendClockOutToTimeLog($timelog, $clockOut, $date, $time);
     }
 
 }
