@@ -19,6 +19,10 @@ class CreateTimeLogsTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
+            $table->uuid('organization_id');
+            $table->foreign('organization_id')
+                ->references('id')
+                ->on('organizations');
             $table->uuid('time_sheet_id');
             $table->foreign('time_sheet_id')
                 ->references('id')

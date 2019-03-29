@@ -18,16 +18,16 @@ class UserInvitationController extends Controller
 
     public function inviteNewUser(Request $request): array
     {
-        $data = array();
+        $user = Auth::user();
 
-        $data['organizationId'] = (string)$request['organizationId'];
+        $orgId = $user->organization_id;
 
-        $data['roleId'] = (string)$request['roleId'];
+        $roleId = (string)$request['roleId'];
 
-        $data['name'] = (string)$request['name'];
+        $name = (string)$request['name'];
 
-        $data['email'] = (string)$request['email'];
+        $email = (string)$request['email'];
 
-        return $this->userInvitationUtility->inviteNewUser($data['organizationId'], $data['roleId'], $data['name'], $data['email']);
+        return $this->userInvitationUtility->inviteNewUser($orgId, $roleId, $name, $email);
     }
 }

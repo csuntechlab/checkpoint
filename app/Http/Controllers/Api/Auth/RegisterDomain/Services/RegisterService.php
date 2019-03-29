@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Hash;
 
 //Models
 use App\User;
-use App\Models\Program;
+use App\Models\Organization;
 use App\Models\UserInvitation;
 
 //Exceptions
@@ -19,14 +19,14 @@ class RegisterService implements RegisterContract
 {
     public function register($name, $email, $password, $inviteCode): User
     {
-        $programId  = $this->getProgramIdByUserInvitation($email, $inviteCode);
+        $orgId = $this->getOrganizationIdByUserInvitation($email, $inviteCode);
 
         try {
             $user = User::create([
                 'name' => $name,
                 'email' => $email,
                 'password' => Hash::make($password),
-                'program_id' => $programId
+                'organization_id' => $orgId
             ]);
         } catch (\Exception $e) {
             throw new UserCreatedFailed();
@@ -37,13 +37,13 @@ class RegisterService implements RegisterContract
 
 
 
-    private function getProgramIdByUserInvitation(string $email, string $inviteCode): string
+    private function getOrganizationIdByUserInvitation(string $email, string $inviteCode): string
     {
-        $programId = UserInvitation::where('email', $email)->where('invite_code', $inviteCode)->first();
+        $orgId = UserInvitation::where('email', $email)->where('invite_code', $inviteCode)->first();
 
         //TODO HardCode
-        $programId = Program::first();
+        $orgId = Organization::first();
 
-        return $programId->id;
+        return $orgId->id;
     }
 }

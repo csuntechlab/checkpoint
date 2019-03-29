@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Http\Controllers\Api\TimeLog\ClockInDomain\Services;
 
 // Auth
@@ -23,12 +23,11 @@ class ClockInService implements ClockInContract
         $userId = $user->id;
 
         $this->clockInLogicUtility->verifyUserHasNotYetTimeLogged($userId);
-        
+
         $logParam = $this->clockInLogicUtility->getTimeLogParam($userId, $timeStamp);
 
         return $this->clockInLogicUtility->createClockInEntry($logParam['uuid'], $userId, $logParam['timeSheetId'], $logParam['clockIn'], $timeStamp);
     }
-    
+
 }
 
- 

@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
@@ -15,7 +14,7 @@ use App\Http\Controllers\Api\Auth\RegisterDomain\Services\RegisterService;
 use App\User;
 use App\Models\Organization;
 use App\Models\Role;
-use App\Models\UserInvitation;
+use \App\Models\UserInvitation;
 
 class UserInvitationServiceTest extends TestCase
 {
@@ -31,6 +30,7 @@ class UserInvitationServiceTest extends TestCase
         $this->service = new UserInvitationService();
         $this->seed('OrganizationSeeder');
         $this->seed('ProgramSeeder');
+        $this->seed('UsersTableSeeder');
 
         $name = "tes3t@email.com";
         $email = "tes3t@email.com";
@@ -46,30 +46,15 @@ class UserInvitationServiceTest extends TestCase
      */
     public function test_user_invitation_service()
     {
-        $orgId = Organization::first()->id;
+        $userId = User::first()->id;
         $name = "John Goober";
         $email = "j0hNGewB3r@email.com";
         // TODO: Tony - grabbing from roles table not working for some reason
-        $roleId = 3;
+        $roleId = 1;
 
-        $response = $this->service->inviteNewUser($orgId, $roleId, $name, $email);
+        $response = $this->service->inviteNewUser($userId, $roleId, $name, $email);
 
         $this->assertArrayHasKey('email', $response);
-    }
-
-    public function test_user_invite_service_throws_exception_undefined_index()
-    {
-        $orgId = Organization::first()->id;
-        $name = 'John Booger';
-        $email = null;
-        // TODO: Tony - grabbing from roles table not working for some reason
-        $roleId = 3;
-
-        $this->expectException('App\Exceptions\UserInvitationExceptions\UserInviteCreationFailed');
-
-        $response = $this->service->inviteNewUser($orgId, $roleId, $name, $email);
-
-        $this->assertArrayHasKey('message_error', $response);
     }
 
     public function test_user_invite_service_deletes_row_same_email()
@@ -91,17 +76,6 @@ class UserInvitationServiceTest extends TestCase
         $this->assertNull(UserInvitation::where('invite_code', $previousInviteCode)->first());
 
         $this->assertNotEquals($previousInviteCode, $newInviteCode);
-    }
-
-    public function test_verifyUserIsNotAlreadyRegistered_returns_false_registed_email()
-    {
-        $email = "tes3t@email.com";
-
-        $function = 'verifyUserIsNotAlreadyRegistered';
-        $method = $this->get_private_method($this->classPath, $function);
-        $response = $method->invoke($this->service, $email);
-        $this->assertEquals($response, false);
-
     }
 
     public function test_user_invite_service_thows_error_registered_email()

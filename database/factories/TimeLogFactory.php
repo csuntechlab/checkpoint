@@ -4,6 +4,7 @@
 use App\User;
 use App\Models\TimeSheets;
 use App\Models\TimeLog;
+use App\Models\Organization;
 
 // Domain Value Objects
 use App\DomainValueObjects\UUIDGenerator\UUID;
@@ -16,6 +17,7 @@ use Faker\Generator as Faker;
 $factory->define(TimeLog::class, function (Faker $faker) {
     $uuid = new UUID('log');
     $user = User::where('id', 1)->first();
+    $orgId = Organization::first()->id;
 
     $timeSheet = TimeSheets::where('user_id', $user->id)->first();
 
@@ -32,6 +34,7 @@ $factory->define(TimeLog::class, function (Faker $faker) {
         'id' => $uuid->toString,
         'user_id' => $user->id,
         'time_sheet_id' => $timeSheet->id,
+        'organization_id' => $orgId,
         'clock_in' =>  serialize($clockIn),
         'clock_out' => serialize($clockOut)
     ];

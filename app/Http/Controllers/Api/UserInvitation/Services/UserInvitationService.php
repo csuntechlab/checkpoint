@@ -18,12 +18,15 @@ use Dirape\Token\Token as DirapeToken;
 
 class UserInvitationService implements UserInvitationContract
 {
-    public function inviteNewUser($organizationId, $roleId, $name, $email): array
+    public function inviteNewUser(string $orgId, string $roleId, string $name, string $email): array
     {
-         $this->deletePreviouslyCreatedUserInvitation($email);
-        if(!$this->verifyUserIsNotAlreadyRegistered($email)) {
-            throw new UserAlreadyRegistered();
+        if($email) {
+            if(User::where('email', $email)->first()){
+                throw new UserAlreadyRegistered();
+            }
+            $this->deletePreviouslyCreatedUserInvitation($email);
         }
+
 
         $token = new DirapeToken();
         $token = $token->uniqueNumber('user_invitations', 'invite_code', 6);
@@ -32,7 +35,7 @@ class UserInvitationService implements UserInvitationContract
         try {
             $userInvitation = UserInvitation::create([
                 'id' => $id,
-                'organization_id' => $organizationId,
+                'organization_id' => $orgId,
                 'role_id' => $roleId,
                 'name' => $name,
                 'email' => $email,
@@ -53,11 +56,4 @@ class UserInvitationService implements UserInvitationContract
         return UserInvitation::where('email', $email)->delete();
     }
 
-    private function verifyUserIsNotAlreadyRegistered($email): bool
-    {
-        if(User::where('email', $email)->first()){
-            return false;
-        }
-        return true;
-    }
 }
