@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Http\Controllers\Api\TimeLog\ClockInDomain\Services;
 
 // Auth
@@ -22,11 +22,12 @@ class ClockInService implements ClockInContract
     {
         $user = Auth::user();
         $userId = $user->id;
+        $organizationId = $user->organization_id;
 
         $this->clockInLogicUtility->userHasIncompleteTimeLogByDate($date, $userId);
 
         $logParam = $this->clockInLogicUtility->getTimeLogParam($userId, $date, $time);
 
-        return $this->clockInLogicUtility->createClockInEntry($logParam['id'], $userId, $logParam['timeSheetId'], $logParam['clockIn'], $date, $time);
+        return $this->clockInLogicUtility->createClockInEntry($logParam['id'], $userId, $organizationId, $logParam['timeSheetId'], $logParam['clockIn'], $date, $time);
     }
 }

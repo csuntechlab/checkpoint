@@ -18,8 +18,7 @@ class LogoutServiceTest extends TestCase
     {
         parent::setUp();
         $this->service = new LogoutService();
-        $this->seed('OrgnaizationSeeder');
-        $this->seed('ProgramSeeder');
+        $this->seed('OrganizationSeeder');
     }
     /**
      * register service test

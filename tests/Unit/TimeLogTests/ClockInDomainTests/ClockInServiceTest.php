@@ -12,6 +12,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
 use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
+use App\Models\Organization;
 
 use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockInLogicContract;
 use App\Http\Controllers\Api\TimeLog\ClockInDomain\Services\ClockInService;
@@ -29,8 +30,7 @@ class ClockInServiceTest extends TestCase
         parent::setUp();
         $this->clockInLogicUtility = Mockery::mock(ClockInLogicContract::class);
         $this->service = new ClockInService($this->clockInLogicUtility);
-        $this->seed('OrgnaizationSeeder');
-        $this->seed('ProgramSeeder');
+        $this->seed('OrganizationSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
         $this->user = \App\User::where('id', 1)->first();
@@ -38,14 +38,15 @@ class ClockInServiceTest extends TestCase
     }
 
     /**
-     * Clock In test 
+     * Clock In test
      *
      * @return void
      */
     public function test_clock_in_service_get_user_location_and_user_time_sheet_id_with_mockery()
     {
         $userId = $this->user->id;
-
+        $organizationId = Organization::first();
+        $organizationId = $organizationId->id;
         $date = "2019-02-01";
         $time = "06:30:44";
 
@@ -81,7 +82,7 @@ class ClockInServiceTest extends TestCase
 
         $this->clockInLogicUtility
             ->shouldReceive('createClockInEntry')
-            ->with($logUuid, $userId, $timeSheetId, $clockIn, $date, $time)
+            ->with($logUuid, $userId, $organizationId, $timeSheetId, $clockIn, $date, $time)
             ->once()->andReturn($expectedResponse);
 
         $response = $this->service->clockIn($date, $time);

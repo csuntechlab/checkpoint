@@ -200,6 +200,11 @@ return [
         App\Providers\ApiProviders\TimeLog\Logic\ClockOutLogicServiceProvider::class,
 
 
+        /*********** UserInvitation Service Providers **************/
+
+        /** UserInvite Service Provider */
+        App\Providers\ApiProviders\UserInvitation\UserInvitationServiceProvider::class,
+
     ],
 
     /*
@@ -248,6 +253,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Token'=>\Dirape\Token\Facades\Facade::class,
 
     ],
 
