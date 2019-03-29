@@ -29,7 +29,6 @@ class ClockOutServiceTest extends TestCase
         $this->clockOutLogicUtility = Mockery::mock(ClockOutLogicContract::class);
         $this->service = new ClockOutService($this->clockOutLogicUtility);
         $this->seed('OrganizationSeeder');
-        $this->seed('ProgramSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
         $this->seed('TimeLogSeeder');
@@ -47,14 +46,17 @@ class ClockOutServiceTest extends TestCase
         $timeLog = factory(TimeLog::class)->create();
         $clockOut = unserialize($timeLog->clock_out);
 
-        $timeStampString = $clockOut->getTimeStamp()->getTimeStampString();
+        $date = "2019-02-01";
+        $time = "06:30:44";
+
         $logUuid = $timeLog->id;
 
         $expectedResponse =  [
             "message_success" => "Clock out was successfull",
-            "timeSheet_id" => "uuid",
-            "log_uuid" => "uuid",
-            "time_stamp" => $timeStampString
+            "time_sheet_id" => "id",
+            "log_id" => "id",
+            "date" => $date,
+            "time" => $time,
         ];
 
         $this->clockOutLogicUtility
@@ -64,15 +66,15 @@ class ClockOutServiceTest extends TestCase
 
         $this->clockOutLogicUtility
             ->shouldReceive('getClockOut')
-            ->with($timeStampString)
+            ->with($date, $time)
             ->once()->andReturn($clockOut);
 
         $this->clockOutLogicUtility
             ->shouldReceive('appendClockOutToTimeLog')
-            ->with($timeLog, $clockOut, $timeStampString)
+            ->with($timeLog, $clockOut, $date, $time)
             ->once()->andReturn($expectedResponse);
 
-        $response = $this->service->clockOut($timeStampString, $logUuid);
+        $response = $this->service->clockOut($date, $time, $logUuid);
 
         $this->assertEquals($expectedResponse, $response);
     }

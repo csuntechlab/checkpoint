@@ -9,6 +9,8 @@ use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\TimeLog\ClockOut\ClockOut;
 use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 
+use App\Models\TimeLog;
+
 // Service
 use App\Http\Controllers\Api\TimeLog\Logic\Services\ClockOutLogicService;
 
@@ -24,20 +26,20 @@ class ClockOutLogicServiceNoDatabaseMigrationsTest extends TestCase
     {
         $userId = 1;
         $this->expectException('App\Exceptions\GeneralExceptions\DataBaseQueryFailed');
-        $uuid = 'uuid';
-        $this->service->getTimeLog($userId, $uuid);
+        $id = 'id';
+        $this->service->getTimeLog($userId, $id);
     }
 
     public function test_appendClockOutToTimeLog_ClockOutWasNotSuccesfullyCreated()
     {
-
-        $timeStampString =  "2019-02-01 09:30:44";
+        $date = "2019-02-01";
+        $time = "06:30:44";
         $clockOutUUid = new UUID("clockOut");
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStampString);
+        $timeStamp = new TimeStamp(new UUID('timeStamp'), $date, $time);
         $clockOut = new ClockOut($clockOutUUid, $timeStamp);
-        $timeLog = "App\Models\TimeLog";
+        $timeLog = new TimeLog();
 
         $this->expectException('App\Exceptions\TimeLogExceptions\ClockOut\ClockOutWasNotSucessfullyAdded');
-        $this->service->appendClockOutToTimeLog($timeLog, $clockOut, $timeStampString);
+        $this->service->appendClockOutToTimeLog($timeLog, $clockOut, $date, $time);
     }
 }

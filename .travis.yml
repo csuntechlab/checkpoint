@@ -1,23 +1,24 @@
 os:
-- linux
+  - linux
 
 language: php
 php:
-- '7.1'
+  - '7.1'
 
 services:
-- mysql 
+  - mysql
 
 before_script:
-- cp .env.travis .env
-- mysql -e 'create database test_db;'
-- composer self-update
-- composer install --no-interaction
-- php artisan key:generate
-- php artisan migrate --seed
+  - cp .env.travis .env
+  - mysql -e 'create database test_db;'
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan key:generate
+  - php artisan migrate --seed
+  - php artisan passport:install
 
 script:
-- vendor/bin/phpunit
+  - vendor/bin/phpunit
 
 branches:
   only:

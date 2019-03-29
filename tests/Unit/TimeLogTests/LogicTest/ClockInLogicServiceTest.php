@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
 use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
+use App\Models\Organization;
 
 // Models
 use App\Models\TimeSheets;
@@ -30,7 +31,6 @@ class ClockInLogicServiceTest extends TestCase
         parent::setUp();
         $this->service = new ClockInLogicService();
         $this->seed('OrganizationSeeder');
-        $this->seed('ProgramSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
         $this->seed('TimeLogSeeder');
@@ -40,7 +40,9 @@ class ClockInLogicServiceTest extends TestCase
 
     public function test_verifyUserHasNotYetTimeLogged_passes()
     {
-        $response = $this->service->verifyUserHasNotYetTimeLogged($this->user->id);
+        $date = "2019-02-01";
+
+        $response = $this->service->userHasIncompleteTimeLogByDate($date, $this->user->id);
 
         $this->assertInternalType('bool', $response);
         $this->assertEquals(true, $response);
@@ -57,9 +59,11 @@ class ClockInLogicServiceTest extends TestCase
         $timeLog->clock_out = null;
         $timeLog->save();
 
-        $function = 'verifyUserHasNotYetTimeLogged';
+        $date = "2019-02-01";
+
+        $function = 'userHasIncompleteTimeLogByDate';
         $method = $this->get_private_method($this->classPath, $function);
-        $response = $method->invoke($this->service, $userId);
+        $response = $method->invoke($this->service, $date, $userId);
     }
 
     public function test_getTmeSheetId_passes()
@@ -90,46 +94,54 @@ class ClockInLogicServiceTest extends TestCase
 
     public function test_getClockIn_passes()
     {
-        $timeStamp =  "2019-02-01 09:30:44";
+        $date = "2019-02-01";
+        $time = "06:30:44";
 
         $function = 'getClockIn';
         $method = $this->get_private_method($this->classPath, $function);
-        $response = $method->invoke($this->service, $timeStamp);
+        $response = $method->invoke($this->service, $date, $time);
 
         $this->assertInstanceOf('App\DomainValueObjects\TimeLog\ClockIn\ClockIn', $response);
     }
 
     public function test_getTimeLogParam_passes()
     {
-        $timeStamp =  "2019-02-01 06:30:44";
+        $date = "2019-02-01";
+        $time = "06:30:44";
 
-        $response = $this->service->getTimeLogParam($this->user->id, $timeStamp);
+        $response = $this->service->getTimeLogParam($this->user->id, $date, $time);
 
         $this->assertArrayHasKey('clockIn', $response);
-        $this->assertArrayHasKey('uuid', $response);
+        $this->assertArrayHasKey('id', $response);
         $this->assertArrayHasKey('timeSheetId', $response);
-        $this->assertInternalType('string', $response['uuid']);
+        $this->assertInternalType('string', $response['id']);
         $this->assertInstanceOf('App\DomainValueObjects\TimeLog\ClockIn\ClockIn', $response['clockIn']);
     }
 
     public function test_createClockInEntry_passes()
     {
-        $timeStampString = "2019-02-01 06:30:44";
+        $date = "2019-02-01";
+        $time = "06:30:44";
+        $organizationId = Organization::first();
+        $organizationId = $organizationId->id;
 
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $timeStampString);
+        $timeStamp = new TimeStamp(new UUID('timeStamp'), $date, $time);
         $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp);
 
-        $timeSheetId = "uuid";
-        $logUuid = "uuid";
+        $timeSheetId = "id";
+        $logUuid = "id";
 
-        $response = $this->service->createClockInEntry($logUuid, $this->user->id, $timeSheetId, $clockIn, $timeStampString);
+        $response = $this->service->createClockInEntry($logUuid, $this->user->id, $organizationId, $timeSheetId, $clockIn, $date, $time);
+
         $this->assertArrayHasKey('message_success', $response);
-        $this->assertArrayHasKey('timeSheet_id', $response);
-        $this->assertArrayHasKey('log_uuid', $response);
-        $this->assertArrayHasKey('time_stamp', $response);
-        $this->assertInternalType('string', $response['timeSheet_id']);
-        $this->assertInternalType('string', $response['time_stamp']);
-        $this->assertInternalType('string', $response['log_uuid']);
+        $this->assertArrayHasKey('time_sheet_id', $response);
+        $this->assertArrayHasKey('log_id', $response);
+        $this->assertArrayHasKey('date', $response);
+        $this->assertArrayHasKey('time', $response);
         $this->assertInternalType('string', $response['message_success']);
+        $this->assertInternalType('string', $response['time_sheet_id']);
+        $this->assertInternalType('string', $response['log_id']);
+        $this->assertInternalType('string', $response['date']);
+        $this->assertInternalType('string', $response['time']);
     }
 }

@@ -13,7 +13,7 @@ class UUID
     private $domainName = null;
     public $toString = null;
 
-    public function __construct(string $domainName)
+    public function __construct(string $domainName = null)
     {
         $this->domainName = $domainName;
         $this->validation();
@@ -30,12 +30,7 @@ class UUID
     {
         $uuid = null;
 
-        try {
-            $uuid = UUIDPackage::generate();
-        } catch (\Exception $e) {
-            throw new GenerateUUID5Failed();
-        }
-        if ($uuid == null || $uuid == '') throw new GenerateUUID5Failed();
+        $uuid = UUIDPackage::generate();
 
         return (string)$uuid;
     }

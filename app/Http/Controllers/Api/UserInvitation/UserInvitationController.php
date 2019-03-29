@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api\UserInvitation;
 
 use Illuminate\Http\Request;
-use App\Models\UserInvitation;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\UserInvitation\Contracts\UserInvitationContract;
+
+use App\Models\UserInvitation;
 
 class UserInvitationController extends Controller
 {

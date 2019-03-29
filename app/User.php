@@ -29,5 +29,6 @@ class User extends Authenticatable
         'password', 'remember_token', 'id', 'updated_at', 'created_at', 'organization_id'
     ];
 
+
     public $incrementing = false;
 }

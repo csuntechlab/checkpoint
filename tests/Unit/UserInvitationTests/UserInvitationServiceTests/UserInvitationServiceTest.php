@@ -29,7 +29,6 @@ class UserInvitationServiceTest extends TestCase
         $this->registerService = new RegisterService();
         $this->service = new UserInvitationService();
         $this->seed('OrganizationSeeder');
-        $this->seed('ProgramSeeder');
         $this->seed('UsersTableSeeder');
 
         $name = "tes3t@email.com";
