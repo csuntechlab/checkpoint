@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserInvitationsTable extends Migration
+class CreateDepartmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateUserInvitationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_invitations', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->uuid('program_id');
-            $table->foreign('program_id')
+            $table->uuid('organization_id');
+            $table->foreign('organization_id')
                 ->references('id')
-                ->on('programs');
-            $table->string('email')->unique();
-            $table->string('invite_code')->unique();
-            $table->timestamps();
+                ->on('organizations');
+            $table->string('name')->unique();
+            $table->string('display_name');
+            $table->primary(['id', 'organization_id', 'name']);
         });
     }
 
@@ -32,8 +32,6 @@ class CreateUserInvitationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_invitations');
+        Schema::dropIfExists('departments');
     }
 }
-
- 

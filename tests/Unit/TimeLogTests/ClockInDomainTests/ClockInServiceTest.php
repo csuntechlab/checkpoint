@@ -62,7 +62,7 @@ class ClockInServiceTest extends TestCase
         ];
 
         $expectedResponse = [
-            "message_success" => "Clock in was successfull",
+            "message_success" => "Clock in was successful",
             "timeSheet_id" => $timeSheetId,
             "log_id" => $logUuid,
             "date" => $date,

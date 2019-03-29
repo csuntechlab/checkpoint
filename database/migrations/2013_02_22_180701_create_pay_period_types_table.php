@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrganizationLocationsTable extends Migration
+class CreatePayPeriodTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateOrganizationLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('organization_locations', function (Blueprint $table) {
+        Schema::create('pay_period_types', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->text('locations');
-            $table->timestamps();
+            $table->string('name')->unique();
+            $table->string('display_name');
+            $table->primary(['id', 'name']);
         });
     }
 
@@ -27,6 +28,6 @@ class CreateOrganizationLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organization_locations');
+        Schema::dropIfExists('pay_period_types');
     }
 }

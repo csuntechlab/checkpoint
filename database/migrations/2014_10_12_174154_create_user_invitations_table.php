@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrganizationSettingsTable extends Migration
+class CreateUserInvitationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateOrganizationSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('organization_settings', function (Blueprint $table) {
+        Schema::create('user_invitations', function (Blueprint $table) {
             $table->uuid('id')->unique();
             $table->uuid('organization_id');
             $table->foreign('organization_id')
                 ->references('id')
                 ->on('organizations');
+            $table->string('email')->unique();
+            $table->string('invite_code')->unique();
             $table->timestamps();
         });
     }
@@ -30,6 +32,8 @@ class CreateOrganizationSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organization_settings');
+        Schema::dropIfExists('user_invitations');
     }
 }
+
+ 
