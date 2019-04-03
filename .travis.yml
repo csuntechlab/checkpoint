@@ -24,7 +24,6 @@ matrix:
 
     - stage: "Frontend Test"
       language: node_js
-      os: linux
       node: 
         - 'lts/*'
       cache:
