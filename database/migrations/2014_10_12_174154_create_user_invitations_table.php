@@ -35,5 +35,3 @@ class CreateUserInvitationsTable extends Migration
         Schema::dropIfExists('user_invitations');
     }
 }
-
- 

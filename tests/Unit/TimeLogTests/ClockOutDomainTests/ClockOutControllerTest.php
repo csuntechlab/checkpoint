@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 // TB models
 use \App\User;
 
-//Contracts 
+//Contracts
 use \App\Http\Controllers\Api\TimeLog\ClockOutDomain\ClockOutController;
 use \App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutContract;
 use App\Http\Requests\ClockOutRequest;
@@ -31,7 +31,7 @@ class ClockOutControllerTest extends TestCase
         parent::setUp();
         $this->retriever = Mockery::mock(ClockOutContract::class);
         $this->controller = new ClockOutController($this->retriever);
-        // $this->seed('OrgnaizationSeeder');
+        // $this->seed('OrganizationSeeder');
         // $this->seed('UsersTableSeeder');
         // $this->seed('TimeSheetSeeder');
     }

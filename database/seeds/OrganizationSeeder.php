@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Organization;
 
-class OrgnaizationSeeder extends Seeder
+class OrganizationSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -13,6 +13,7 @@ interface ClockInLogicContract
     public function createClockInEntry(
         string $id,
         string $userId,
+        string $organizationId,
         string $timeSheetId,
         ClockIn $clockIn,
         string $date,

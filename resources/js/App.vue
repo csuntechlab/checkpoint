@@ -1,10 +1,15 @@
 <template>
-    <div>
-        Welcome to Admin
-    </div>
+  <v-app>
+    <Navigation></Navigation>
+    <router-view></router-view>
+  </v-app>
 </template>
 <script>
-export default{
-    
-}
+import Navigation from "./components/Navigation.vue";
+export default {
+  name: "App",
+  components: {
+    Navigation
+  }
+};
 </script>

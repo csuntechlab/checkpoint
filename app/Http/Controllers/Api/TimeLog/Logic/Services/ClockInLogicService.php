@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Http\Controllers\Api\TimeLog\Logic\Services;
 
 use function Opis\Closure\serialize;
@@ -11,6 +11,7 @@ use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 // TB Models
 use App\Models\TimeSheets;
 use App\Models\TimeLog;
+use App\User;
 
 //Exceptions
 use App\Exceptions\TimeSheetExceptions\TimeSheetNotFound;
@@ -81,6 +82,7 @@ class ClockInLogicService implements ClockInLogicContract
     public function createClockInEntry(
         string $id,
         string $userId,
+        string $organizationId,
         string $timeSheetId,
         ClockIn $clockIn,
         string $date,
@@ -90,6 +92,7 @@ class ClockInLogicService implements ClockInLogicContract
             TimeLog::create([
                 'id' => $id,
                 'user_id' => $userId,
+                'organization_id' => $organizationId,
                 'time_sheet_id' => $timeSheetId,
                 'date' => $date,
                 'clock_in' => serialize($clockIn),
