@@ -21,7 +21,7 @@ class CreateProjectsTable extends Migration
                 ->on('organizations');
             $table->string('name')->unique();
             $table->string('display_name');
-            $table->primary(['id', 'oranization_id', 'name']);
+            $table->primary(['id', 'organization_id', 'name']);
         });
     }
 

@@ -14,7 +14,7 @@ class CreateLocationsTable extends Migration
     public function up()
     {
         Schema::create('locations', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->unique();
             $table->text('location');
         });
     }
