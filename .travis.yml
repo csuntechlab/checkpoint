@@ -1,25 +1,39 @@
-os:
-  - linux
+matrix:
+  include: 
+    - stage: "Backend Test"
+      os:
+        - linux
+      language: php
+      php:
+        - '7.1'
 
-language: php
-php:
-  - '7.1'
+      services:
+        - mysql
 
-services:
-  - mysql
+      before_script:
+        - cp .env.travis .env
+        - mysql -e 'create database test_db;'
+        - composer self-update
+        - composer install --no-interaction
+        - php artisan key:generate
+        - php artisan migrate --seed
+        - php artisan passport:install
 
-before_script:
-  - cp .env.travis .env
-  - mysql -e 'create database test_db;'
-  - composer self-update
-  - composer install --no-interaction
-  - php artisan key:generate
-  - php artisan migrate --seed
-  - php artisan passport:install
+      script:
+        - vendor/bin/phpunit
 
-script:
-  - vendor/bin/phpunit
+    - stage: "Frontend Test"
+      language: node_js
+      os: linux
+      node: "lts/*"
+      cache:
+        directories:
+          - node_modules
+      install:
+        - yarn
+      # script:
+      #   - yarn test
 
-branches:
-  only:
-    - dev
+# branches:
+#   only:
+#     - dev
