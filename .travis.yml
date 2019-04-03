@@ -25,6 +25,7 @@ matrix:
     - stage: "Frontend Test"
       language: node_js
       os: linux
+      node: "8"
       cache:
         directories:
           - node_modules
