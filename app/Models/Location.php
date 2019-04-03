@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SupervisorDepartment extends Model
+class Location extends Model
 {
     //
 }
