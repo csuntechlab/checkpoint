@@ -11,7 +11,12 @@
         "test": "jest"
     },
     "devDependencies": {
+        "@babel/core": "^7.4.3",
+        "@babel/preset-env": "^7.4.3",
+        "@vue/test-utils": "^1.0.0-beta.29",
         "axios": "^0.18",
+        "babel-core": "^7.0.0-bridge.0",
+        "babel-jest": "^24.7.0",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
         "jest": "^24.7.0",
@@ -23,6 +28,7 @@
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
         "vue": "^2.6.2",
+        "vue-jest": "^3.0.4",
         "vue-template-compiler": "^2.6.8"
     },
     "dependencies": {
