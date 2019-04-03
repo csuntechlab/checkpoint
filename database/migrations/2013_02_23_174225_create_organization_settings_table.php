@@ -23,10 +23,10 @@ class CreateOrganizationSettingsTable extends Migration
             $table->foreign('pay_period_type_id')
                 ->references('id')
                 ->on('pay_period_types');
-            $table->uuid('time_calculator_id');
-            $table->foreign('time_calculator_id')
+            $table->uuid('time_calculator_type_id');
+            $table->foreign('time_calculator_type_id')
                 ->references('id')
-                ->on('time_calculators');
+                ->on('time_calculator_types');
         });
     }
 

@@ -22,7 +22,7 @@ class CreateUserProjectsTable extends Migration
             $table->foreign('project_id')
                 ->references('id')
                 ->on('projects');
-            $table->primary(['organization_id', 'project_id']);
+            $table->primary(['user_id', 'project_id']);
         });
     }
 
