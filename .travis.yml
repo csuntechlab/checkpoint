@@ -25,14 +25,15 @@ matrix:
     - stage: "Frontend Test"
       language: node_js
       os: linux
-      node: '8'
+      node: 
+        - 'lts/*'
       cache:
         directories:
           - node_modules
       install:
         - yarn
-      # script:
-      #   - yarn test
+      script:
+        - yarn test
 
 # branches:
 #   only:
