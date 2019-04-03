@@ -30,6 +30,7 @@ class CreateTimeLogsTable extends Migration
             $table->date('date');
             $table->text('clock_in');
             $table->text('clock_out')->nullable();
+            $table->boolean('categories');
             $table->float('total_hours')->nullable();
             $table->text('log_change_stack')->nullable();
             $table->timestamps();

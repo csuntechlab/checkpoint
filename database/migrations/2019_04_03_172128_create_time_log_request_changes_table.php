@@ -30,6 +30,7 @@ class CreateTimeLogRequestChangesTable extends Migration
             $table->date('date');
             $table->text('clock_in');
             $table->text('clock_out');
+            $table->boolean('categories');
             $table->float('total_hours')->nullable();
         });
     }
