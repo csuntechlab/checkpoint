@@ -8,8 +8,6 @@ use App\Models\Organization;
 
 // Domain Value Objects
 use App\DomainValueObjects\UUIDGenerator\UUID;
-use App\DomainValueObjects\Location\Location;
-use App\DomainValueObjects\Location\GeoLocation;
 use App\DomainValueObjects\Location\Address;
 
 

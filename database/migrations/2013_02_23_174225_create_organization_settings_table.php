@@ -15,7 +15,7 @@ class CreateOrganizationSettingsTable extends Migration
     {
         Schema::create('organization_settings', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->uuid('organization_id');
+            $table->uuid('organization_id')->unique();
             $table->foreign('organization_id')
                 ->references('id')
                 ->on('organizations');
@@ -27,6 +27,7 @@ class CreateOrganizationSettingsTable extends Migration
             $table->foreign('time_calculator_type_id')
                 ->references('id')
                 ->on('time_calculator_types');
+            $table->primary(['id', 'organization_id']);
         });
     }
 
