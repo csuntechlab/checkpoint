@@ -30,7 +30,7 @@ class OrganizationSeeder extends Seeder
             $city = $faker->city;
             $state = $faker->state;
             $postCode = $faker->postcode;
-            $logoLocation = "/data/" . $faker->name . ".jpeg";
+            $logoLocation = "/data/" . $organizationName . ".jpeg";
             $address = new Address($streetNumber, $streetName, $city, $state, $postCode);
             $orgId = UUID::generate();
 
