@@ -5,5 +5,5 @@ import App from '../../resources/src/js/App.vue'
 test('Test App.Vue mount', () => {
   const wrapper = mount(App)
 
-  expect(wrapper.isVisible()).toBe(false)
+  expect(wrapper.isVisible()).toBe(true)
 })
