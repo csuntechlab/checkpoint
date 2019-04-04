@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Api\Auth\RegisterDomain;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\RegisterAdminRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
+use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterAdminContract;
 use App\User;
 
 class RegisterAdminController extends Controller
 {
     protected $registerAdminUtility;
 
-    public function __contstruct(RegisterContract $registerContract)
+    public function __contstruct(RegisterAdminContract $registerContract)
     {
         $this->$registerAdminUtility = $registerContract;
     }

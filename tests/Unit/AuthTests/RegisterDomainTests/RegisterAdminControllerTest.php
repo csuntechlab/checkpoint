@@ -77,7 +77,7 @@ class RegisterAdminControllerTest extends TestCase
     $response = $this->json('POST', "/api/register_admin", $request);
     $response = $response->getOriginalContent();
     dd($response);
-    $response = json_encode($response);
+    // $response = json_encode($response);
 
   }
 }
