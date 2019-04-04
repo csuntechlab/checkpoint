@@ -1,9 +1,8 @@
+os: linux
 matrix:
   include: 
-    - stage: "Backend Test"
-      os:
-        - linux
-      language: php
+    #PHPUnit test 
+    - language: php
       php:
         - '7.1'
       services:
@@ -18,8 +17,8 @@ matrix:
         - php artisan passport:install
       script:
         - vendor/bin/phpunit
-    - stage: "Frontend Test"
-      language: node_js
+    # Jest Test
+    - language: node_js
       node_js: 
         - 'lts/*'
       install:
