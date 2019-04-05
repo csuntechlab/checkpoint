@@ -20,6 +20,7 @@ class CreateUserInvitationsTable extends Migration
                 ->references('id')
                 ->on('organizations');
             $table->string('email')->unique();
+            $table->string('name');
             $table->string('invite_code')->unique();
             $table->timestamps();
         });

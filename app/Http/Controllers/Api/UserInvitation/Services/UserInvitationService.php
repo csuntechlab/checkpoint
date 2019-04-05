@@ -20,8 +20,8 @@ class UserInvitationService implements UserInvitationContract
 {
     public function inviteNewUser(string $orgId, string $roleId, string $name, string $email): array
     {
-        if($email) {
-            if(User::where('email', $email)->first()){
+        if ($email) {
+            if (User::where('email', $email)->first()) {
                 throw new UserAlreadyRegistered();
             }
             $this->deletePreviouslyCreatedUserInvitation($email);
@@ -40,20 +40,18 @@ class UserInvitationService implements UserInvitationContract
                 'name' => $name,
                 'email' => $email,
                 'invite_code' => $token
-                ]);
-            } catch (\Exception $e) {
-                throw new UserInviteCreationFailed();
-            }
+            ]);
+        } catch (\Exception $e) {
+            throw new UserInviteCreationFailed();
+        }
         return [
             "message_success" => "User Invite Was Successful",
             "email" => $email
         ];
-
     }
 
     private function deletePreviouslyCreatedUserInvitation($email): bool
     {
         return UserInvitation::where('email', $email)->delete();
     }
-
 }

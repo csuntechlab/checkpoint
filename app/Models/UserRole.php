@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserRoles extends Model
+class UserRole extends Model
 {
-    //
+    public $incrementing = false;
     public $timestamps = false;
 }
