@@ -8,6 +8,7 @@ use App\User;
 use App\Models\Program;
 use App\Models\Organization;
 use App\Models\UserInvitation;
+use App\DomainValueObjects\Location\Address;
 
 //Exceptions
 use App\Exceptions\AuthExceptions\UserCreatedFailed;
@@ -38,7 +39,7 @@ class RegisterAdminService implements RegisterContract
 
     public function registerOrganization(
       $organization_name,
-      $address,
+      Address $address,
       $logo
       ):Organization {
         try{

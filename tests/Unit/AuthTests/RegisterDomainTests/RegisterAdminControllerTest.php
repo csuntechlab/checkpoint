@@ -67,11 +67,13 @@ class RegisterAdminControllerTest extends TestCase
       'street'=> "Reseda Blvd",
       'city' => "Northridge",
       'state' => "CA",
-      'zip' => "91324",
+      'zip_code' => "91324",
+      'country' => "United States",
       'organization_name' => "META+LAB",
-      'logo' => "logo.jpg",
       'email' => "MikaruuChann69@email.com",
-      'password' => "A_password"
+      'logo' => "logo.jpg",
+      'password' => "A_password",
+      'password_confirmation' => "A_password"
     ];
 
     $response = $this->json('POST', "/api/register_admin", $request);

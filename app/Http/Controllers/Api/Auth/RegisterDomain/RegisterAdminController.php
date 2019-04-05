@@ -6,15 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Auth\RegisterAdminRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterAdminContract;
+use App\DomainValueObjects\Location\Address;
 use App\User;
 
 class RegisterAdminController extends Controller
 {
     protected $registerAdminUtility;
 
-    public function __contstruct(RegisterAdminContract $registerContract)
+    public function __construct(RegisterAdminContract $registerAdminContract)
     {
-        $this->$registerAdminUtility = $registerContract;
+        $this->registerAdminUtility = $registerAdminContract;
     }
 
     public function register(RegisterAdminRequest $request)
@@ -26,7 +27,7 @@ class RegisterAdminController extends Controller
         $request['street'],
         $request['city'],
         $request['state'],
-        $request['zip']
+        $request['zip_code']
       );
 
       $organization = $this->registerAdminUtility->registerOrganization(

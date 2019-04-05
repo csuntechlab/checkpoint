@@ -187,6 +187,9 @@ return [
         /** Register Domain Service provider */
         App\Providers\ApiProviders\Auth\RegiserServiceProvider::class,
 
+        /** Register Admin Domain Service provider **/
+        App\Providers\ApiProviders\Auth\RegisterAdminServiceProvider::class,
+
         /*********** TimeLog Service Providers **************/
 
         /** ClockIn Service Provider */
