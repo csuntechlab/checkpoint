@@ -8,7 +8,7 @@ use Mockery;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use App\User;
-use App\Models\Program;
+use App\Models\Organization;
 use App\Http\Controllers\Api\Auth\LoginDomain\Services\LoginService;
 // use App\Http\Requests\Auth\LoginRequest;
 
@@ -29,8 +29,7 @@ class LoginServiceTest extends TestCase
     {
         parent::setUp();
         $this->seed('PassportSeeder');
-        $this->seed('OrgnaizationSeeder');
-        $this->seed('ProgramSeeder');
+        $this->seed('OrganizationSeeder');
         $this->seed('UsersTableSeeder');
         $this->user = \App\User::where('id', 1)->first();
         $this->actingAs($this->user);
@@ -67,14 +66,14 @@ class LoginServiceTest extends TestCase
     {
         $email = "example@emai.com";
         $password = $email;
-        $programId = Program::first();
-        $programId = $programId->id;
+        $orgId = Organization::first();
+        $orgId = $orgId->id;
 
         User::create([
             'name' => $email,
             'email' => $email,
             'password' => Hash::make($password),
-            'program_id' => $programId
+            'organization_id' => $orgId
         ]);
 
         $function = 'authenticateUser';
@@ -99,14 +98,14 @@ class LoginServiceTest extends TestCase
     {
         $email = "example@emai.com";
         $password = $email;
-        $programId = Program::first();
-        $programId = $programId->id;
+        $orgId = Organization::first();
+        $orgId = $orgId->id;
 
         User::create([
             'name' => $email,
             'email' => $email,
             'password' => Hash::make($password),
-            'program_id' => $programId
+            'organization_id' => $orgId
         ]);
 
         $response = $this->service->login($email, $password);

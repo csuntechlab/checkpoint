@@ -1,10 +1,5 @@
 # Checkpoint
-
-<!--
-[![Build Status](https://travis-ci.com/csun-metalab/CSU-Metro-LA.svg?token=e9qZAYzzq9K9MQ8bgdpF&branch=dev)](https://travis-ci.com/csun-metalab/CSU-Metro-LA) [![Build Status](https://travis-ci.com/csun-metalab/CSU-Metro-LA.svg?token=e9qZAYzzq9K9MQ8bgdpF&branch=demo)](https://travis-ci.com/csun-metalab/CSU-Metro-LA) -->
-
-> A clock-in application
-
+[![Build Status](https://travis-ci.com/csun-metalab/checkpoint.svg?branch=dev)](https://travis-ci.com/csun-metalab/checkpoint)
 ## Table of Contents
 
 ## Getting Started

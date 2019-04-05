@@ -25,8 +25,7 @@ class ClockOutLogicServiceTest extends TestCase
     {
         parent::setUp();
         $this->service = new ClockOutLogicService();
-        $this->seed('OrgnaizationSeeder');
-        $this->seed('ProgramSeeder');
+        $this->seed('OrganizationSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
         $this->user = \App\User::where('id', 1)->first();

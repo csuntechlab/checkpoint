@@ -24,8 +24,7 @@ class RegisterControllerTest extends TestCase
         parent::setUp();
         $this->retriever = Mockery::mock(RegisterContract::class);
         $this->controller = new RegisterController($this->retriever);
-        $this->seed('OrgnaizationSeeder');
-        $this->seed('ProgramSeeder');
+        $this->seed('OrganizationSeeder');
     }
 
     /**

@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
 use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
+use App\Models\Organization;
 
 // Models
 use App\Models\TimeSheets;
@@ -29,8 +30,7 @@ class ClockInLogicServiceTest extends TestCase
     {
         parent::setUp();
         $this->service = new ClockInLogicService();
-        $this->seed('OrgnaizationSeeder');
-        $this->seed('ProgramSeeder');
+        $this->seed('OrganizationSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
         $this->seed('TimeLogSeeder');
@@ -122,6 +122,8 @@ class ClockInLogicServiceTest extends TestCase
     {
         $date = "2019-02-01";
         $time = "06:30:44";
+        $organizationId = Organization::first();
+        $organizationId = $organizationId->id;
 
         $timeStamp = new TimeStamp(new UUID('timeStamp'), $date, $time);
         $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp);
@@ -129,7 +131,7 @@ class ClockInLogicServiceTest extends TestCase
         $timeSheetId = "id";
         $logUuid = "id";
 
-        $response = $this->service->createClockInEntry($logUuid, $this->user->id, $timeSheetId, $clockIn, $date, $time);
+        $response = $this->service->createClockInEntry($logUuid, $this->user->id, $organizationId, $timeSheetId, $clockIn, $date, $time);
 
         $this->assertArrayHasKey('message_success', $response);
         $this->assertArrayHasKey('time_sheet_id', $response);

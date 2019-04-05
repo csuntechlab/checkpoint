@@ -6,7 +6,6 @@ use function Opis\Closure\unserialize;
 use Faker\Generator as Faker;
 
 // Models
-use App\Models\Program;
 use App\Models\Organization;
 
 /*
