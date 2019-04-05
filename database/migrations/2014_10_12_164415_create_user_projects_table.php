@@ -14,6 +14,7 @@ class CreateUserProjectsTable extends Migration
     public function up()
     {
         Schema::create('user_projects', function (Blueprint $table) {
+            $table->uuid('id');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')
