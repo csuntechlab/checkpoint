@@ -1,23 +1,20 @@
+// Base Imports
+import Vue from 'vue';
+import router from './router';
+import store from './store';
+import checkpoint from './config';
 
-require('./bootstrap');
 
-//Packages
-import Vue from "vue";
-import axios from "axios";
-import router from "./router";
-import store from "./store";
-
+//Axios
+import axios from 'axios';
+axios.defaults.baseURL = checkpoint.url;
+axios.defaults.headers.common[''] = checkpoint.token;
 // Vuetify
-import Vuetify from 'vuetify'
-Vue.use(Vuetify)
-
+import Vuetify from 'vuetify';
+Vue.use(Vuetify);
 
 //Components
 import App from './App.vue';
-
-//Base Urls
-// axios.defaults.baseURL = url;
-// axios.defaults.headers.common[''] = token;
 
 const vm = new Vue({
     el: '#app',
@@ -26,6 +23,5 @@ const vm = new Vue({
     axios,
     render: h => h(App),
 });
-
 
 export default vm;
