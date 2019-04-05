@@ -122,7 +122,7 @@ class RegisterControllerTest extends TestCase
 
       $response = $this->json('POST', "/api/register", $input);
       $response = $response->getOriginalContent();
-      
+
       $expected = [
         "message" => "The given data was invalid.",
         "errors" => [

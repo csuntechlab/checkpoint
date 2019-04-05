@@ -20,7 +20,7 @@ class RegisterAdminController extends Controller
 
     public function register(RegisterAdminRequest $request)
     {
-      $name = $request['first_name'].$request['last_name'];
+      $name = $request['first_name'].' '.$request['last_name'];
 
       $address = new Address(
         $request['address_number'],
@@ -39,9 +39,10 @@ class RegisterAdminController extends Controller
       $user = $this->registerAdminUtility->registerAdminUser(
         $name,
         $request['email'],
-        $password
+        $request['password'],
+        $organization->id
       );
 
-      return [$organization, $user];
+      return compact(['organization', 'user']);
     }
 }

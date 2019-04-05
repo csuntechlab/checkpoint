@@ -5,7 +5,7 @@ namespace App\Exceptions\OrganizationExceptions;
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class OrganizationCodedNotDefined extends Exception
+class OrganizationCreatedFailed extends Exception
 {
     public function __construct()
     {
@@ -19,8 +19,8 @@ class OrganizationCodedNotDefined extends Exception
      */
     public function render()
     {
-        $message = 'Organization code was not defined.';
-        $status_code = 409;
+        $message = 'Organization was not created.';
+        $status_code = 500;
         return BuildResponse::build_response($message, $status_code);
     }
 }

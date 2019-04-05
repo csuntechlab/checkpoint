@@ -4,7 +4,7 @@ namespace App\Providers\ApiProviders\Auth;
 
 use Illuminate\Support\ServiceProvider;
 
-class RegiserAdminServiceProvider extends ServiceProvider
+class RegisterAdminServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
