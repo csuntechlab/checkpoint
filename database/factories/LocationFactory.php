@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\DomainValueObjects\Location\Address;
 
 use App\Models\Location;
 use App\Models\Project;
