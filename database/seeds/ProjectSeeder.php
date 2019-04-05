@@ -2,7 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
+use App\User;
 use App\Models\Project;
+use App\Models\UserProject;
 
 class ProjectSeeder extends Seeder
 {
@@ -11,8 +13,21 @@ class ProjectSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
-        factory(Project::class, 10)->create();
+        for ($i = 0; $i < 30; $i++) {
+            $projectId = UUID::generate();
+            $organizationId = Organization::all()->random()->id;
+            $userId = User::where('organization_id', $organizationId)->random()->id;
+            $name = $faker->unique()->name;
+            Project::create([
+                'id' => $projectId,
+                'organization_id' => $organizationId,
+                'name' => $name,
+                'display_name' => $name
+            ]);
+
+            UserProject::create([]);
+        }
     }
 }
