@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PayPeriodTypeSeeder::class);
         $this->call(OrganizationSeeder::class); //seeds org and settings
         $this->call(CategorySeeder::class);
+        $this->call(ProjectSeeder::class);
         // $this->call(RoleSeeder::class);
         // $this->call(ProgramSeeder::class);
         // $this->call(UsersTableSeeder::class);

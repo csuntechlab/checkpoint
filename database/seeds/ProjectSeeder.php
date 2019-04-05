@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Models\Program;
+use App\Models\Project;
 
-class ProgramSeeder extends Seeder
+class ProjectSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +13,6 @@ class ProgramSeeder extends Seeder
      */
     public function run()
     {
-        factory(Program::class)->create();
+        factory(Project::class, 10)->create();
     }
 }
