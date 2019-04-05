@@ -24,7 +24,7 @@ class RegisterAdminControllerTest extends TestCase
       parent::setUp();
       $this->retriever = Mockery::mock(RegisterAdminContract::class);
       $this->controller = new RegisterAdminController($this->retriever);
-      $this->seed('OrgnaizationSeeder');
+      $this->seed('OrganizationSeeder');
   }
 
   public function test_register()
