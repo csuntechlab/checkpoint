@@ -25,8 +25,10 @@ class TimeSheetSeeder extends Seeder
 
     private function createTimeSheet($organization)
     {
-        $startDate = Carbon::now('America/Los_Angeles')->startOfDay();
-        $endDate = $startDate->addMonth()->endOfDay();
+        $startDate = Carbon::now('America/Los_Angeles')->startOfMonth()->startOfDay();
+        $endDate = Carbon::now('America/Los_Angeles')->startOfDay();
+
+        $endDate->addMonth()->endOfDay();
 
         TimeSheets::create([
             'id' => UUID::generate(),
