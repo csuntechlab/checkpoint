@@ -24,8 +24,8 @@ class UserInvitationServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Http\Controllers\Api\UserInvitation\Contracts\UserInvitationContract',
-            'App\Http\Controllers\Api\UserInvitation\Services\userInvitationService'
+            'App\Contracts\UserInvitationContract',
+            'App\Services\userInvitationService'
         );
     }
 }

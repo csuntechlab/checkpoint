@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Exceptions\UserInvitationExceptions\UserInviteCreationFailed;
 use App\Exceptions\UserInvitationExceptions\UserAlreadyRegistered;
 
-use App\Http\Controllers\Api\UserInvitation\Services\UserInvitationService;
+use App\Services\UserInvitationService;
 use App\Services\RegisterService;
 
 
@@ -23,7 +23,7 @@ class UserInvitationServiceTest extends TestCase
     private $service;
     private $user;
     private $role;
-    private $classPath = 'App\Http\Controllers\Api\UserInvitation\Services\UserInvitationService';
+    private $classPath = 'App\Services\UserInvitationService';
 
 
     public function setUp()

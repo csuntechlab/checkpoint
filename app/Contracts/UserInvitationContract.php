@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\UserInvitation\Contracts;
+namespace App\Contracts;
 
 use App\Models\UserInvitation;
 
@@ -7,5 +7,4 @@ use App\Models\UserInvitation;
 interface UserInvitationContract
 {
     public function inviteNewUser(string $orgId, string $roleId, string $name, string $email): array;
-
 }

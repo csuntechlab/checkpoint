@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\UserInvitation\Services;
+namespace App\Services;
 
 // Models
 
@@ -7,7 +7,7 @@ use App\User;
 use App\Models\UserInvitation;
 use App\DomainValueObjects\UUIDGenerator\UUID;
 // Contracts
-use App\Http\Controllers\Api\UserInvitation\Contracts\UserInvitationContract;
+use App\Contracts\UserInvitationContract;
 // Exceptions
 
 
