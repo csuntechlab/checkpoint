@@ -10,11 +10,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\User;
 use App\Models\Organization;
 use App\Http\Controllers\Api\Auth\LoginDomain\Services\LoginService;
-// use App\Http\Requests\Auth\LoginRequest;
 
-use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\Auth\LoginRequest;
 
 
 class LoginServiceTest extends TestCase
@@ -29,7 +26,10 @@ class LoginServiceTest extends TestCase
     {
         parent::setUp();
         $this->seed('PassportSeeder');
+        $this->seed('TimeCalculatorTypeSeeder');
+        $this->seed('PayPeriodTypeSeeder');
         $this->seed('OrganizationSeeder');
+        $this->seed('RoleSeeder');
         $this->seed('UsersTableSeeder');
         $this->user = \App\User::where('id', 1)->first();
         $this->actingAs($this->user);
@@ -96,7 +96,7 @@ class LoginServiceTest extends TestCase
 
     public function test_login_service_pass()
     {
-        $email = "example@emai.com";
+        $email = "example@email.com";
         $password = $email;
         $orgId = Organization::first();
         $orgId = $orgId->id;

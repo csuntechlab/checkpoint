@@ -2,14 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\User;
-
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use Mockery;
-use Illuminate\Http\Request;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Api\Auth\LoginDomain\LoginController;
 use App\Http\Controllers\Api\Auth\LoginDomain\Contracts\LoginContract;

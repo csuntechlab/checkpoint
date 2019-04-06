@@ -3,12 +3,12 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-// use Illuminate\Foundation\Teclearsting\WithFaker;
-// use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Mockery;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+
+
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Controllers\Api\Auth\RegisterDomain\RegisterController;
 use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
 
@@ -24,68 +24,34 @@ class RegisterControllerTest extends TestCase
         parent::setUp();
         $this->retriever = Mockery::mock(RegisterContract::class);
         $this->controller = new RegisterController($this->retriever);
+        $this->seed('TimeCalculatorTypeSeeder');
+        $this->seed('PayPeriodTypeSeeder');
         $this->seed('OrganizationSeeder');
     }
 
     /**
-     * A Mockery Test for get_param in ClockIn Contoller
-     *
-     * @return array
-     */
-    public function test_get_param()
-    {
-        $input = [
-            "name" => "tes3t@email.com",
-            "email" => "tes3t@email.com",
-            "password" => "tes3t@email.com",
-            "password_confirmation" => "tes3t@email.com",
-            "invite_code" => "000-000"
-        ];
-
-        $expectedResponse = [
-            "name" => "tes3t@email.com",
-            "email" => "tes3t@email.com",
-            "password" => "tes3t@email.com",
-            "invite_code" => "000-000"
-        ];
-
-        $request = new Request($input);
-
-        $function = 'getParam';
-
-        $method = $this->get_private_method($this->classPath, $function);
-
-        $response = $method->invoke($this->controller, $request);
-
-        $this->assertEquals($response, $expectedResponse);
-        $this->assertArrayHasKey('name', $expectedResponse);
-        $this->assertArrayHasKey('email', $expectedResponse);
-        $this->assertArrayHasKey('password', $expectedResponse);
-        $this->assertArrayHasKey('password', $expectedResponse);
-        $this->assertArrayHasKey('invite_code', $response);
-    }
-
-    /**
-     * A Mockery Test for Register Contoller
+     * A Mockery Test for Register Controller
      *
      * @return userCreds
      */
     public function test_register_controller_with_mockery()
     {
 
-        $name = "tes3t@email.com";
-        $email = "tes3t@email.com";
-        $password = "tes3t@email.com";
-        $inviteCode = "000-000";
+        $input['name'] = "tes3t@email.com";
+        $input['email'] = "tes3t@email.com";
+        $input['password'] = "tes3t@email.com";
+        $input['inviteCode'] = "000-000";
+
+        $request = new RegisterRequest($input);
 
         $expectedResponse = [];
 
         $this->retriever
             ->shouldReceive('register')
-            ->with($name, $email, $password, $inviteCode)
+            ->with($request['name'], $request['email'], $request['password'], $request['inviteCode'])
             ->once()->andReturn($expectedResponse);
 
-        $response = $this->retriever->register($name, $email, $password, $inviteCode);
+        $response = $this->controller->register($request);
 
         $this->assertEquals($expectedResponse, $response);
     }
@@ -112,32 +78,32 @@ class RegisterControllerTest extends TestCase
 
     public function test_register_fails_with_wrong_parameters()
     {
-      $input = [
-          "name" => "",
-          "email" => "not_a_email",
-          "password" => "oof",
-          "password_confirmation" => "yikes"
-      ];
+        $input = [
+            "name" => "",
+            "email" => "not_a_email",
+            "password" => "oof",
+            "password_confirmation" => "yikes"
+        ];
 
-      $response = $this->json('POST', "/api/register", $input);
-      $response = $response->getOriginalContent();
+        $response = $this->json('POST', "/api/register", $input);
+        $response = $response->getOriginalContent();
 
-      $expected = [
-        "message" => "The given data was invalid.",
-        "errors" => [
-          "name" => [
-            0 => "Name is required!"
-          ],
-          "email" => [
-            0 => "Email is invalid."
-          ],
-          "password" => [
-            0 => "Password must be 6 characters long!",
-            1 => "The password confirmation does not match."
-          ]
-        ]
-      ];
+        $expected = [
+            "message" => "The given data was invalid.",
+            "errors" => [
+                "name" => [
+                    0 => "Name is required!"
+                ],
+                "email" => [
+                    0 => "Email is invalid."
+                ],
+                "password" => [
+                    0 => "Password must be 6 characters long!",
+                    1 => "The password confirmation does not match."
+                ]
+            ]
+        ];
 
-      $this->assertEquals($expected, $response);
+        $this->assertEquals($expected, $response);
     }
 }

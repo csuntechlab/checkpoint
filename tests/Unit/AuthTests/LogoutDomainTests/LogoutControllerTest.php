@@ -2,15 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\User;
-
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Mockery;
-use Illuminate\Http\Request;
-use App\Http\Requests\Auth\LoginLogoutRequest;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use App\Http\Controllers\Api\Auth\LogoutDomain\LogoutController;
