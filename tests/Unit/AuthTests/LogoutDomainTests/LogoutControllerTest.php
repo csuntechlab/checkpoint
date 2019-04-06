@@ -25,7 +25,7 @@ class LogoutControllerTest extends TestCase
 
 
     /**
-     * A Mockery Test for Logout Contoller
+     * A Mockery Test for Logout Controller
      *
      * @return json
      */
@@ -36,7 +36,7 @@ class LogoutControllerTest extends TestCase
             'Authorization' => 'Bearer serializedToken'
         ]);
 
-        $expectedResponse = response()->json("Logout was succesful!");
+        $expectedResponse = response()->json("Logout was successful!");
 
         $this->retriever
             ->shouldReceive('logout')

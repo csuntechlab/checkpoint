@@ -37,7 +37,7 @@ class LogoutServiceTest extends TestCase
             'Authorization' => 'Bearer serializedToken'
         ]);
 
-        $expectedResponse = response()->json("Logout was succesful!");
+        $expectedResponse = response()->json("Logout was successful!");
 
         $user = \App\User::where('id', 1)->first();
         $this->actingAs($user);

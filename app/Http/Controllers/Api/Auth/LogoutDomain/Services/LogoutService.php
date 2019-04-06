@@ -22,6 +22,6 @@ class LogoutService implements LogoutContract
     }
 
 
-    return response()->json("Logout was succesful!");
+    return response()->json("Logout was successful!");
   }
 }
