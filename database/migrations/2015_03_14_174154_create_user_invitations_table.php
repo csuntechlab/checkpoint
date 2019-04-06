@@ -19,6 +19,10 @@ class CreateUserInvitationsTable extends Migration
             $table->foreign('organization_id')
                 ->references('id')
                 ->on('organizations');
+            $table->unsignedInteger('role_id');
+            $table->foreign('role_id')
+                ->references('id')
+                ->on('roles');
             $table->string('email')->unique();
             $table->string('name');
             $table->string('invite_code')->unique();

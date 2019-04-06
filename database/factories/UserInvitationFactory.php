@@ -21,6 +21,7 @@ $factory->define(UserInvitation::class, function (Faker $faker) {
     return [
         'id' => $uuid->toString,
         'organization_id' => $organizationId,
+        'role_id' => $roleId,
         'email' => $email,
         'name' => $name,
         'invite_code' => $inviteCode,

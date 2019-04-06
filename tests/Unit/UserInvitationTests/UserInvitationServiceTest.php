@@ -11,6 +11,7 @@ use App\Exceptions\UserInvitationExceptions\UserAlreadyRegistered;
 use App\Http\Controllers\Api\UserInvitation\Services\UserInvitationService;
 use App\Http\Controllers\Api\Auth\RegisterDomain\Services\RegisterService;
 
+
 use App\User;
 use App\Models\Organization;
 use App\Models\Role;
@@ -20,6 +21,8 @@ class UserInvitationServiceTest extends TestCase
 {
     use DatabaseMigrations;
     private $service;
+    private $user;
+    private $role;
     private $classPath = 'App\Http\Controllers\Api\UserInvitation\Services\UserInvitationService';
 
 
@@ -28,8 +31,15 @@ class UserInvitationServiceTest extends TestCase
         parent::setUp();
         $this->registerService = new RegisterService();
         $this->service = new UserInvitationService();
+        $this->seed('PassportSeeder');
+        $this->seed('TimeCalculatorTypeSeeder');
+        $this->seed('PayPeriodTypeSeeder');
         $this->seed('OrganizationSeeder');
+        $this->seed('RoleSeeder');
         $this->seed('UsersTableSeeder');
+        $this->user = User::first();
+        $this->role = Role::where('name', 'Employee')->first();
+        $this->actingAs($this->user);
 
         $name = "tes3t@email.com";
         $email = "tes3t@email.com";
@@ -45,7 +55,8 @@ class UserInvitationServiceTest extends TestCase
      */
     public function test_user_invitation_service()
     {
-        $userId = User::first()->id;
+        $userId = $this->user->id;
+        $userId = $this->user->name;
         $name = "John Goober";
         $email = "j0hNGewB3r@email.com";
         // TODO: Tony - grabbing from roles table not working for some reason

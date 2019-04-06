@@ -30,7 +30,10 @@ class ClockInControllerTest extends TestCase
         $this->utility = Mockery::mock(ClockInContract::class);
         $this->controller = new ClockInController($this->utility);
         $this->seed('PassportSeeder');
+        $this->seed('TimeCalculatorTypeSeeder');
+        $this->seed('PayPeriodTypeSeeder');
         $this->seed('OrganizationSeeder');
+        $this->seed('RoleSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
         $this->user = \App\User::where('id', 1)->first();

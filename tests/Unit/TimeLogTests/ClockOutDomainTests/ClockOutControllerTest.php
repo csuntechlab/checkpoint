@@ -31,9 +31,6 @@ class ClockOutControllerTest extends TestCase
         parent::setUp();
         $this->retriever = Mockery::mock(ClockOutContract::class);
         $this->controller = new ClockOutController($this->retriever);
-        // $this->seed('OrganizationSeeder');
-        // $this->seed('UsersTableSeeder');
-        // $this->seed('TimeSheetSeeder');
     }
 
     public function test_clock_out_controller_with_mockery()
