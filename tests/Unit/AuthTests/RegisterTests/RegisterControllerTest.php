@@ -9,8 +9,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\Controllers\Api\Auth\RegisterDomain\RegisterController;
-use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
+use App\Http\Controllers\RegisterController;
+use App\Contracts\RegisterContract;
 
 class RegisterControllerTest extends TestCase
 {

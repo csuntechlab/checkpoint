@@ -1,8 +1,8 @@
 <?php
-namespace App\Http\Controllers\Api\Auth\LogoutDomain\Services;
+namespace App\Services;
 
 use App\User;
-use App\Http\Controllers\Api\Auth\LogoutDomain\Contracts\LogoutContract;
+use App\Contracts\LogoutContract;
 
 
 class LogoutService implements LogoutContract

@@ -1,9 +1,13 @@
 <?php
-namespace App\Http\Controllers\Api\Auth\RegisterDomain;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+
+// Request
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
+
+// Contracts
+use App\Contracts\RegisterContract;
 
 class RegisterController extends Controller
 {

@@ -7,8 +7,8 @@ use Tests\TestCase;
 use Mockery;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-use App\Http\Controllers\Api\Auth\LogoutDomain\LogoutController;
-use App\Http\Controllers\Api\Auth\LogoutDomain\Contracts\LogoutContract;
+use App\Http\Controllers\LogoutController;
+use App\Contracts\LogoutContract;
 
 class LogoutControllerTest extends TestCase
 {

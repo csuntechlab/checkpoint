@@ -1,5 +1,5 @@
-<?php 
-namespace App\Http\Controllers\Api\Auth\LoginDomain\Services;
+<?php
+namespace App\Services;
 
 
 use Illuminate\Support\Facades\Auth;
@@ -8,7 +8,7 @@ use App\User as User;
 
 use App\Exceptions\AuthExceptions\UnauthenticatedUser;
 
-use App\Http\Controllers\Api\Auth\LoginDomain\Contracts\LoginContract;
+use App\Contracts\LoginContract;
 
 class LoginService implements LoginContract
 {

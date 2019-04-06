@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\Auth\LogoutDomain\Contracts;
+namespace App\Contracts;
 
 interface LogoutContract
 {

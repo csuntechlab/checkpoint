@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use App\User;
 use App\Models\Organization;
-use App\Http\Controllers\Api\Auth\LoginDomain\Services\LoginService;
+use App\Services\LoginService;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -20,7 +20,7 @@ class LoginServiceTest extends TestCase
     private $mockedService;
     private $service;
     private $user;
-    private $classPath = "App\Http\Controllers\Api\Auth\LoginDomain\Services\LoginService";
+    private $classPath = "App\Services\LoginService";
 
     public function setUp()
     {

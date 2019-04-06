@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\Auth\LoginDomain\Contracts;
+namespace App\Contracts;
 
 interface LoginContract
 {

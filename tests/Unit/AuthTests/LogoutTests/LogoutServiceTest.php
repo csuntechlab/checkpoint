@@ -7,7 +7,7 @@ use App\User;
 use App\Models\Organization;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-use App\Http\Controllers\Api\Auth\LogoutDomain\Services\LogoutService;
+use App\Services\LogoutService;
 
 class LogoutServiceTest extends TestCase
 {

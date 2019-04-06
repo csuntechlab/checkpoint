@@ -7,8 +7,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use Mockery;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Controllers\Api\Auth\LoginDomain\LoginController;
-use App\Http\Controllers\Api\Auth\LoginDomain\Contracts\LoginContract;
+use App\Http\Controllers\LoginController;
+use App\Contracts\LoginContract;
 
 
 class LoginControllerTest extends TestCase
@@ -16,7 +16,7 @@ class LoginControllerTest extends TestCase
     use DatabaseMigrations;
     private $controller;
     private $retriever;
-    private $classPath = '\App\Http\Controllers\Api\Auth\LoginDomain\LoginController';
+    private $classPath = '\App\Http\LoginController';
 
     public function setUp()
     {

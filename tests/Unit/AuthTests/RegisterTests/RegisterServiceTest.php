@@ -3,9 +3,10 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Http\Controllers\Api\Auth\RegisterDomain\Services\RegisterService;
+
+use App\Services\RegisterService;
 
 class RegisterServiceTest extends TestCase
 {

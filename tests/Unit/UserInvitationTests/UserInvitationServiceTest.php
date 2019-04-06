@@ -9,7 +9,7 @@ use App\Exceptions\UserInvitationExceptions\UserInviteCreationFailed;
 use App\Exceptions\UserInvitationExceptions\UserAlreadyRegistered;
 
 use App\Http\Controllers\Api\UserInvitation\Services\UserInvitationService;
-use App\Http\Controllers\Api\Auth\RegisterDomain\Services\RegisterService;
+use App\Services\RegisterService;
 
 
 use App\User;

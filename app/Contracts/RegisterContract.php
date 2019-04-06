@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\Auth\RegisterDomain\Contracts;
+namespace App\Contracts;
 
 interface RegisterContract
 {

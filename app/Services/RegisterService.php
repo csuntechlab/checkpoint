@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\Auth\RegisterDomain\Services;
+namespace App\Services;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -12,7 +12,7 @@ use App\Models\UserInvitation;
 use App\Exceptions\AuthExceptions\UserCreatedFailed;
 
 //Contracts
-use App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract;
+use App\Contracts\RegisterContract;
 
 
 class RegisterService implements RegisterContract

@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth\LoginDomain;
+namespace App\Http\Controllers;
 
-
-use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Api\Auth\LoginDomain\Contracts\LoginContract;
+
+// Request
+use App\Http\Requests\Auth\LoginRequest;
+
+// Contract
+use App\Contracts\LoginContract;
 
 class LoginController extends Controller
 {

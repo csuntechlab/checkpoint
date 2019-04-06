@@ -1,9 +1,13 @@
 <?php
-namespace App\Http\Controllers\Api\Auth\LogoutDomain;
+namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Api\Auth\LogoutDomain\Contracts\LogoutContract;
+
+// Request
+use Illuminate\Http\Request;
+
+// Contracts
+use App\Contracts\LogoutContract;
 
 class LogoutController extends Controller
 {
