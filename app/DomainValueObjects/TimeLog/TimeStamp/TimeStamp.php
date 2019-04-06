@@ -6,10 +6,12 @@ namespace App\DomainValueObjects\TimeLog\TimeStamp;
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\Location\Location;
 use App\Exceptions\TimeLogExceptions\TimeStamp\GenerateTimeStampFailed;
+use Carbon\Carbon;
 
 
 class TimeStamp
 {
+    private $timeZone = 'America/Los_Angeles';
     private $uuid = null;
     private $date = null;
     private $time = null;
@@ -37,5 +39,19 @@ class TimeStamp
     public function getTimeStampString()
     {
         return $this->date . " " . $this->time;
+    }
+
+    public function toCarbon()
+    {
+        return Carbon::create($this->getTimeStampString(), $this->timeZone);
+    }
+
+    public function toArray()
+    {
+        $data = array();
+        $data['date'] = $this->date;
+        $data['time'] = $this->time;
+        $data['timeStamp'] = $this->getTimeStampString();
+        return $data;
     }
 }

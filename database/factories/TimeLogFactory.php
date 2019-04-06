@@ -14,7 +14,14 @@ use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 
 use Faker\Generator as Faker;
 
+$timeZone = 'America/Los_Angeles';
+
+/**
+ * Redo Time Log factory
+ */
+
 $factory->define(TimeLog::class, function (Faker $faker) {
+
     $uuid = new UUID('log');
     $user = User::where('id', 1)->first();
     $orgId = Organization::first()->id;
@@ -33,7 +40,7 @@ $factory->define(TimeLog::class, function (Faker $faker) {
     $clockOut = new ClockOut(new UUID('clockOut'), $timeStampClockOut);
 
     return [
-        'id' => $uuid->toString,
+        'id' => UUID::generate(),
         'user_id' => $user->id,
         'time_sheet_id' => $timeSheet->id,
         'organization_id' => $orgId,
