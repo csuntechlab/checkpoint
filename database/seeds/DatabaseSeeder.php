@@ -20,8 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProjectSeeder::class); // seeds also UserProject table
         $this->call(LocationSeeder::class);
         $this->call(UserInvitationsTableSeeder::class);
-        // $this->call(ProgramSeeder::class);
-        // $this->call(TimeSheetSeeder::class);
+        $this->call(TimeSheetSeeder::class);
         // $this->call(TimeLogSeeder::class);
     }
 }

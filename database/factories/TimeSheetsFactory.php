@@ -17,7 +17,7 @@ $factory->define(TimeSheets::class, function (Faker $faker) {
     $endDate = '2019-02-01 06:30:44';
 
     return [
-        'id' => $uuid->toString,
+        'id' => UUID::generate(),
         'user_id' => 1,
         'organization_id' => $orgId,
         'start_date' => $startDate,
