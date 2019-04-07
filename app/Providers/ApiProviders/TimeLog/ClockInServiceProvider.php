@@ -24,8 +24,8 @@ class ClockInServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract',
-            'App\Http\Controllers\Api\TimeLog\ClockInDomain\Services\ClockInService'
+            'App\Contracts\ClockInContract',
+            'App\Services\ClockInService'
         );
     }
 }

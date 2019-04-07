@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts;
+namespace App\Contracts;
 
 interface ClockInContract
 {

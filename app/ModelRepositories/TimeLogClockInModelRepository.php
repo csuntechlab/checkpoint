@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\TimeLog\Logic\Services;
+namespace App\ModelRepositories;
 
 use function Opis\Closure\serialize;
 
@@ -11,18 +11,17 @@ use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 // TB Models
 use App\Models\TimeSheets;
 use App\Models\TimeLog;
-use App\User;
 
 //Exceptions
 use App\Exceptions\TimeSheetExceptions\TimeSheetNotFound;
 use App\Exceptions\GeneralExceptions\DataBaseQueryFailed;
 use App\Exceptions\TimeLogExceptions\ClockIn\AlreadyClockedIn;
-
-//Contracts
-use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockInLogicContract;
 use App\Exceptions\TimeLogExceptions\ClockIn\ClockInWasNotSuccesfullyAdded;
 
-class ClockInLogicService implements ClockInLogicContract
+//Contracts
+use App\ModelRepositoryInterfaces\TimeLogClockInModelRepositoryInterface;
+
+class TimeLogClockInModelRepository implements TimeLogClockInModelRepositoryInterface
 {
 
     private $domainName = "TimeLog";
@@ -87,7 +86,8 @@ class ClockInLogicService implements ClockInLogicContract
         ClockIn $clockIn,
         string $date,
         string $time
-    ): array {
+    ): array
+    {
         try {
             TimeLog::create([
                 'id' => $id,
@@ -102,7 +102,7 @@ class ClockInLogicService implements ClockInLogicContract
         }
 
         return [
-            "message_success" => "Clock in was successfull",
+            "message_success" => "Clock in was successful",
             "time_sheet_id" => $timeSheetId,
             "log_id" => $id,
             "date" => $date,

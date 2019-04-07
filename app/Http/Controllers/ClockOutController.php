@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api\TimeLog\ClockOutDomain;
+namespace App\Http\Controllers;
 
-use App\Http\Requests\ClockOutRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutContract;
+
+// Request
+use App\Http\Requests\ClockOutRequest;
+
+// Contract
+use App\Contracts\ClockOutContract;
 
 class ClockOutController extends Controller
 {

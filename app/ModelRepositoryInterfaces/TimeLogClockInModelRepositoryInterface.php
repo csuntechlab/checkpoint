@@ -1,10 +1,10 @@
 <?php
-namespace App\Http\Controllers\Api\TimeLog\Logic\Contracts;
+namespace App\ModelRepositoryInterfaces;
 
 
 use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
 
-interface ClockInLogicContract
+interface TimeLogClockInModelRepositoryInterface
 {
     public function userHasIncompleteTimeLogByDate(string $date, string $userId): bool;
 

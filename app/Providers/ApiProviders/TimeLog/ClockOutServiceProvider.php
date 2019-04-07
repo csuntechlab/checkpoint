@@ -24,8 +24,8 @@ class ClockOutServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutContract',
-            'App\Http\Controllers\Api\TimeLog\ClockOutDomain\Services\ClockOutService'
+            'App\Contracts\ClockOutContract',
+            'App\Services\ClockOutService'
         );
     }
 }

@@ -1,12 +1,14 @@
 <?php
-
-namespace App\Http\Controllers\Api\TimeLog\ClockInDomain;
+declare (strict_types = 1);
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
+// Requests
 use App\Http\Requests\ClockInRequest;
 
-use App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;
+// Contracts
+use App\Contracts\ClockInContract;
 
 class ClockInController extends Controller
 {
@@ -19,6 +21,6 @@ class ClockInController extends Controller
 
     public function clockIn(ClockInRequest $request): array
     {
-        return $this->clockInUtility->clockIn($request['date'], $request['time']);
+        $this->clockInUtility->clockIn($request['date'], $request['time']);
     }
 }
