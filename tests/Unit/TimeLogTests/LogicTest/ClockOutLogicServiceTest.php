@@ -11,20 +11,20 @@ use function Opis\Closure\unserialize;
 use App\Models\TimeLog;
 
 // Service
-use App\Http\Controllers\Api\TimeLog\Logic\Services\ClockOutLogicService;
+use App\Http\Controllers\Api\TimeLog\Logic\Services\TimeLogClockOutModelRepository;
 
 
 class ClockOutLogicServiceTest extends TestCase
 {
     use DatabaseMigrations;
     private $service;
-    private $classPath = 'App\Http\Controllers\Api\TimeLog\Logic\Services\ClockOutLogicService';
+    private $classPath = 'App\Http\Controllers\Api\TimeLog\Logic\Services\TimeLogClockOutModelRepository';
     private $user;
 
     public function setUp()
     {
         parent::setUp();
-        $this->service = new ClockOutLogicService();
+        $this->service = new TimeLogClockOutModelRepository();
         $this->seed('OrganizationSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');

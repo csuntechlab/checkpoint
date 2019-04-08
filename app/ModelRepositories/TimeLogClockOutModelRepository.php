@@ -1,5 +1,5 @@
-<?php 
-namespace App\Http\Controllers\Api\TimeLog\Logic\Services;
+<?php
+namespace App\ModelRepositories;
 
 use function Opis\Closure\serialize;
 
@@ -16,10 +16,13 @@ use App\Exceptions\TimeLogExceptions\TimeLogNotFound;
 use App\Exceptions\GeneralExceptions\DataBaseQueryFailed;
 use App\Exceptions\TimeLogExceptions\ClockOut\AlreadyClockedOut;
 use App\Exceptions\TimeLogExceptions\ClockOut\ClockOutWasNotSucessfullyAdded;
-// Contracts 
-use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract;
 
-class ClockOutLogicService implements ClockOutLogicContract
+// Contracts 
+use App\ModelRepositoryInterfaces\TImeLogClockOutModelRepositoryInterface;
+use function GuzzleHttp\json_encode;
+use Carbon\Carbon;
+
+class TimeLogClockOutModelRepository implements TImeLogClockOutModelRepositoryInterface
 {
     private $domainName = "clockOut";
 
@@ -35,39 +38,39 @@ class ClockOutLogicService implements ClockOutLogicContract
         if ($log == null) throw new TimeLogNotFound();
 
         if ($log->clock_out != null) throw new AlreadyClockedOut();
-
         return $log;
     }
 
-    public function getClockOut(string $date, string $time): ClockOut
+    public function getHours(Carbon $clockIn, Carbon $clockOut): float
     {
-        $clockOutUUid = new UUID($this->domainName);
-
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $date, $time);
-
-        $clockOut = new ClockOut($clockOutUUid, $timeStamp);
-
-        return $clockOut;
+        $hours = $clockIn->diffInRealHours($clockOut);
+        return $hours;
     }
 
-    public function appendClockOutToTimeLog(TimeLog $timeLog, ClockOut $clockOut, string $date, string $time): array
+    public function appendClockOutToTimeLog(TimeLog $timeLog, TimeStamp $clockOut, float $totalHours): array
     {
+
+        $clockOut = $clockOut->toArray();
+        $date = $clockOut['date'];
+        $time = $clockOut['time'];
+
         try {
-            $timeLog->clock_out = serialize($clockOut);
+            $timeLog->clock_out = json_encode($clockOut);
             $timeLog->save();
         } catch (\Exception $e) {
             throw new ClockOutWasNotSucessfullyAdded();
         }
 
         $timeSheetId = $timeLog->time_sheet_id;
-        $id = $timeLog->id;
+        $log_id = $timeLog->id;
 
         return [
-            "message_success" => "Clock out was successfull",
+            "message_success" => "Clock out was successful",
             "time_sheet_id" => $timeSheetId,
-            "log_id" => $id,
+            "log_id" => $log_id,
             "date" => $date,
-            "time" => $time
+            "time" => $time,
+            'total_hours' => $totalHours
         ];
     }
 }

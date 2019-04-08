@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts;
+namespace App\Contracts;
 
 interface ClockOutContract
 {

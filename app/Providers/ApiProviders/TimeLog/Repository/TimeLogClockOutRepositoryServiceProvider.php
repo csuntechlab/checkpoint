@@ -24,8 +24,8 @@ class TimeLogClockOutRepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Contracts\ClockOutLogicContract',
-            'App\Services\ClockOutLogicService'
+            'App\ModelRepositoryInterfaces\TImeLogClockOutModelRepositoryInterface',
+            'App\ModelRepositories\TimeLogClockOutModelRepository'
         );
     }
 }

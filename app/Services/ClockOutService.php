@@ -1,35 +1,41 @@
-<?php 
+<?php
 
-namespace App\Http\Controllers\Api\TimeLog\ClockOutDomain\Services;
+namespace App\Services;
 
 // Auth
 use Illuminate\Support\Facades\Auth;
 
 // Contracts 
-use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutContract;
-use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract;
+use App\Contracts\ClockOutContract;
+use App\ModelRepositoryInterfaces\TImeLogClockOutModelRepositoryInterface;
+use function GuzzleHttp\json_decode;
+use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
+use Carbon\Carbon;
 
 class ClockOutService implements ClockOutContract
 {
 
-    protected $clockOutLogicUtility;
+    protected $clockOutModelRepo;
 
-    public function __construct(ClockOutLogicContract $clockOutLogicUtility)
+    public function __construct(TImeLogClockOutModelRepositoryInterface $clockOutModelRepo)
     {
-        $this->clockOutLogicUtility = $clockOutLogicUtility;
+        $this->clockOutModelRepo = $clockOutModelRepo;
     }
 
     public function clockOut(string $date, string $time, string $logId): array
     {
         $user = Auth::user();
 
-        $timelog = $this->clockOutLogicUtility->getTimeLog($user->id, $logId);
-        
-        $clockOut = $this->clockOutLogicUtility->getClockOut($date, $time);
+        $timeLog = $this->clockOutModelRepo->getTimeLog($user->id, $logId);
 
-        return $this->clockOutLogicUtility->appendClockOutToTimeLog($timelog, $clockOut, $date, $time);
+        $clockIn = json_decode($timeLog->clock_in);
+
+        $clockIn = new TimeStamp($clockIn->date, $clockIn->time);
+        $clockOut = new TimeStamp($date, $time);
+
+        $totalHours = $this->clockOutModelRepo->getHours($clockIn->carbon, $clockOut->carbon);
+
+
+        return $this->clockOutModelRepo->appendClockOutToTimeLog($timeLog, $clockOut, $totalHours);
     }
-
 }
-
- 

@@ -11,7 +11,7 @@ use App\Models\TimeLog;
 
 // Contracts
 use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Services\ClockOutService;
-use App\Http\Controllers\Api\TimeLog\Logic\Contracts\ClockOutLogicContract;
+use App\Http\Controllers\Api\TimeLog\Logic\Contracts\TImeLogClockOutModelRepositoryInterface;
 
 use function Opis\Closure\unserialize;
 
@@ -26,7 +26,7 @@ class ClockOutServiceTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->clockOutLogicUtility = Mockery::mock(ClockOutLogicContract::class);
+        $this->clockOutLogicUtility = Mockery::mock(TImeLogClockOutModelRepositoryInterface::class);
         $this->service = new ClockOutService($this->clockOutLogicUtility);
         $this->seed('OrganizationSeeder');
         $this->seed('UsersTableSeeder');

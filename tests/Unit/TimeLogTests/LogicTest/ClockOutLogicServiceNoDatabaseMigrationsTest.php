@@ -12,14 +12,14 @@ use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 use App\Models\TimeLog;
 
 // Service
-use App\Http\Controllers\Api\TimeLog\Logic\Services\ClockOutLogicService;
+use App\Http\Controllers\Api\TimeLog\Logic\Services\TimeLogClockOutModelRepository;
 
 class ClockOutLogicServiceNoDatabaseMigrationsTest extends TestCase
 {
     public function setUp()
     {
         parent::setUp();
-        $this->service = new ClockOutLogicService();
+        $this->service = new TimeLogClockOutModelRepository();
     }
 
     public function test_getTimeLog_throws_DataBaseQueryFailed()
