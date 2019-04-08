@@ -12,7 +12,7 @@ use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 use App\Models\Organization;
 
 // Models
-use App\Models\TimeSheets;
+use App\Models\TimeSheet;
 use App\Models\TimeLog;
 
 use App\Http\Controllers\Api\TimeLog\Logic\Services\ClockInLogicService;
@@ -69,7 +69,7 @@ class ClockInLogicServiceTest extends TestCase
     public function test_getTmeSheetId_passes()
     {
         $userId = 1;
-        $timeSheet = TimeSheets::where('user_id', $userId)->first();
+        $timeSheet = TimeSheet::where('user_id', $userId)->first();
 
         $function = 'getTimeSheetId';
         $method = $this->get_private_method($this->classPath, $function);
@@ -85,7 +85,7 @@ class ClockInLogicServiceTest extends TestCase
         $this->expectException('App\Exceptions\TimeSheetExceptions\TimeSheetNotFound');
         $userId = 1;
 
-        TimeSheets::where('user_id', $userId)->first()->delete();
+        TimeSheet::where('user_id', $userId)->first()->delete();
 
         $function = 'getTimeSheetId';
         $method = $this->get_private_method($this->classPath, $function);

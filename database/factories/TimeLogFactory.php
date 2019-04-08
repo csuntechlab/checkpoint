@@ -2,7 +2,7 @@
 
 // Models
 use App\User;
-use App\Models\TimeSheets;
+use App\Models\TimeSheet;
 use App\Models\TimeLog;
 use App\Models\Organization;
 
@@ -26,7 +26,7 @@ $factory->define(TimeLog::class, function (Faker $faker) {
     $user = User::where('id', 1)->first();
     $orgId = Organization::first()->id;
 
-    $timeSheet = TimeSheets::where('user_id', $user->id)->first();
+    $timeSheet = TimeSheet::where('user_id', $user->id)->first();
 
     $date =  "2019-02-01";
     $time = "06:30:44";

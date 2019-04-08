@@ -21,6 +21,7 @@ class CreateTimeSheetsTable extends Migration
                 ->on('organizations');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->boolean('completed')->nullable();
             $table->text('completed_time_sheet')->nullable();
         });
     }

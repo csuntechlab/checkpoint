@@ -10,7 +10,7 @@ use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
 use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 
 // Models
-use App\Models\TimeSheets;
+use App\Models\TimeSheet;
 use App\Models\TimeLog;
 
 use App\Http\Controllers\Api\TimeLog\Logic\Services\ClockInLogicService;
@@ -45,7 +45,7 @@ class ClockInLogicServiceNoDatabaseMigrationsTest extends TestCase
 
     // public function test_createClockInEntry_fails_throws_DataBaseQueryFailed_exception()
     // {
-    //     $this->expectException('App\Exceptions\TimeLogExceptions\ClockIn\ClockInWasNotSuccesfullyAdded');
+    //     $this->expectException('App\Exceptions\TimeLogExceptions\ClockIn\ClockInWasNotSuccessfullyAdded');
 
     //     $timeStampString = "2019-02-01 06:30:44";
 

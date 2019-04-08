@@ -1,8 +1,10 @@
 <?php
 namespace App\Services;
 
-// Auth
+// Domain Value Objects TimeStamp
+use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 
+// Auth
 use Illuminate\Support\Facades\Auth;
 
 // Contracts
@@ -24,11 +26,15 @@ class ClockInService implements ClockInContract
         $userId = $user->id;
         $organizationId = $user->organization_id;
 
+        // Verify user does not have incomplete time log 
         $this->clockInModelRepo->userHasIncompleteTimeLogByDate($date, $userId);
+        // Get Time Sheet 
+        $timeSheet = $this->clockInModelRepo->getTimeSheet($organizationId);
 
-        $logParam = $this->clockInModelRepo->getTimeLogParam($userId, $date, $time);
-        dd($logParam);
+        $timeStamp = new TimeStamp($date, $time);
 
-        return $this->clockInModelRepo->createClockInEntry($logParam['id'], $userId, $organizationId, $logParam['timeSheetId'], $logParam['clockIn'], $date, $time);
+        $timeStamp->isWithInStartAndEndDate($timeSheet->start_date, $timeSheet->end_date);
+
+        return $this->clockInModelRepo->createClockInEntry($userId, $organizationId, $timeSheet->id, $timeStamp);
     }
 }

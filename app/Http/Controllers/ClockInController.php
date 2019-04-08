@@ -21,6 +21,6 @@ class ClockInController extends Controller
 
     public function clockIn(ClockInRequest $request): array
     {
-        $this->clockInUtility->clockIn($request['date'], $request['time']);
+        return $this->clockInUtility->clockIn($request['date'], $request['time']);
     }
 }

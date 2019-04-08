@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 
 use App\DomainValueObjects\UUIDGenerator\UUID;
-use App\Models\TimeSheets;
+use App\Models\TimeSheet;
 use App\Models\Organization;
 use Carbon\Carbon;
 
@@ -30,7 +30,7 @@ class TimeSheetSeeder extends Seeder
 
         $endDate->addMonth()->endOfDay();
 
-        TimeSheets::create([
+        TimeSheet::create([
             'id' => UUID::generate(),
             'organization_id' => $organization->id,
             'start_date' => $startDate,

@@ -5,7 +5,7 @@ namespace App\Exceptions\TimeLogExceptions\ClockIn;
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class ClockInWasNotSuccesfullyAdded extends Exception
+class ClockInWasNotSuccessfullyAdded extends Exception
 {
     public function __construct()
     {

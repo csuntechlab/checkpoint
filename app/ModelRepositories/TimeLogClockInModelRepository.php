@@ -9,14 +9,14 @@ use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
 use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 
 // TB Models
-use App\Models\TimeSheets;
+use App\Models\TimeSheet;
 use App\Models\TimeLog;
 
 //Exceptions
 use App\Exceptions\TimeSheetExceptions\TimeSheetNotFound;
 use App\Exceptions\GeneralExceptions\DataBaseQueryFailed;
 use App\Exceptions\TimeLogExceptions\ClockIn\AlreadyClockedIn;
-use App\Exceptions\TimeLogExceptions\ClockIn\ClockInWasNotSuccesfullyAdded;
+use App\Exceptions\TimeLogExceptions\ClockIn\ClockInWasNotSuccessfullyAdded;
 
 //Contracts
 use App\ModelRepositoryInterfaces\TimeLogClockInModelRepositoryInterface;
@@ -42,11 +42,11 @@ class TimeLogClockInModelRepository implements TimeLogClockInModelRepositoryInte
         return true;
     }
 
-    //TODO: hard Code fix
-    private function getTimeSheetId(string $userId): string
+    //TODO: hard Code fix  we should be passing in orgId and Time Sheet Id
+    public function getTimeSheet(string $organizationId): TimeSheet
     {
         try {
-            $timeSheet = TimeSheets::where('user_id', $userId)->first();
+            $timeSheet = TimeSheet::where('organization_id', $organizationId)->first();
         } catch (\Exception $e) {
             $subject = 'Time Sheet ';
             throw new DataBaseQueryFailed($subject);
@@ -54,57 +54,33 @@ class TimeLogClockInModelRepository implements TimeLogClockInModelRepositoryInte
 
         if ($timeSheet == null) throw new TimeSheetNotFound();
 
-        return $timeSheet->id;
+        return $timeSheet;
     }
 
-    private function getClockIn(string $date, string $time): ClockIn
+    public function createClockInEntry(string $userId, string $organizationId, string $timeSheetId, TimeStamp $timeStamp): array
     {
-        $timeStamp = new TimeStamp(new UUID('timeStamp'), $date, $time);
-        $clockIn = new ClockIn(new UUID('clockIn'), $timeStamp);
-        return $clockIn;
-    }
-
-    public function getTimeLogParam(string $userId, string $date, string $time): array
-    {
-        $logParam = array();
-
-        $logParam['timeSheetId'] = $this->getTimeSheetId($userId);
-
-        $id = new UUID($this->domainName);
-        $logParam['id'] = $id->toString;
-
-        $logParam['clockIn'] = $this->getClockIn($date, $time);
-
-        return $logParam;
-    }
-
-    public function createClockInEntry(
-        string $id,
-        string $userId,
-        string $organizationId,
-        string $timeSheetId,
-        ClockIn $clockIn,
-        string $date,
-        string $time
-    ): array
-    {
+        $timeLogId = UUID::generate();
+        $clockIn = $timeStamp->toArray();
+        $date = $clockIn['date'];
+        $time = $clockIn['time'];
+        $clockIn = json_encode($clockIn);
         try {
             TimeLog::create([
-                'id' => $id,
+                'id' => $timeLogId,
                 'user_id' => $userId,
                 'organization_id' => $organizationId,
                 'time_sheet_id' => $timeSheetId,
                 'date' => $date,
-                'clock_in' => serialize($clockIn),
+                'clock_in' => $clockIn
             ]);
         } catch (\Exception $e) {
-            throw new ClockInWasNotSuccesfullyAdded;
+            throw new ClockInWasNotSuccessfullyAdded;
         }
 
         return [
             "message_success" => "Clock in was successful",
             "time_sheet_id" => $timeSheetId,
-            "log_id" => $id,
+            "log_id" => $timeLogId,
             "date" => $date,
             "time" => $time
         ];

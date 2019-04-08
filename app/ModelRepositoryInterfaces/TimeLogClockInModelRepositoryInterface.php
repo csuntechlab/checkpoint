@@ -1,22 +1,17 @@
 <?php
 namespace App\ModelRepositoryInterfaces;
 
+// Domain Value Objects
+use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 
-use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
+// Models
+use App\Models\TimeSheet;
 
 interface TimeLogClockInModelRepositoryInterface
 {
     public function userHasIncompleteTimeLogByDate(string $date, string $userId): bool;
 
-    public function getTimeLogParam(string $userId, string $date, string $time): array;
+    public function getTimeSheet(string $organizationId): TimeSheet;
 
-    public function createClockInEntry(
-        string $id,
-        string $userId,
-        string $organizationId,
-        string $timeSheetId,
-        ClockIn $clockIn,
-        string $date,
-        string $time
-    ): array;
+    public function createClockInEntry(string $userId, string $organizationId, string $timeSheetId, TimeStamp $timeStamp): array;
 }
