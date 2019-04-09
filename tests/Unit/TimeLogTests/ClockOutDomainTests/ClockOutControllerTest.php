@@ -14,8 +14,8 @@ use Illuminate\Http\Request;
 use \App\User;
 
 //Contracts
-use \App\Http\Controllers\Api\TimeLog\ClockOutDomain\ClockOutController;
-use \App\Http\Controllers\Api\TimeLog\ClockOutDomain\Contracts\ClockOutContract;
+use \App\Http\Controllers\ClockOutController;
+use \App\Contracts\ClockOutContract;
 use App\Http\Requests\ClockOutRequest;
 
 class ClockOutControllerTest extends TestCase
@@ -48,7 +48,7 @@ class ClockOutControllerTest extends TestCase
         $request = new ClockOutRequest($input);
 
         $expectedResponse =  [
-            "message_success" => "Clock out was successfull",
+            "message_success" => "Clock out was successful",
             "time_sheet_id" => "id",
             "log_id" => "id",
             "date" => $date,

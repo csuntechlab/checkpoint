@@ -10,7 +10,5 @@ interface TImeLogClockOutModelRepositoryInterface
 {
     public function getTimeLog(string $userId, string $logId): TimeLog;
 
-    public function getHours(Carbon $clockIn, Carbon $clockOut): float;
-
     public function appendClockOutToTimeLog(TimeLog $timeLog, TimeStamp $clockOut, float $totalHours): array;
 }

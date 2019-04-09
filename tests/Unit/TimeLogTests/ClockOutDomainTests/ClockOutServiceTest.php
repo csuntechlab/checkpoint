@@ -10,17 +10,18 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Models\TimeLog;
 
 // Contracts
-use App\Http\Controllers\Api\TimeLog\ClockOutDomain\Services\ClockOutService;
-use App\Http\Controllers\Api\TimeLog\Logic\Contracts\TImeLogClockOutModelRepositoryInterface;
+use App\Services\ClockOutService;
+use App\ModelRepositoryInterfaces\TImeLogClockOutModelRepositoryInterface;
 
 use function Opis\Closure\unserialize;
+use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 
 class ClockOutServiceTest extends TestCase
 {
     use DatabaseMigrations;
     private $clockOutLogicUtility;
     private $service;
-    private $classPath = 'App\Http\Controllers\Api\TimeLog\ClockOutDomain\Services\ClockOutService';
+    private $classPath = 'App\Services\ClockOutService';
     private $user;
 
     public function setUp()
@@ -28,10 +29,13 @@ class ClockOutServiceTest extends TestCase
         parent::setUp();
         $this->clockOutLogicUtility = Mockery::mock(TImeLogClockOutModelRepositoryInterface::class);
         $this->service = new ClockOutService($this->clockOutLogicUtility);
+        $this->seed('PassportSeeder');
+        $this->seed('TimeCalculatorTypeSeeder');
+        $this->seed('PayPeriodTypeSeeder');
         $this->seed('OrganizationSeeder');
+        $this->seed('RoleSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
-        $this->seed('TimeLogSeeder');
         $this->user = \App\User::where('id', 1)->first();
         $this->actingAs($this->user);
     }
@@ -44,15 +48,21 @@ class ClockOutServiceTest extends TestCase
     public function test_ClockOutService_passes()
     {
         $timeLog = factory(TimeLog::class)->create();
-        $clockOut = unserialize($timeLog->clock_out);
 
         $date = "2019-02-01";
         $time = "06:30:44";
 
+        $clockIn = json_decode($timeLog->clock_in);
+
+        $clockIn = new TimeStamp($clockIn->date, $clockIn->time);
+        $clockOut = new TimeStamp($date, $time);
+
+        $totalHours = 20.19;
+
         $logUuid = $timeLog->id;
 
         $expectedResponse =  [
-            "message_success" => "Clock out was successfull",
+            "message_success" => "Clock out was successful",
             "time_sheet_id" => "id",
             "log_id" => "id",
             "date" => $date,
@@ -64,18 +74,12 @@ class ClockOutServiceTest extends TestCase
             ->with($this->user->id, $logUuid)
             ->once()->andReturn($timeLog);
 
-        $this->clockOutLogicUtility
-            ->shouldReceive('getClockOut')
-            ->with($date, $time)
-            ->once()->andReturn($clockOut);
-
-        $this->clockOutLogicUtility
-            ->shouldReceive('appendClockOutToTimeLog')
-            ->with($timeLog, $clockOut, $date, $time)
-            ->once()->andReturn($expectedResponse);
-
         $response = $this->service->clockOut($date, $time, $logUuid);
 
-        $this->assertEquals($expectedResponse, $response);
+        $this->assertArrayHasKey('message_success', $response);
+        $this->assertArrayHasKey('time_sheet_id', $response);
+        $this->assertArrayHasKey('log_id', $response);
+        $this->assertArrayHasKey('date', $response);
+        $this->assertArrayHasKey('time', $response);
     }
 }

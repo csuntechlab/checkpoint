@@ -13,6 +13,8 @@ use App\DomainValueObjects\TimeLog\ClockOut\ClockOut;
 use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 
 use Faker\Generator as Faker;
+use function GuzzleHttp\json_encode;
+use Carbon\Carbon;
 
 $timeZone = 'America/Los_Angeles';
 
@@ -24,20 +26,23 @@ $factory->define(TimeLog::class, function (Faker $faker) {
 
     $uuid = new UUID('log');
     $user = User::where('id', 1)->first();
-    $orgId = Organization::first()->id;
+    $orgId = $user->organization_id;
 
-    $timeSheet = TimeSheet::where('user_id', $user->id)->first();
+    $timeSheet = TimeSheet::where('organization_id', $orgId)->first();
 
     $date =  "2019-02-01";
     $time = "06:30:44";
-    $timeStampClockIn = new TimeStamp(new UUID('timeStamp'), $date, $time);
+    $clockIn = new TimeStamp($date, $time);
+
+    $carbonClockIn = $clockIn->carbon;
 
     $date =  "2019-02-01";
     $time = "09:30:44";
-    $timeStampClockOut = new TimeStamp(new UUID('timeStamp'), $date, $time);
+    $clockOut = new TimeStamp($date, $time);
 
-    $clockIn = new ClockIn(new UUID('clockIn'), $timeStampClockIn);
-    $clockOut = new ClockOut(new UUID('clockOut'), $timeStampClockOut);
+    $carbonClockOut = $clockOut->carbon;
+
+    $hours = $carbonClockIn->diffInRealHours($carbonClockOut);
 
     return [
         'id' => UUID::generate(),
@@ -45,7 +50,8 @@ $factory->define(TimeLog::class, function (Faker $faker) {
         'time_sheet_id' => $timeSheet->id,
         'organization_id' => $orgId,
         'date' => $date,
-        'clock_in' =>  serialize($clockIn),
-        'clock_out' => serialize($clockOut)
+        'clock_in' =>  json_encode($clockIn->toArray()),
+        'clock_out' => json_encode($clockOut->toArray()),
+        'total_hours' => $hours,
     ];
 });

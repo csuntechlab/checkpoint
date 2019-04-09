@@ -12,6 +12,4 @@ interface TimeLogClockInModelRepositoryInterface
     public function userHasIncompleteTimeLogByDate(string $date, string $userId): bool;
 
     public function getTimeSheet(string $organizationId): TimeSheet;
-
-    public function createClockInEntry(string $userId, string $organizationId, string $timeSheetId, TimeStamp $timeStamp): array;
 }

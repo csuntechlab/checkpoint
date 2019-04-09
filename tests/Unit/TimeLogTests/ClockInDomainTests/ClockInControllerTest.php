@@ -13,8 +13,8 @@ use Carbon\Carbon;
 use App\Http\Requests\ClockInRequest;
 
 //Contracts
-use \App\Http\Controllers\Api\TimeLog\ClockInDomain\ClockInController;
-use \App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;
+use \App\Http\Controllers\ClockInController;
+use \App\Contracts\ClockInContract;
 
 class ClockInControllerTest extends TestCase
 {
@@ -22,7 +22,7 @@ class ClockInControllerTest extends TestCase
     private $controller;
     private $utility;
 
-    private $classPath = '\App\Http\Controllers\Api\TimeLog\ClockInDomain\ClockInController';
+    private $classPath = '\App\Http\Controllers\ClockInController';
 
     public function setUp()
     {

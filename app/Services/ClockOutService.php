@@ -11,6 +11,7 @@ use App\ModelRepositoryInterfaces\TImeLogClockOutModelRepositoryInterface;
 use function GuzzleHttp\json_decode;
 use App\DomainValueObjects\TimeLog\TimeStamp\TimeStamp;
 use Carbon\Carbon;
+use App\Exceptions\TimeLogExceptions\ClockOut\ClockOutWasNotSucessfullyAdded;
 
 class ClockOutService implements ClockOutContract
 {
@@ -33,9 +34,32 @@ class ClockOutService implements ClockOutContract
         $clockIn = new TimeStamp($clockIn->date, $clockIn->time);
         $clockOut = new TimeStamp($date, $time);
 
-        $totalHours = $this->clockOutModelRepo->getHours($clockIn->carbon, $clockOut->carbon);
+        $clockInCarbon = $clockIn->carbon;
+        $clockOutCarbon = $clockOut->carbon;
 
+        $totalHours =  $clockInCarbon->diffInRealHours($clockOutCarbon);
 
-        return $this->clockOutModelRepo->appendClockOutToTimeLog($timeLog, $clockOut, $totalHours);
+        $clockOut = $clockOut->toArray();
+        $date = $clockOut['date'];
+        $time = $clockOut['time'];
+
+        try {
+            $timeLog->clock_out = json_encode($clockOut);
+            $timeLog->save();
+        } catch (\Exception $e) {
+            throw new ClockOutWasNotSucessfullyAdded();
+        }
+
+        $timeSheetId = $timeLog->time_sheet_id;
+        $log_id = $timeLog->id;
+
+        return [
+            "message_success" => "Clock out was successful",
+            "time_sheet_id" => $timeSheetId,
+            "log_id" => $log_id,
+            "date" => $date,
+            "time" => $time,
+            'total_hours' => $totalHours
+        ];
     }
 }

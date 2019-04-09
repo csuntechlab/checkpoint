@@ -40,37 +40,4 @@ class TimeLogClockOutModelRepository implements TImeLogClockOutModelRepositoryIn
         if ($log->clock_out != null) throw new AlreadyClockedOut();
         return $log;
     }
-
-    public function getHours(Carbon $clockIn, Carbon $clockOut): float
-    {
-        $hours = $clockIn->diffInRealHours($clockOut);
-        return $hours;
-    }
-
-    public function appendClockOutToTimeLog(TimeLog $timeLog, TimeStamp $clockOut, float $totalHours): array
-    {
-
-        $clockOut = $clockOut->toArray();
-        $date = $clockOut['date'];
-        $time = $clockOut['time'];
-
-        try {
-            $timeLog->clock_out = json_encode($clockOut);
-            $timeLog->save();
-        } catch (\Exception $e) {
-            throw new ClockOutWasNotSucessfullyAdded();
-        }
-
-        $timeSheetId = $timeLog->time_sheet_id;
-        $log_id = $timeLog->id;
-
-        return [
-            "message_success" => "Clock out was successful",
-            "time_sheet_id" => $timeSheetId,
-            "log_id" => $log_id,
-            "date" => $date,
-            "time" => $time,
-            'total_hours' => $totalHours
-        ];
-    }
 }

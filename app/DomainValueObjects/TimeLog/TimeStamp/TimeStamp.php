@@ -1,6 +1,4 @@
 <?php
-
-declare (strict_types = 1);
 namespace App\DomainValueObjects\TimeLog\TimeStamp;
 
 use App\Exceptions\TimeLogExceptions\TimeStamp\GenerateTimeStampFailed;

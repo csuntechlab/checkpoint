@@ -1,8 +1,6 @@
 <?php
 namespace App\ModelRepositories;
 
-use function Opis\Closure\serialize;
-
 // DomainValue Objects
 use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\TimeLog\ClockIn\ClockIn;
@@ -55,34 +53,5 @@ class TimeLogClockInModelRepository implements TimeLogClockInModelRepositoryInte
         if ($timeSheet == null) throw new TimeSheetNotFound();
 
         return $timeSheet;
-    }
-
-    public function createClockInEntry(string $userId, string $organizationId, string $timeSheetId, TimeStamp $timeStamp): array
-    {
-        $timeLogId = UUID::generate();
-        $clockIn = $timeStamp->toArray();
-        $date = $clockIn['date'];
-        $time = $clockIn['time'];
-        $clockIn = json_encode($clockIn);
-        try {
-            TimeLog::create([
-                'id' => $timeLogId,
-                'user_id' => $userId,
-                'organization_id' => $organizationId,
-                'time_sheet_id' => $timeSheetId,
-                'date' => $date,
-                'clock_in' => $clockIn
-            ]);
-        } catch (\Exception $e) {
-            throw new ClockInWasNotSuccessfullyAdded;
-        }
-
-        return [
-            "message_success" => "Clock in was successful",
-            "time_sheet_id" => $timeSheetId,
-            "log_id" => $timeLogId,
-            "date" => $date,
-            "time" => $time
-        ];
     }
 }
