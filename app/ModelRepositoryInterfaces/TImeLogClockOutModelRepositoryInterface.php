@@ -9,6 +9,4 @@ use Carbon\Carbon;
 interface TImeLogClockOutModelRepositoryInterface
 {
     public function getTimeLog(string $userId, string $logId): TimeLog;
-
-    public function appendClockOutToTimeLog(TimeLog $timeLog, TimeStamp $clockOut, float $totalHours): array;
 }
