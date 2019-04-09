@@ -40,4 +40,14 @@ class Address
           throw new InvalidAddress();
         }
     }
+
+    public function __toString()
+    {
+      return $this->address_number . '\t' . $this->street . '\t' . $this->city . '\t' . $this->state . '\t' . $this->zip;
+    }
+
+    public static function fromString(string $address)
+    {
+      return new self(...\explode('\t', $address));
+    }
 }

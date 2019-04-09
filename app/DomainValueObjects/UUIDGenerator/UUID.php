@@ -34,4 +34,11 @@ class UUID
 
         return (string)$uuid;
     }
+
+    public static function generate()
+    {
+        $uuid = UUIDPackage::generate();
+
+        return (string)$uuid;
+    }
 }

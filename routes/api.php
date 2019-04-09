@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // AUTH
 Route::post('/login', 'Api\Auth\LoginDomain\LoginController@login');
 Route::post('/register', 'Api\Auth\RegisterDomain\RegisterController@register');
+Route::post('/register_admin', 'Api\Auth\RegisterDomain\RegisterAdminController@register');
+
 Route::middleware('auth:api')->post('/logout', 'Api\Auth\LogoutDomain\LogoutController@logout');
 
 // CLOCK IN
@@ -28,4 +30,3 @@ Route::middleware('auth:api')->post('/clock/out', 'Api\TimeLog\ClockOutDomain\Cl
 
 // INVITE
 Route::middleware('auth:api')->post('/invite', 'Api\UserInvitation\UserInvitationController@inviteNewUser');
-

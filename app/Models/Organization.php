@@ -13,6 +13,10 @@ class Organization extends Model
      */
     protected $table = 'organizations';
 
+    protected $hidden = [
+        'id', 'address', 'updated_at', 'created_at'
+    ];
+
     protected $guarded = [];
     public $incrementing = false;
 }
