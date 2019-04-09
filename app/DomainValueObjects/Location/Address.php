@@ -7,20 +7,20 @@ use App\Exceptions\LocationExceptions\InvalidAddress;
 
 class Address
 {
-    private $number;
+    private $address_number;
     private $street;
     private $city;
     private $state;
     private $zip;
 
     public function __construct(
-        String $number = null,
+        String $address_number = null,
         String $street = null,
         String $city = null,
         String $state = null,
         String $zip = null
     ) {
-        $this->number = $number;
+        $this->address_number = $address_number;
         $this->street = $street;
         $this->city = $city;
         $this->state = $state;
@@ -31,7 +31,7 @@ class Address
     private function validate()
     {
         if (
-            $this->number == null ||
+            $this->address_number == null ||
             $this->street == null ||
             $this->city == null ||
             $this->state == null ||
@@ -43,7 +43,7 @@ class Address
 
     public function __toString()
     {
-        return $this->number . '\t' . $this->street . '\t' . $this->city . '\t' . $this->state . '\t' . $this->zip;
+        return $this->address_number . '\t' . $this->street . '\t' . $this->city . '\t' . $this->state . '\t' . $this->zip;
     }
 
     public static function fromString(string $address)

@@ -187,6 +187,9 @@ return [
         /** Register Domain Service provider */
         App\Providers\ApiProviders\Auth\RegiserServiceProvider::class,
 
+        /** Register Admin Domain Service provider */
+        App\Providers\ApiProviders\Auth\RegisterAdminServiceProvider::class,
+
         /*********** TimeLog Service Providers **************/
 
         /** ClockIn Service Provider */
@@ -204,6 +207,10 @@ return [
 
         /** UserInvite Service Provider */
         App\Providers\ApiProviders\UserInvitation\UserInvitationServiceProvider::class,
+
+        /*********** METALAB Providers **************/
+        /** Proxy Pass Provider */
+        CSUNMetaLab\ProxyPass\Providers\ProxyPassServiceProvider::class,
 
     ],
 

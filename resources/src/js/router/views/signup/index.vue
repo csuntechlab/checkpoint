@@ -10,7 +10,7 @@
         <v-flex pa-1 grow>
           <v-form ref="form">
             <v-text-field v-model="organization" label="Organization Name" required></v-text-field>
-            <v-text-field v-model="firstname" label="First Name" required></v-text-field>
+            <v-text-field v-model="firstName" label="First Name" required></v-text-field>
             <v-text-field v-model="lastname" label="Last Name" required></v-text-field>
             <v-text-field v-model="email" label="E-mail (This will be your username)" required></v-text-field>
             <v-text-field type="password" v-model="password" label="Password" required></v-text-field>
@@ -39,10 +39,11 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators';
 export default {
   data: () => ({
     organization: null,
-    firstname: null,
+    firstName: null,
     lastname: null,
     email: null,
     password: null,
@@ -53,5 +54,20 @@ export default {
     country: null,
     zip: null
   }),
+  validations: {
+      form: {
+          organization: { required },
+          firstName: { required },
+          lastName: { required },
+          email: { required },
+          password: { required },
+          validatePassword: { required },
+          address1: { required },
+          address2: { required },
+          city: { required },
+          country: { required },
+          zip: { required }
+      }
+  }
 };
 </script>
