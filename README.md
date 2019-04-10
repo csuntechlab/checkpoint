@@ -1,5 +1,7 @@
 # Checkpoint
+
 [![Build Status](https://travis-ci.com/csun-metalab/checkpoint.svg?branch=dev)](https://travis-ci.com/csun-metalab/checkpoint)
+
 ## Table of Contents
 
 ## Getting Started
@@ -16,12 +18,6 @@ Make sure you meet the necessary [Prerequisites](#prerequisites) in order to sta
 ## Serving the application
 
 To begin, navigate to the project root on your favorite terminal and run the following:
-
-```
-$ ./start.sh
-```
-
-Answer the following prompt honestly, after run.
 
 ```
 docker-compose up -d
@@ -42,6 +38,12 @@ To end the serve
 docker-compose down
 ```
 
+To get into the docker container run
+
+```
+docker exec -it checkpoint-server bash
+```
+
 ## Additional project set-up
 
 ### Seeding the application
@@ -57,14 +59,6 @@ This will drop you into the `checkpoint-server` container which allows you to ru
 ```
 $ php artisan migrate:refresh --seed
 $ php artisan passport:install
-```
-
-Add the corressponding Laravel Password Grant Client column secret and id to the corressponding .env values
-
-```
-PASSPORT_LOGIN_ENDPOINT=<IP>:8080/oauth/token
-PASSPORT_CLIENT_ID=
-PASSPORT_CLIENT_SECRET=
 ```
 
 ## Development cycle commands
