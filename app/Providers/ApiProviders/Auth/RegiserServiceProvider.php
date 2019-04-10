@@ -24,8 +24,8 @@ class RegiserServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterContract',
-            'App\Http\Controllers\Api\Auth\RegisterDomain\Services\RegisterService'
+            'App\Contracts\RegisterContract',
+            'App\Services\RegisterService'
         );
     }
 }

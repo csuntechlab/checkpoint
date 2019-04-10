@@ -15,16 +15,13 @@ class CreateTimeSheetsTable extends Migration
     {
         Schema::create('time_sheets', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
             $table->uuid('organization_id');
             $table->foreign('organization_id')
                 ->references('id')
                 ->on('organizations');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->boolean('completed')->nullable();
             $table->text('completed_time_sheet')->nullable();
         });
     }

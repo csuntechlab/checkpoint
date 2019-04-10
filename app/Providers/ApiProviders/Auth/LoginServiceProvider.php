@@ -24,8 +24,8 @@ class LoginServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Http\Controllers\Api\Auth\LoginDomain\Contracts\LoginContract',
-            'App\Http\Controllers\Api\Auth\LoginDomain\Services\LoginService'
+            'App\Contracts\LoginContract',
+            'App\Services\LoginService'
         );
     }
 }

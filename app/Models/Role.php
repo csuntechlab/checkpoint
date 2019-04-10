@@ -16,5 +16,6 @@ class Role extends Model
 
     protected $table = 'roles';
 
+    public $incrementing = false;
     public $timestamps = false;
 }

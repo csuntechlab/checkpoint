@@ -14,40 +14,40 @@ class Address
     private $zip;
 
     public function __construct(
-      String $address_number = null,
-      String $street = null,
-      String $city = null,
-      String $state = null,
-      String $zip = null
+        String $address_number = null,
+        String $street = null,
+        String $city = null,
+        String $state = null,
+        String $zip = null
     ) {
-      $this->address_number = $address_number;
-      $this->street = $street;
-      $this->city = $city;
-      $this->state = $state;
-      $this->zip = $zip;
-      $this->validate();
+        $this->address_number = $address_number;
+        $this->street = $street;
+        $this->city = $city;
+        $this->state = $state;
+        $this->zip = $zip;
+        $this->validate();
     }
 
     private function validate()
     {
-        if(
-          $this->address_number == null ||
-          $this->street == null ||
-          $this->city == null ||
-          $this->state == null ||
-          $this->zip == null
-        ){
-          throw new InvalidAddress();
+        if (
+            $this->address_number == null ||
+            $this->street == null ||
+            $this->city == null ||
+            $this->state == null ||
+            $this->zip == null
+        ) {
+            throw new InvalidAddress();
         }
     }
 
     public function __toString()
     {
-      return $this->address_number . '\t' . $this->street . '\t' . $this->city . '\t' . $this->state . '\t' . $this->zip;
+        return $this->address_number . '\t' . $this->street . '\t' . $this->city . '\t' . $this->state . '\t' . $this->zip;
     }
 
     public static function fromString(string $address)
     {
-      return new self(...\explode('\t', $address));
+        return new self(...\explode('\t', $address));
     }
 }

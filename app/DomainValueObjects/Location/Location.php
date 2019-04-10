@@ -50,6 +50,6 @@ class Location
 
   private function validateWithAddress()
   {
-    if ($this->address == null || !($this->address instanceof Address)) throw new AddressNotDefined();
+    if ($this->address == null || ! ($this->address instanceof Address)) throw new AddressNotDefined();
   }
 }

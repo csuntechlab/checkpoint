@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 
 use App\Models\Role;
+use App\DomainValueObjects\UUIDGenerator\UUID;
 
 class RoleSeeder extends Seeder
 {

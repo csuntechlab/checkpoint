@@ -13,8 +13,8 @@ use Carbon\Carbon;
 use App\Http\Requests\ClockInRequest;
 
 //Contracts
-use \App\Http\Controllers\Api\TimeLog\ClockInDomain\ClockInController;
-use \App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;
+use \App\Http\Controllers\ClockInController;
+use \App\Contracts\ClockInContract;
 
 class ClockInControllerTest extends TestCase
 {
@@ -22,7 +22,7 @@ class ClockInControllerTest extends TestCase
     private $controller;
     private $utility;
 
-    private $classPath = '\App\Http\Controllers\Api\TimeLog\ClockInDomain\ClockInController';
+    private $classPath = '\App\Http\Controllers\ClockInController';
 
     public function setUp()
     {
@@ -30,7 +30,10 @@ class ClockInControllerTest extends TestCase
         $this->utility = Mockery::mock(ClockInContract::class);
         $this->controller = new ClockInController($this->utility);
         $this->seed('PassportSeeder');
+        $this->seed('TimeCalculatorTypeSeeder');
+        $this->seed('PayPeriodTypeSeeder');
         $this->seed('OrganizationSeeder');
+        $this->seed('RoleSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
         $this->user = \App\User::where('id', 1)->first();

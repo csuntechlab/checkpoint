@@ -198,9 +198,9 @@ return [
         /** ClockOut Service Provider */
         App\Providers\ApiProviders\TimeLog\ClockOutServiceProvider::class,
 
-        /** Time Log Logic Service Provider */
-        App\Providers\ApiProviders\TimeLog\Logic\ClockInLogicServiceProvider::class,
-        App\Providers\ApiProviders\TimeLog\Logic\ClockOutLogicServiceProvider::class,
+        /** Time Log Repository  Service Provider */
+        App\Providers\ApiProviders\TimeLog\Repository\TimeLogClockInRepositoryServiceProvider::class,
+        App\Providers\ApiProviders\TimeLog\Repository\TimeLogClockOutRepositoryServiceProvider::class,
 
 
         /*********** UserInvitation Service Providers **************/
@@ -260,7 +260,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Token'=>\Dirape\Token\Facades\Facade::class,
+        'Token' => \Dirape\Token\Facades\Facade::class,
 
     ],
 

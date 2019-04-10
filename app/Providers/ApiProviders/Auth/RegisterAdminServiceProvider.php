@@ -24,8 +24,8 @@ class RegisterAdminServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Http\Controllers\Api\Auth\RegisterDomain\Contracts\RegisterAdminContract',
-            'App\Http\Controllers\Api\Auth\RegisterDomain\Services\RegisterAdminService'
+            'App\Contracts\RegisterAdminContract',
+            'App\Services\RegisterAdminService'
         );
     }
 }

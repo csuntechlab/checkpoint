@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Api\Auth\LoginDomain\Services\LoginService;
+use App\Services\LoginService;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -21,7 +21,7 @@ abstract class TestCase extends BaseTestCase
 
     public function get_auth_token($user)
     {
-        $classPath = "App\Http\Controllers\Api\Auth\LoginDomain\Services\LoginService";
+        $classPath = "App\Services\LoginService";
         $service = new LoginService();
         $function = 'createToken';
 
