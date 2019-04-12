@@ -46,7 +46,6 @@ class OrganizationSeeder extends Seeder
                 'organization_id' =>  $orgId,
                 'pay_period_type_id' =>  PayPeriodType::all()->random()->id,
                 'time_calculator_type_id' =>  TimeCalculatorType::all()->random()->id,
-                'radius' => 25.34
             ]);
         }
     }

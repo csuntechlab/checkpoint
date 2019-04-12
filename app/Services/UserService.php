@@ -12,16 +12,15 @@ class UserService implements UserContract
 {
     // logs that do not have a clock out
     // logs that happened today
-
-    // locations[] by org
-    // locations[] by proj
-    // radius:
-    // mentors ? 
     // currentTimeSheetId
+
+    // change Location relationship to polymorphic
+    // mentors ? 
     public function profile(int $userId)
     {
-        $profile = User::with(['userRole.role', 'userProject.project', 'userLocation', 'userProject.location'])->where('id', $userId)->get();
-        // $profile = User::with('userLocation')->where('id', $userId)->get();
+        $profile = User::with(['userRole.role', 'userProject.project', 'userProject.mentorsProject.mentorProfile.userRole.role' => function ($query) {
+            $query->where('name', 'Mentor');
+        }, 'userLocation', 'userProject.location'])->where('id', $userId)->get();
         return $profile;
     }
 }

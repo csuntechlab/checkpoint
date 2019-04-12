@@ -20,6 +20,8 @@ $factory->define(Location::class, function (Faker $faker) {
 
     $randomNumber = rand(1, 2);
 
+    $radius = rand(1, 50);
+
     $id = Organization::all()->random()->id;
 
     if ($randomNumber % 2 == 0) {
@@ -31,5 +33,6 @@ $factory->define(Location::class, function (Faker $faker) {
         'address' => $address->__toString(),
         'lat' => $lat,
         'lng' => $lng,
+        'radius' => $radius
     ];
 });

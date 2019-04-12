@@ -13,6 +13,7 @@ class UserProject extends Model
 
     protected $fillable = ['id', 'user_id', 'project_id'];
 
+    // protected $hidden = ['id'];
     protected $hidden = ['id', 'user_id'];
 
     public function project()
@@ -25,5 +26,15 @@ class UserProject extends Model
     {
         // Model, fk, local
         return $this->hasMany('App\Models\location', 'id', 'project_id');
+    }
+
+    public function mentorsProject()
+    {
+        return $this->hasMany('App\Models\UserProject', 'project_id', 'project_id');
+    }
+
+    public function mentorProfile()
+    {
+        return $this->hasOne('App\User', 'id', 'user_id');
     }
 }
