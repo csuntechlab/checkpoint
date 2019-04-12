@@ -14,8 +14,9 @@ class TimeStampTest extends TestCase
 
     public function test_a_timeStamp_is_successfully_created()
     {
-        $UUID = new UUID("domainName");
-        $timeStamp = new TimeStamp($UUID, "2019-02-01 06:30:44");
+        $date = "2019-02-01";
+        $time = "06:30:44";
+        $timeStamp = new TimeStamp($date, $time);
         $this->assertInstanceOf(TimeStamp::class, $timeStamp);
     }
 
@@ -27,11 +28,13 @@ class TimeStampTest extends TestCase
 
     public function test_get_Time_Stamp_String()
     {
-        $expectedResponse = "2019-02-01 06:30:44";
-        $UUID = new UUID("domainName");
-        $timeStamp = new TimeStamp($UUID, "2019-02-01 06:30:44");
+        $date = "2019-02-01";
+        $time = "06:30:44";
+        $expectedResponse = $date . " " . $time;
 
-        $timeStampString = $timeStamp->getTimeStampString();
+        $timeStamp = new TimeStamp($date, $time);
+
+        $timeStampString = $timeStamp->__toString();
 
         $this->assertEquals($expectedResponse, $timeStampString);
     }

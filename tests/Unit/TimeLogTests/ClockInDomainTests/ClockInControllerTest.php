@@ -3,36 +3,41 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use Mockery;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 // TB models
-use \App\User;
+use App\Http\Requests\ClockInRequest;
 
-//Contracts 
-use \App\Http\Controllers\Api\TimeLog\ClockInDomain\ClockInController;
-use \App\Http\Controllers\Api\TimeLog\ClockInDomain\Contracts\ClockInContract;
+//Contracts
+use \App\Http\Controllers\ClockInController;
+use \App\Contracts\ClockInContract;
 
 class ClockInControllerTest extends TestCase
 {
     use DatabaseMigrations;
     private $controller;
-    private $retriever;
+    private $utility;
 
-    private $classPath = '\App\Http\Controllers\Api\TimeLog\ClockInDomain\ClockInController';
+    private $classPath = '\App\Http\Controllers\ClockInController';
 
     public function setUp()
     {
         parent::setUp();
-        $this->retriever = Mockery::mock(ClockInContract::class);
-        $this->controller = new ClockInController($this->retriever);
-        // $this->seed('OrgnaizationSeeder');
-        // $this->seed('UsersTableSeeder');
-        // $this->seed('TimeSheetSeeder');
+        $this->utility = Mockery::mock(ClockInContract::class);
+        $this->controller = new ClockInController($this->utility);
+        $this->seed('PassportSeeder');
+        $this->seed('TimeCalculatorTypeSeeder');
+        $this->seed('PayPeriodTypeSeeder');
+        $this->seed('OrganizationSeeder');
+        $this->seed('RoleSeeder');
+        $this->seed('UsersTableSeeder');
+        $this->seed('TimeSheetSeeder');
+        $this->user = \App\User::where('id', 1)->first();
+        $this->actingAs($this->user);
     }
 
     /**
@@ -42,41 +47,63 @@ class ClockInControllerTest extends TestCase
      */
     public function test_clock_in_controller_with_mockery()
     {
-        $input = ["timeStamp" => "2019-02-01 06:30:44"];
+        $date = "2019-02-01";
+        $time = "06:30:44";
+
+        $input = [
+            "date" => $date,
+            "time" => $time
+        ];
+
+        $request = new ClockInRequest($input);
 
         $expectedResponse = [
             "message_success" => "Clock in was successfull",
-            "log_uuid" => "uuid"
+            "log_uuid" => "id",
+            "time_sheet_id" => "id",
+            "date" => $date,
+            "time" => $time
         ];
 
-        $this->retriever
+        $this->utility
             ->shouldReceive('clockIn')
-            ->with($input['timeStamp'])
+            ->with($request['date'], $request['time'])
             ->once()->andReturn($expectedResponse);
 
-        $response = $this->retriever->clockIn($input['timeStamp']);
+        $response = $this->controller->clockIn($request);
 
         $this->assertEquals($expectedResponse, $response);
     }
 
-    /**
-     * A Mockery Test for get_param in ClockIn Contoller
-     *
-     * @return array
-     */
-    public function test_get_param()
+    public function test_login_http_request()
     {
-        $input = ["timeStamp" => "2019-02-01 06:30:44"];
-        $request = new Request($input);
+        $date = "2019-02-01";
+        $time = "06:30:44";
 
-        $function = 'getParam';
+        $input = [
+            "date" => $date,
+            "time" => $time
+        ];
 
-        $method = $this->get_private_method($this->classPath, $function);
+        $token = $this->get_auth_token($this->user);
 
-        $response = $method->invoke($this->controller, $request);
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => $token
+        ])->json('POST', '/api/clock/in', $input);
+        $response = $response->getOriginalContent();
 
-        $this->assertEquals($response, $input);
-        $this->assertArrayHasKey('timeStamp', $input);
-        $this->assertInternalType('array', $response);
+        $this->assertArrayHasKey("message_success", $response);
+        $this->assertArrayHasKey("time_sheet_id", $response);
+        $this->assertArrayHasKey("log_id", $response);
+        $this->assertArrayHasKey("date", $response);
+        $this->assertArrayHasKey("time", $response);
+
+        $this->assertNotNull($response["message_success"]);
+        $this->assertNotNull($response["time_sheet_id"]);
+        $this->assertNotNull($response["log_id"]);
+        $this->assertNotNull($response["date"]);
+        $this->assertNotNull($response["time"]);
     }
 }

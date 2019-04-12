@@ -17,10 +17,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// AUTH
+Route::post('/login', 'LoginController@login');
+Route::post('/register', 'RegisterController@register');
+Route::middleware('auth:api')->post('/logout', 'LogoutController@logout');
+Route::post('/register_admin', 'RegisterAdminController@register');
 
-Route::post('/login', 'Api\Auth\LoginDomain\LoginController@login');
+// CLOCK IN
+Route::middleware('auth:api')->post('/clock/in', 'ClockInController@clockIn');
+Route::middleware('auth:api')->post('/clock/out', 'ClockOutController@clockOut');
 
-Route::middleware('auth:api')->post('/logout', 'Api\Auth\LogoutDomain\LogoutController@logout');
-Route::post('/register', 'Api\Auth\RegisterDomain\RegisterController@register');
-Route::middleware('auth:api')->post('/clock/in', 'Api\TimeLog\ClockInDomain\ClockInController@clockIn');
-Route::middleware('auth:api')->post('/clock/out', 'Api\TimeLog\ClockOutDomain\ClockOutController@clockOut');
+// INVITE
+Route::middleware('auth:api')->post('/invite', 'UserInvitationController@inviteNewUser');

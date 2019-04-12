@@ -187,6 +187,9 @@ return [
         /** Register Domain Service provider */
         App\Providers\ApiProviders\Auth\RegiserServiceProvider::class,
 
+        /** Register Admin Domain Service provider */
+        App\Providers\ApiProviders\Auth\RegisterAdminServiceProvider::class,
+
         /*********** TimeLog Service Providers **************/
 
         /** ClockIn Service Provider */
@@ -195,10 +198,19 @@ return [
         /** ClockOut Service Provider */
         App\Providers\ApiProviders\TimeLog\ClockOutServiceProvider::class,
 
-        /** Time Log Logic Service Provider */
-        App\Providers\ApiProviders\TimeLog\Logic\ClockInLogicServiceProvider::class,
-        App\Providers\ApiProviders\TimeLog\Logic\ClockOutLogicServiceProvider::class,
+        /** Time Log Repository  Service Provider */
+        App\Providers\ApiProviders\TimeLog\Repository\TimeLogClockInRepositoryServiceProvider::class,
+        App\Providers\ApiProviders\TimeLog\Repository\TimeLogClockOutRepositoryServiceProvider::class,
 
+
+        /*********** UserInvitation Service Providers **************/
+
+        /** UserInvite Service Provider */
+        App\Providers\ApiProviders\UserInvitation\UserInvitationServiceProvider::class,
+
+        /*********** METALAB Providers **************/
+        /** Proxy Pass Provider */
+        CSUNMetaLab\ProxyPass\Providers\ProxyPassServiceProvider::class,
 
     ],
 
@@ -248,6 +260,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Token' => \Dirape\Token\Facades\Facade::class,
 
     ],
 

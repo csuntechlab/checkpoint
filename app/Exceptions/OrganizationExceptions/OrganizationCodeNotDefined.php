@@ -14,7 +14,7 @@ class OrganizationCodedNotDefined extends Exception
 
     /**
      * Render an exception into an HTTP response.
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function render()
