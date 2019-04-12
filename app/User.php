@@ -26,9 +26,32 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'id', 'updated_at', 'created_at', 'organization_id'
+        'email_verified_at', 'password', 'remember_token', 'id', 'updated_at', 'created_at', 'organization_id'
     ];
 
 
+    protected $table = 'users';
+
+
     // public $incrementing = false;
+
+
+    public function userRole()
+    {
+        // Model,fk,local
+        return $this->hasOne('App\Models\UserRole', 'user_id', 'id');
+    }
+
+
+    public function userProject()
+    {
+        // Model, fk, local
+        return $this->hasMany('App\Models\UserProject', 'user_id', 'id');
+    }
+
+    public function userLocation()
+    {
+        // Model, fk, local
+        return $this->hasMany('App\Models\Location', 'id', 'organization_id');
+    }
 }

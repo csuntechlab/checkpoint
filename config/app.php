@@ -208,6 +208,11 @@ return [
         /** UserInvite Service Provider */
         App\Providers\ApiProviders\UserInvitation\UserInvitationServiceProvider::class,
 
+        /*********** UserInvitation Service Providers **************/
+
+        /** User Service Provider */
+        App\Providers\ApiProviders\User\UserServiceProvider::class,
+
         /*********** METALAB Providers **************/
         /** Proxy Pass Provider */
         CSUNMetaLab\ProxyPass\Providers\ProxyPassServiceProvider::class,

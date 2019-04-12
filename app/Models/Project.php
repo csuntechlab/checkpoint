@@ -8,4 +8,6 @@ class Project extends Model
 {
     public $incrementing = false;
     public $timestamps = false;
+
+    protected $hidden = ['id', 'organization_id', 'name'];
 }

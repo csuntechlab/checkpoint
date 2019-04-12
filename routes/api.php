@@ -21,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login', 'LoginController@login');
 Route::post('/register', 'RegisterController@register');
 Route::middleware('auth:api')->post('/logout', 'LogoutController@logout');
+
+// Admin
 Route::post('/register_admin', 'RegisterAdminController@register');
 
 // CLOCK IN
@@ -29,3 +31,7 @@ Route::middleware('auth:api')->post('/clock/out', 'ClockOutController@clockOut')
 
 // INVITE
 Route::middleware('auth:api')->post('/invite', 'UserInvitationController@inviteNewUser');
+
+
+// User 
+Route::middleware('auth:api')->get('user/profile', 'UserController@profile');
