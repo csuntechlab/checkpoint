@@ -83,9 +83,8 @@ class UserInvitationServiceTest extends TestCase
         $this->assertNotEquals($previousInviteCode, $newInviteCode);
     }
 
-    public function test_user_invite_service_thows_error_registered_email()
+    public function test_user_invite_service_throws_error_registered_email()
     {
-
         $userInvitation = UserInvitation::all()->random();
 
         $name = $userInvitation->name;

@@ -14,6 +14,10 @@ class RegisterServiceTest extends TestCase
     use DatabaseMigrations;
     private $service;
 
+    private $classPath = '\App\Services\RegisterService';
+
+
+
     public function setUp()
     {
         parent::setUp();
@@ -63,5 +67,21 @@ class RegisterServiceTest extends TestCase
         $response = $this->service->register($name, $email, $password, $inviteCode);
 
         $this->assertArrayHasKey('message_error', $response);
+    }
+
+    public function test_getOrganizationIdByUserInvitation()
+    {
+        $userInvitation = UserInvitation::all()->random();
+
+        $name = $userInvitation->name;
+        $email = $userInvitation->email;
+        $password = "tes3t@email.com";
+        $inviteCode = $userInvitation->invite_code;
+
+        $function = 'getOrganizationIdByUserInvitation';
+        $method = $this->get_private_method($this->classPath, $function);
+        $response = $method->invoke($this->service, $email, $inviteCode);
+        $this->assertNotNull($response);
+        $this->assertInternalType('string', $response);
     }
 }

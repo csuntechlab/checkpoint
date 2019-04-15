@@ -14,6 +14,8 @@ use App\Exceptions\AuthExceptions\UserCreatedFailed;
 //Contracts
 use App\Contracts\RegisterContract;
 
+// Exceptions
+use App\Exceptions\UserInvitationExceptions\UserInvitationNotFound;
 
 class RegisterService implements RegisterContract
 {
@@ -35,11 +37,13 @@ class RegisterService implements RegisterContract
         return $user;
     }
 
-
-
     private function getOrganizationIdByUserInvitation(string $email, string $inviteCode): string
     {
         $userInvitation = UserInvitation::where('email', $email)->where('invite_code', $inviteCode)->first();
+
+        if ($userInvitation == null) {
+            throw new UserInvitationNotFound();
+        }
 
         return $userInvitation->organization_id;
     }
