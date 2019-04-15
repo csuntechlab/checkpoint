@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\User;
+use App\Models\Location;
+use App\Models\Project;
+
+
 class UserProject extends Model
 {
     public $incrementing = false;
@@ -19,22 +24,27 @@ class UserProject extends Model
     public function project()
     {
         // Model, fk, local
-        return $this->belongsTo('App\Models\Project', 'project_id', 'id');
+        return $this->belongsTo(Project::class, 'project_id', 'id');
     }
 
     public function location()
     {
         // Model, fk, local
-        return $this->hasMany('App\Models\location', 'id', 'project_id');
+        return $this->hasMany(Location::class, 'id', 'project_id');
     }
 
     public function mentorsProject()
     {
-        return $this->hasMany('App\Models\UserProject', 'project_id', 'project_id');
+        return $this->hasMany(self::class, 'project_id', 'project_id');
     }
+
+    // public function mentorProfile()
+    // {
+    // return $this->hasOne(User::class, 'id', 'user_id')->with('userRole.roleMentor');
+    // }
 
     public function mentorProfile()
     {
-        return $this->hasOne('App\User', 'id', 'user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

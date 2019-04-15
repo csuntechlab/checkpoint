@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Role;
+
 class UserRole extends Model
 {
     public $incrementing = false;
@@ -14,6 +16,15 @@ class UserRole extends Model
     public function role()
     {
         // Model, fk, local
-        return $this->hasOne('App\Models\Role', 'id', 'role_id');
+        return $this->hasOne(Role::class, 'id', 'role_id');
+    }
+
+    public function roleMentor()
+    {
+        return $this->hasOne(Role::class, 'id', 'role_id')
+            ->whereHas('name',  function ($query) {
+                $query->where('name', 'Mentor');
+            });
+        // return $this->hasOne(Role::class, 'id', 'role_id');
     }
 }

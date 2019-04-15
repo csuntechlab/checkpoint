@@ -7,6 +7,10 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Models\Location;
+use App\Models\UserRole;
+use App\Models\UserProject;
+
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
@@ -30,29 +34,20 @@ class User extends Authenticatable
         'email_verified_at', 'password', 'remember_token', 'id', 'updated_at', 'created_at', 'organization_id'
     ];
 
-
     protected $table = 'users';
-
-
-    // public $incrementing = false;
-
 
     public function userRole()
     {
-        // Model,fk,local
-        return $this->hasOne('App\Models\UserRole', 'user_id', 'id');
+        return $this->hasOne(UserRole::class, 'user_id', 'id');
     }
-
 
     public function userProject()
     {
-        // Model, fk, local
-        return $this->hasMany('App\Models\UserProject', 'user_id', 'id');
+        return $this->hasMany(UserProject::class, 'user_id', 'id');
     }
 
     public function userLocation()
     {
-        // Model, fk, local
-        return $this->hasMany('App\Models\Location', 'id', 'organization_id');
+        return $this->hasMany(Location::class, 'id', 'organization_id');
     }
 }
