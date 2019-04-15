@@ -7,6 +7,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use App\Services\RegisterService;
+use App\Models\UserInvitation;
 
 class RegisterServiceTest extends TestCase
 {
@@ -19,7 +20,13 @@ class RegisterServiceTest extends TestCase
         $this->service = new RegisterService();
         $this->seed('TimeCalculatorTypeSeeder');
         $this->seed('PayPeriodTypeSeeder');
-        $this->seed('OrganizationSeeder');
+        $this->seed('OrganizationSeeder'); //seeds org and settings
+        $this->seed('CategorySeeder');
+        $this->seed('RoleSeeder');
+        $this->seed('UsersTableSeeder');
+        $this->seed('ProjectSeeder'); // seeds also UserProject table
+        $this->seed('LocationSeeder');
+        $this->seed('UserInvitationsTableSeeder');
     }
     /**
      * register service test
@@ -28,10 +35,12 @@ class RegisterServiceTest extends TestCase
      */
     public function test_register_service()
     {
-        $name = "tes3t@email.com";
-        $email = "tes3t@email.com";
+        $userInvitation = UserInvitation::all()->random();
+
+        $name = $userInvitation->name;
+        $email = $userInvitation->email;
         $password = "tes3t@email.com";
-        $inviteCode = "000-000";
+        $inviteCode = $userInvitation->invite_code;
 
         $response = $this->service->register($name, $email, $password, $inviteCode);
 
@@ -41,10 +50,13 @@ class RegisterServiceTest extends TestCase
 
     public function test_register_service_fails_throws_an_exception_undefined_index()
     {
+        $userInvitation = UserInvitation::all()->random();
+
         $name = null;
-        $email = "tes3t@email.com";
+        $email = $userInvitation->email;
         $password = "tes3t@email.com";
-        $inviteCode = "000-000";
+        $inviteCode = $userInvitation->invite_code;
+
 
         $this->expectException('App\Exceptions\AuthExceptions\UserCreatedFailed');
 

@@ -26,7 +26,8 @@ class RegisterRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed',
+            'invitation_code' => 'required|digits:6'
         ];
     }
 
@@ -40,7 +41,8 @@ class RegisterRequest extends FormRequest
                 'unique' => 'email is not unique'
             ],
             'password.required' => 'Password is required!',
-            'password.min' => 'Password must be 6 characters long!'
+            'password.min' => 'Password must be 6 characters long!',
+            'invitation_code.digits' => 'Incorrect code!',
         ];
     }
 }

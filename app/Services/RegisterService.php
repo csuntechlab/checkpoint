@@ -39,11 +39,8 @@ class RegisterService implements RegisterContract
 
     private function getOrganizationIdByUserInvitation(string $email, string $inviteCode): string
     {
-        // $orgId = UserInvitation::where('email', $email)->where('invite_code', $inviteCode)->first();
+        $userInvitation = UserInvitation::where('email', $email)->where('invite_code', $inviteCode)->first();
 
-        //TODO HardCode
-        $orgId = Organization::first();
-
-        return $orgId->id;
+        return $userInvitation->organization_id;
     }
 }
