@@ -44,7 +44,6 @@ class RegisterService implements RegisterContract
         if ($userInvitation == null) {
             throw new UserInvitationNotFound();
         }
-
         return $userInvitation->organization_id;
     }
 }
