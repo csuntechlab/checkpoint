@@ -1,5 +1,6 @@
 // Base Imports
 import Vue from 'vue';
+import Vuelidate from 'vuelidate'
 import router from './router';
 import store from './store';
 import checkpoint from './config';
@@ -12,6 +13,9 @@ axios.defaults.headers.common[''] = checkpoint.token;
 // Vuetify
 import Vuetify from 'vuetify';
 Vue.use(Vuetify);
+
+// Vuelidate
+Vue.use(Vuelidate)
 
 //Components
 import App from './App.vue';
