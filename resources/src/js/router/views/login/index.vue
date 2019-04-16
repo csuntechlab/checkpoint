@@ -9,7 +9,7 @@
               <v-spacer></v-spacer>
             </v-toolbar>
             <v-card-text>
-              <form>
+              <form action="/api/login" method="post">
                 <v-text-field
                   v-model="email"
                   prepend-icon="email"
@@ -21,12 +21,14 @@
                 ></v-text-field>
                 <v-text-field
                   v-model="password"
+                  :append-icon="showPassword ? 'visibility' : 'visibility_off'"
                   :counter="0"
-                  :type="show1 ? 'text':'password'"
+                  :type="showPassword ? 'text':'password'"
                   prepend-icon="lock"
                   :error-messages="passwordErrors"
                   label="Password"
                   required
+                  @click:append="showPassword = !showPassword"
                   @input="$v.password.$touch()"
                   @blur="$v.password.$touch()"
                 ></v-text-field>
@@ -67,10 +69,11 @@ export default {
 
   validations: {
     email: { required, email },
-    password: { required, minLength: minLength(8) }
+    password: { required, minLength: minLength(6) }
   },
 
   data: () => ({
+    showPassword: false,
     email: "",
     password: ""
   }),
@@ -80,7 +83,7 @@ export default {
       const errors = [];
       if (!this.$v.password.$dirty) return errors;
       !this.$v.password.minLength &&
-        errors.push("Password must be atleast 8 characters long");
+        errors.push("Password must be atleast 6 characters long");
       !this.$v.password.required && errors.push("Password is required.");
       return errors;
     },
@@ -95,7 +98,7 @@ export default {
 
   methods: {
     submit() {
-      this.$v.$touch();
+      console.log({ email: this.email, password: this.password });
     }
   }
 };

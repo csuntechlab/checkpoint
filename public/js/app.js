@@ -1877,6 +1877,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1888,11 +1890,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     password: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
-      minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(8)
+      minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(6)
     }
   },
   data: function data() {
     return {
+      showPassword: false,
       email: "",
       password: ""
     };
@@ -1901,7 +1904,7 @@ __webpack_require__.r(__webpack_exports__);
     passwordErrors: function passwordErrors() {
       var errors = [];
       if (!this.$v.password.$dirty) return errors;
-      !this.$v.password.minLength && errors.push("Password must be atleast 8 characters long");
+      !this.$v.password.minLength && errors.push("Password must be atleast 6 characters long");
       !this.$v.password.required && errors.push("Password is required.");
       return errors;
     },
@@ -1915,7 +1918,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
-      this.$v.$touch();
+      console.log({
+        email: this.email,
+        password: this.password
+      });
     }
   }
 });
@@ -2657,6 +2663,7 @@ var render = function() {
                       _c("v-card-text", [
                         _c(
                           "form",
+                          { attrs: { action: "/api/login", method: "post" } },
                           [
                             _c("v-text-field", {
                               attrs: {
@@ -2684,14 +2691,20 @@ var render = function() {
                             _vm._v(" "),
                             _c("v-text-field", {
                               attrs: {
+                                "append-icon": _vm.showPassword
+                                  ? "visibility"
+                                  : "visibility_off",
                                 counter: 0,
-                                type: _vm.show1 ? "text" : "password",
+                                type: _vm.showPassword ? "text" : "password",
                                 "prepend-icon": "lock",
                                 "error-messages": _vm.passwordErrors,
                                 label: "Password",
                                 required: ""
                               },
                               on: {
+                                "click:append": function($event) {
+                                  _vm.showPassword = !_vm.showPassword
+                                },
                                 input: function($event) {
                                   return _vm.$v.password.$touch()
                                 },
