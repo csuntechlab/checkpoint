@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\DomainValueObjects\Location\Address.php;
+use App\DomainValueObjects\Location\Address;
+
 use
 
 use App\Http\Controllers\Controller;
+use App\Services\LocationService;
 use App\Contracts\LocationContract;
 
 class LocationController extends Controller
@@ -20,12 +22,12 @@ class LocationController extends Controller
         $this->$locationUtility = $locationContract;
     }
 
-    public function update(Request $request, $id = null)
+    public function update(LocationRequest $request, $id = null)
     {
-        $this->validate($type);
 
-        $latitude = $request['latitude'];
         $longitude = $request['longitude'];
+        $latitude = $request['latitude'];
+        $radius = $request['radius'];
 
         $address = new Address(
           $request['address_number'],
@@ -35,6 +37,11 @@ class LocationController extends Controller
           $request['zip']
         );
 
-        return $this->locationUtility->updateLocation($address, $latitude, $longitude);
+        if($id == null){
+            return $this->locationUtility->updateOrganizationLocation($address, $longitude, $latitude, $radius);
+        }else{
+            return $this->locationUtility->updateProjectLoaction($address, $longitude, $latitude, $radius, $id);
+        }
+
     }
 }

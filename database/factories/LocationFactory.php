@@ -33,5 +33,6 @@ $factory->define(Location::class, function (Faker $faker) {
         'address' => $address->__toString(),
         'lat' => $lat,
         'lng' => $lng,
+        'radius' => $radius
     ];
 });
