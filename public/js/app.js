@@ -1869,6 +1869,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1885,8 +1893,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      email: '',
-      password: ''
+      email: "",
+      password: ""
     };
   },
   computed: {
@@ -2698,7 +2706,33 @@ var render = function() {
                                 },
                                 expression: "password"
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _c("v-spacer"),
+                            _vm._v(" "),
+                            _c(
+                              "v-tooltip",
+                              {
+                                attrs: { right: "" },
+                                scopedSlots: _vm._u([
+                                  {
+                                    key: "activator",
+                                    fn: function(ref) {
+                                      var on = ref.on
+                                      return [
+                                        _c("span", _vm._g({}, on), [
+                                          _vm._v("Forgot Password?")
+                                        ])
+                                      ]
+                                    }
+                                  }
+                                ])
+                              },
+                              [
+                                _vm._v(" "),
+                                _c("span", [_vm._v("Reset Password")])
+                              ]
+                            )
                           ],
                           1
                         )

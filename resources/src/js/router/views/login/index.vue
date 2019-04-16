@@ -30,6 +30,14 @@
                   @input="$v.password.$touch()"
                   @blur="$v.password.$touch()"
                 ></v-text-field>
+                <v-spacer></v-spacer>
+
+                <v-tooltip right>
+                  <template v-slot:activator="{ on }">
+                    <span v-on="on">Forgot Password?</span>
+                  </template>
+                  <span>Reset Password</span>
+                </v-tooltip>
               </form>
             </v-card-text>
             <v-card-actions class="justify-center">
@@ -59,12 +67,12 @@ export default {
 
   validations: {
     email: { required, email },
-    password: {required, minLength: minLength(8)}
+    password: { required, minLength: minLength(8) }
   },
 
   data: () => ({
-    email: '',
-    password: ''
+    email: "",
+    password: ""
   }),
 
   computed: {
