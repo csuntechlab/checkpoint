@@ -9,7 +9,7 @@
               <v-spacer></v-spacer>
             </v-toolbar>
             <v-card-text>
-              <form action="/api/login" method="post">
+              <v-form>
                 <v-text-field
                   v-model="email"
                   prepend-icon="email"
@@ -40,7 +40,7 @@
                   </template>
                   <span>Reset Password</span>
                 </v-tooltip>
-              </form>
+              </v-form>
             </v-card-text>
             <v-card-actions class="justify-center">
               <v-btn @click="submit" color="primary">Sign in</v-btn>
@@ -63,6 +63,7 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, minLength, email } from "vuelidate/lib/validators";
+import axios from "axios";
 
 export default {
   mixins: [validationMixin],
@@ -99,6 +100,26 @@ export default {
   methods: {
     submit() {
       console.log({ email: this.email, password: this.password });
+      axios
+        .post(
+          '/api/login',
+          {
+            email: this.email,
+            password: this.password
+          },
+          {
+            headers: {
+              'Content-Type': "application/x-www-form-urlencoded",
+              'Accept': "application/json"
+            }
+          }
+        )
+        .then(function(response) {
+          console.log(response.data);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };

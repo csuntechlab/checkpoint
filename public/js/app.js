@@ -1817,6 +1817,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -1879,6 +1881,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1921,6 +1924,19 @@ __webpack_require__.r(__webpack_exports__);
       console.log({
         email: this.email,
         password: this.password
+      });
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('checkpoint.url/api/login', {
+        email: this.email,
+        password: this.password
+      }, {
+        headers: {
+          'Content-Type': "application/x-www-form-urlencoded",
+          'Accept': "application/json"
+        }
+      }).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   }
@@ -2660,96 +2676,99 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("v-card-text", [
-                        _c(
-                          "form",
-                          { attrs: { action: "/api/login", method: "post" } },
-                          [
-                            _c("v-text-field", {
-                              attrs: {
-                                "prepend-icon": "email",
-                                "error-messages": _vm.emailErrors,
-                                label: "E-mail",
-                                required: ""
-                              },
-                              on: {
-                                input: function($event) {
-                                  return _vm.$v.email.$touch()
+                      _c(
+                        "v-card-text",
+                        [
+                          _c(
+                            "v-form",
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  "prepend-icon": "email",
+                                  "error-messages": _vm.emailErrors,
+                                  label: "E-mail",
+                                  required: ""
                                 },
-                                blur: function($event) {
-                                  return _vm.$v.email.$touch()
-                                }
-                              },
-                              model: {
-                                value: _vm.email,
-                                callback: function($$v) {
-                                  _vm.email = $$v
-                                },
-                                expression: "email"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("v-text-field", {
-                              attrs: {
-                                "append-icon": _vm.showPassword
-                                  ? "visibility"
-                                  : "visibility_off",
-                                counter: 0,
-                                type: _vm.showPassword ? "text" : "password",
-                                "prepend-icon": "lock",
-                                "error-messages": _vm.passwordErrors,
-                                label: "Password",
-                                required: ""
-                              },
-                              on: {
-                                "click:append": function($event) {
-                                  _vm.showPassword = !_vm.showPassword
-                                },
-                                input: function($event) {
-                                  return _vm.$v.password.$touch()
-                                },
-                                blur: function($event) {
-                                  return _vm.$v.password.$touch()
-                                }
-                              },
-                              model: {
-                                value: _vm.password,
-                                callback: function($$v) {
-                                  _vm.password = $$v
-                                },
-                                expression: "password"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("v-spacer"),
-                            _vm._v(" "),
-                            _c(
-                              "v-tooltip",
-                              {
-                                attrs: { right: "" },
-                                scopedSlots: _vm._u([
-                                  {
-                                    key: "activator",
-                                    fn: function(ref) {
-                                      var on = ref.on
-                                      return [
-                                        _c("span", _vm._g({}, on), [
-                                          _vm._v("Forgot Password?")
-                                        ])
-                                      ]
-                                    }
+                                on: {
+                                  input: function($event) {
+                                    return _vm.$v.email.$touch()
+                                  },
+                                  blur: function($event) {
+                                    return _vm.$v.email.$touch()
                                   }
-                                ])
-                              },
-                              [
-                                _vm._v(" "),
-                                _c("span", [_vm._v("Reset Password")])
-                              ]
-                            )
-                          ],
-                          1
-                        )
-                      ]),
+                                },
+                                model: {
+                                  value: _vm.email,
+                                  callback: function($$v) {
+                                    _vm.email = $$v
+                                  },
+                                  expression: "email"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("v-text-field", {
+                                attrs: {
+                                  "append-icon": _vm.showPassword
+                                    ? "visibility"
+                                    : "visibility_off",
+                                  counter: 0,
+                                  type: _vm.showPassword ? "text" : "password",
+                                  "prepend-icon": "lock",
+                                  "error-messages": _vm.passwordErrors,
+                                  label: "Password",
+                                  required: ""
+                                },
+                                on: {
+                                  "click:append": function($event) {
+                                    _vm.showPassword = !_vm.showPassword
+                                  },
+                                  input: function($event) {
+                                    return _vm.$v.password.$touch()
+                                  },
+                                  blur: function($event) {
+                                    return _vm.$v.password.$touch()
+                                  }
+                                },
+                                model: {
+                                  value: _vm.password,
+                                  callback: function($$v) {
+                                    _vm.password = $$v
+                                  },
+                                  expression: "password"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { right: "" },
+                                  scopedSlots: _vm._u([
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        return [
+                                          _c("span", _vm._g({}, on), [
+                                            _vm._v("Forgot Password?")
+                                          ])
+                                        ]
+                                      }
+                                    }
+                                  ])
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _c("span", [_vm._v("Reset Password")])
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
                       _vm._v(" "),
                       _c(
                         "v-card-actions",
