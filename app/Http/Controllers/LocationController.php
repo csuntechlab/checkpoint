@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\DomainValueObjects\Location\Address;
 
-use
+use App\Http\Requests\LocationRequest;
 
 use App\Http\Controllers\Controller;
 use App\Services\LocationService;
@@ -19,7 +19,7 @@ class LocationController extends Controller
 
     public function __construct(LocationContract $locationContract)
     {
-        $this->$locationUtility = $locationContract;
+        $this->locationUtility = $locationContract;
     }
 
     public function update(LocationRequest $request, $id = null)
