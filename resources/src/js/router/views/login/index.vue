@@ -64,20 +64,22 @@
 import { validationMixin } from "vuelidate";
 import { required, minLength, email } from "vuelidate/lib/validators";
 import axios from "axios";
+import { resolve } from "q";
 
 export default {
   mixins: [validationMixin],
-
   validations: {
     email: { required, email },
     password: { required, minLength: minLength(6) }
   },
 
-  data: () => ({
-    showPassword: false,
-    email: "",
-    password: ""
-  }),
+  data() {
+    return {
+      showPassword: false,
+      email: null,
+      password: null
+    };
+  },
 
   computed: {
     passwordErrors() {
@@ -99,21 +101,16 @@ export default {
 
   methods: {
     submit() {
-      console.log({ email: this.email, password: this.password });
       axios
-        .post(
-          '/api/login',
-          {
-            email: this.email,
-            password: this.password
-          },
-
-        )
+        .post('/api/login', {
+          email: this.email,
+          password: this.password
+        })
         .then(function(response) {
           console.log(response.data);
         })
         .catch(function(error) {
-          console.log(error);
+          console.log(error.data);
         });
     }
   }
