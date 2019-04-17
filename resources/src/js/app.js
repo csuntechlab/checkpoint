@@ -9,7 +9,7 @@ import checkpoint from './config';
 //Axios
 import axios from 'axios';
 axios.defaults.baseURL = checkpoint.url;
-axios.defaults.headers.common[''] = checkpoint.token;
+axios.defaults.headers.common['X-CSRF-Token'] = checkpoint.token;
 // Vuetify
 import Vuetify from 'vuetify';
 Vue.use(Vuetify);

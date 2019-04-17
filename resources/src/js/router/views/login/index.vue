@@ -107,12 +107,7 @@ export default {
             email: this.email,
             password: this.password
           },
-          {
-            headers: {
-              'Content-Type': "application/x-www-form-urlencoded",
-              'Accept': "application/json"
-            }
-          }
+
         )
         .then(function(response) {
           console.log(response.data);
