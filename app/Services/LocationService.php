@@ -29,7 +29,7 @@ class LocationService implements LocationContract
             $user = Auth::User();
 
             $location = Location::create([
-                'id' => $user->organization_id;
+                'id' => $user->organization_id,
                 'address' => $address->__toString(),
                 'lat' => $latitude,
                 'lng' => $longitude,
@@ -53,7 +53,7 @@ class LocationService implements LocationContract
             $user = Auth::User();
 
             $location = Location::create([
-                'id' => $id
+                'id' => $id,
                 'address' => $address->__toString(),
                 'lat' => $latitude,
                 'lng' => $longitude,

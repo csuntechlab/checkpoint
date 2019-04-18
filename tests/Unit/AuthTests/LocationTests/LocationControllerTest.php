@@ -31,6 +31,8 @@ class LocationControllerTest extends TestCase
         $this->seed('OrganizationSeeder');
         $this->seed('RoleSeeder');
         $this->seed('UsersTableSeeder');
+        $this->user = \App\User::where('id', 1)->first();
+        $this->actingAs($this->user);
   }
 
   public function test_update_organization_location()
@@ -108,5 +110,43 @@ class LocationControllerTest extends TestCase
     $response = $this->retriever->updateProjectLocation($address, $longitude, $latitude, $radius, $id);
 
     $this->assertEquals($expectedResponse, $response);
+  }
+
+  public function test_update_location_http_call_for_organization()
+  {
+    $request= [
+      'longitude' => 42.09,
+      'latitude' => 48.03,
+      'radius' => 5,
+      'address_number' => "9423 #A",
+      'street' => "Reseda Blvd",
+      'city' => "Northridge",
+      'state' => "California",
+      'zip' => "91324",
+    ];
+
+    $token = $this->get_auth_token($this->user);
+
+
+    $response = $this->withHeaders([
+      'Accept' => 'application/json',
+      'Content-Type' => 'application/x-www-form-urlencoded',
+      'Authorization' => $token
+    ])->json('POST', '/api/update/location', $request)->getOriginalContent();
+    
+    $id = $response->id;
+    $response = json_encode($response);
+    
+    $expectedResponse = [
+      'id' => $id,
+      'address' =>  "9423 #A\\tReseda Blvd\\tNorthridge\\tCalifornia\\t91324",
+      'lat' => 48.03,
+      'lng' => 42.09,
+      'radius' => 5
+    ];
+
+    $expectedResponse = json_encode($expectedResponse);
+
+    $this->assertEquals($response, $expectedResponse);          
   }
 }
