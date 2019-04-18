@@ -30,4 +30,5 @@ Route::middleware('auth:api')->post('/clock/out', 'ClockOutController@clockOut')
 // INVITE
 Route::middleware('auth:api')->post('/invite', 'UserInvitationController@inviteNewUser');
 
+// SETTINGS
 Route::middleware('auth:api')->post('/update/location/{id?}/', 'LocationController@update');

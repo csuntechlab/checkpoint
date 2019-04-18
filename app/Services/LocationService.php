@@ -36,7 +36,7 @@ class LocationService implements LocationContract
                 'radius' => $radius
             ]);
         } catch (\Exception $e) {
-            throw new OrganizationLocationFailed();
+            throw new UpdateOrganizationLocationFailed();
         }
 
         return $location;
@@ -60,7 +60,7 @@ class LocationService implements LocationContract
                 'radius' => $radius
             ]);
         } catch (\Exception $e) {
-            throw new OrganizationLocationFailed();
+            throw new UpdateProjectLocationFailed();
         }
 
         return $location;
