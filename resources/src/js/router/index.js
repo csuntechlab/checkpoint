@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import store from '../store';
 
 import SignUp from './views/signup/index.vue'
-
+import Login from './views/login/index.vue'
 
 // INIT VUE-ROUTER
 Vue.use(VueRouter);
@@ -15,6 +15,11 @@ const router = new VueRouter({
       path: '/signup',
       component: SignUp,
       name: 'SignUp'
+    },
+    {
+      path: '/login',
+      component: Login,
+      name: 'Login'
     }
   ],
 });

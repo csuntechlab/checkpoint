@@ -1,5 +1,6 @@
 // Base Imports
 import Vue from 'vue';
+import Vuelidate from 'vuelidate'
 import router from './router';
 import store from './store';
 import checkpoint from './config';
@@ -8,10 +9,14 @@ import checkpoint from './config';
 //Axios
 import axios from 'axios';
 axios.defaults.baseURL = checkpoint.url;
-axios.defaults.headers.common[''] = checkpoint.token;
+axios.defaults.headers.common['X-CSRF-Token'] = checkpoint.token;
+
 // Vuetify
 import Vuetify from 'vuetify';
 Vue.use(Vuetify);
+
+// Vuelidate
+Vue.use(Vuelidate)
 
 //Components
 import App from './App.vue';
