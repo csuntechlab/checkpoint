@@ -8,4 +8,8 @@ class TimeSheet extends Model
 {
     public $incrementing = false;
     public $timestamps = false;
+
+    protected $hidden = [
+        'org_id'
+    ];
 }

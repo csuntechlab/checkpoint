@@ -26,6 +26,8 @@ Route::post('/register_admin', 'RegisterAdminController@register');
 // CLOCK IN
 Route::middleware('auth:api')->post('/clock/in', 'ClockInController@clockIn');
 Route::middleware('auth:api')->post('/clock/out', 'ClockOutController@clockOut');
+Route::middleware('auth:api')->get('/current/timesheet', 'TimeSheetController@getCurrentTimeSheet');
 
 // INVITE
 Route::middleware('auth:api')->post('/invite', 'UserInvitationController@inviteNewUser');
+
