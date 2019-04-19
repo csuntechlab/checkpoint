@@ -40,7 +40,7 @@ class LocationController extends Controller
         if($id == null){
             return $this->locationUtility->updateOrganizationLocation($address, $longitude, $latitude, $radius);
         }else{
-            return $this->locationUtility->updateProjectLoaction($address, $longitude, $latitude, $radius, $id);
+            return $this->locationUtility->updateProjectLocation($address, $longitude, $latitude, $radius, $id);
         }
 
     }
