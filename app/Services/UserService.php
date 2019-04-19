@@ -18,32 +18,41 @@ class UserService implements UserContract
     // mentors ? 
     public function profile(int $userId)
     {
-        // $profile = User::with([
-        //     'userRole.role', 'userProject.project',
-        //     'userLocation', 'userProject.location',
-        //     'userProject.mentorsProject.mentorProfile.userRole.role' => function ($query) {
-        //         $query->where('name', 'Mentor');
-        //     }
-        // ])->where('id', $userId)->first();
-
         $profile = User::with([
-            'userRole.role', 'userProject.project',
-            'userLocation', 'userProject.location',
-            'userProject.mentorsProject.mentorProfile.userRole.role' => function ($query) {
-                $query->where('name', 'Mentor');
-            }
+            'role', 'userLocation',
+            'userProject.location',
+            'userProject.users.role'
         ])->where('id', $userId)->first();
-        // dd($profile);
-        // return  $profile;
-        // return  $profile->userProject;
 
-        foreach ($profile->userProject as $project) {
-            // dd($project);
-            foreach ($project->mentorsProject as $member) {
-                return $member->mentorProfile->userRole;
+        return $this->generateEmployeeProfile($profile);
+    }
+
+    private function generateEmployeeProfile($profile)
+    {
+
+
+        $projects = $profile->userProject;
+        $locations = $profile->userLocation;
+
+        $userProjects = collect();
+
+        foreach ($projects as $project) {
+            $locations = $locations->concat($project->location);
+            $users = collect();
+            foreach ($project->users as $member) {
+                if ($member->isRole('Mentor')) {
+                    $users->push($member);
+                }
             }
+            unset($project->users);
+            $project->users = $users;
+            $userProjects->push($project);
         }
-        // return $profile->user_project;
-        return $profile->userProject;
+
+        unset($profile->userLocation);
+        unset($profile->userProject);
+        $profile->userLocation = $locations;
+        $profile->userProject = $projects;
+        return $profile;
     }
 }
