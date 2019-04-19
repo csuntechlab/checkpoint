@@ -10,8 +10,8 @@ use App\Models\Role;
 
 $factory->define(UserInvitation::class, function (Faker $faker) {
 
-    $uuid = new UUID('userInvitation');
-    $organizationId = Organization::first();
+    $uuid = UUID::generate();
+    $organizationId = Organization::all()->random()->id;
     $role = Role::where('name', 'Employee')->first();
     $roleId = $role->id;
     $name = $faker->name;
@@ -19,7 +19,7 @@ $factory->define(UserInvitation::class, function (Faker $faker) {
     $inviteCode = Token::UniqueNumber('user_invitations', 'invite_code', 6);
 
     return [
-        'id' => $uuid->toString,
+        'id' => $uuid,
         'organization_id' => $organizationId,
         'role_id' => $roleId,
         'email' => $email,
