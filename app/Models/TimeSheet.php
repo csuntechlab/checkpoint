@@ -12,4 +12,10 @@ class TimeSheet extends Model
     protected $hidden = [
         'org_id'
     ];
+
+    public function scopeGetCurrentTimesheet($query, $date)
+    {
+        return $query->where('start_date', '<=', $date)
+        ->where('end_date' '>=', $date);
+    }
 }
