@@ -7,6 +7,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Models\Role;
+use App\Models\Location;
+use App\Models\UserRole;
+use App\Models\Project;
+use App\Models\UserProject;
+
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
@@ -26,9 +32,30 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'id', 'updated_at', 'created_at', 'organization_id'
+        'id',
+        'email_verified_at', 'password', 'remember_token', 'updated_at', 'created_at', 'organization_id',
+        'pivot'
     ];
 
+    protected $table = 'users';
 
-    // public $incrementing = false;
+    public function userProject()
+    {
+        return $this->belongsToMany(Project::class, 'user_projects', 'user_id', 'project_id');
+    }
+
+    public function userLocation()
+    {
+        return $this->hasMany(Location::class, 'id', 'organization_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+    }
+
+    public function isRole($role)
+    {
+        return $this->role->contains('name', $role);
+    }
 }

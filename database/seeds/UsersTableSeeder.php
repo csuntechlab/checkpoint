@@ -35,6 +35,7 @@ class UsersTableSeeder extends Seeder
         $this->assignRole($user, $role);
 
         for ($i = 0; $i < 100; $i++) {
+            $role = Role::all()->random();
             $user = User::create([
                 'name' => $faker->name,
                 'email' => $faker->unique()->email,

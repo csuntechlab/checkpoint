@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSupervisorDepartmentsTable extends Migration
+class CreateMentorDepartmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSupervisorDepartmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('supervisor_departments', function (Blueprint $table) {
+        Schema::create('mentor_departments', function (Blueprint $table) {
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')
@@ -33,6 +33,6 @@ class CreateSupervisorDepartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('supervisor_departments');
+        Schema::dropIfExists('mentor_departments');
     }
 }
