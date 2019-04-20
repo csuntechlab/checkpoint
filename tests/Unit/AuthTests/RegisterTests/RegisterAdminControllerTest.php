@@ -50,7 +50,6 @@ class RegisterAdminControllerTest extends TestCase
 
     $expectedResponse = [];
 
-
     $this->retriever
       ->shouldReceive('register')
       ->with($request)
