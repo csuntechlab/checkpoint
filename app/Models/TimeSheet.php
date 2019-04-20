@@ -13,9 +13,10 @@ class TimeSheet extends Model
         'org_id'
     ];
 
-    public function scopeGetCurrentTimesheet($query, $date)
+    public function scopeGetCurrentTimesheet($query, $date, $id)
     {
-        return $query->where('start_date', '<=', $date)
-        ->where('end_date' '>=', $date);
+        return $query->where('org_id', $id)
+        ->where('start_date', '<=', $date)
+        ->where('end_date', '>=', $date);
     }
 }

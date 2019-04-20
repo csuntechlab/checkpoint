@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Contracts\TimeSheetContract;
+use App\User;
 
 // Request
 use Illuminate\Http\Request;
@@ -20,8 +22,9 @@ class TimeSheetController extends Controller
 
     public function getCurrentTimeSheet(TimeSheetRequest $request)
     {
+
         $date = Carbon::parse($request['date']);
 
-        return $this->timesheetUtility->getCurrentTimeSheet($date);
+        return $this->timeSheetUtility->getCurrentTimeSheet($date);
     }
 }

@@ -4,8 +4,9 @@ namespace App\Services;
 use Illuminate\Support\Facades\Hash;
 
 //Models
-use App\TimeSheet;
-
+use App\Models\TimeSheet;
+//Auth
+use Illuminate\Support\Facades\Auth;
 //Exceptions
 use App\Exceptions\TimeSheetExceptions\GetTimeSheetFailed;
 
@@ -19,7 +20,9 @@ class TimeSheetService implements TimeSheetContract
     public function getCurrentTimeSheet($date)
     {
         try{
-            $timeSheet = TimeSheet::getCurrentTimeSheet($date)->get();
+            $id = Auth::User()->organization_id;
+
+            $timeSheet = TimeSheet::getCurrentTimeSheet($date, $id)->get();
         } catch (\Exception $e) {
             throw new GetTimeSheetFailed();
         }
