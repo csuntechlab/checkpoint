@@ -24,13 +24,11 @@ class UserService implements UserContract
             'userProject.users.role'
         ])->where('id', $userId)->first();
 
-        return $this->generateEmployeeProfile($profile);
+        return $this->generateProfile($profile);
     }
 
-    private function generateEmployeeProfile($profile)
+    private function generateProfile($profile)
     {
-
-
         $projects = $profile->userProject;
         $locations = $profile->userLocation;
 
