@@ -6,6 +6,10 @@ import store from './store';
 import checkpoint from './config';
 
 
+// Vue file upload
+const VueUploadComponent = require('vue-upload-component')
+Vue.component('file-upload', VueUploadComponent)
+
 //Axios
 import axios from 'axios';
 axios.defaults.baseURL = checkpoint.url;
