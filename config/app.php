@@ -219,6 +219,9 @@ return [
         /** AdminSettings Service Provider */
         App\Providers\ApiProviders\Admin\AdminSettingsProvider::class,
 
+        /*********** Model Repository Service Providers **************/
+        App\Providers\ModelRepository\PayPeriodTypeModelRepositoryServiceProvider::class,
+
         /*********** METALAB Providers **************/
         /** Proxy Pass Provider */
         CSUNMetaLab\ProxyPass\Providers\ProxyPassServiceProvider::class,
