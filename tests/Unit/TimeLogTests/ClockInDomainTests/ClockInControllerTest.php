@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Mockery;
 use Carbon\Carbon;
 
-// TB models
+// TB Requests
 use App\Http\Requests\ClockInRequest;
 
 //Contracts
