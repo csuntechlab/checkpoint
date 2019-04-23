@@ -16,30 +16,25 @@ class PayPeriodTypeSeeder extends Seeder
      */
     public function run()
     {
-        $name = 'weekly';
-        $display_name = 'Weekly';
-        $this->create_type($name, $display_name);
+        $name = 'Weekly';
+        $this->create_type($name);
 
-        $name = 'monthly';
-        $display_name = 'Monthly';
-        $this->create_type($name, $display_name);
+        $name = 'Monthly';
+        $this->create_type($name);
 
-        $name = 'yearly';
-        $display_name = 'Yearly';
-        $this->create_type($name, $display_name);
+        $name = 'Yearly';
+        $this->create_type($name);
 
-        $name = 'custom';
-        $display_name = 'Custom';
-        $this->create_type($name, $display_name);
+        $name = 'Custom';
+        $this->create_type($name);
     }
 
-    private function create_type($name, $display)
+    private function create_type($name)
     {
         $id = UUID::generate();
         PayPeriodType::create([
             'id' => $id,
-            'name' => $name,
-            'display_name' => $display
+            'name' => $name
         ]);
     }
 }

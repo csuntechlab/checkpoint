@@ -38,3 +38,5 @@ Route::middleware('auth:api')->get('user/profile', 'UserController@profile');
 
 // SETTINGS
 Route::middleware('auth:api')->post('/update/location/{id?}/', 'LocationController@update');
+
+Route::middleware('auth:api')->post('/organization/settings', 'AdminSettingsController@setOrganizationSettings');
