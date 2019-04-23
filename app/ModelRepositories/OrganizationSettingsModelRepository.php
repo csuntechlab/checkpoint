@@ -8,6 +8,8 @@ use App\DomainValueObjects\UUIDGenerator\UUID;
 // Interface
 use App\ModelRepositoryInterfaces\OrganizationSettingsModelRepositoryInterface;
 
+// Exceptions
+use App\Exceptions\OrganizationExceptions\OrganizationSettingsHasEntryException;
 
 class OrganizationSettingsModelRepository implements OrganizationSettingsModelRepositoryInterface
 {
@@ -22,7 +24,7 @@ class OrganizationSettingsModelRepository implements OrganizationSettingsModelRe
                 'categories' => $categoriesOptIn
             ]);
         } catch (\Exception $e) {
-            dd($e);
+            throw new OrganizationSettingsHasEntryException();
         }
         return $settings;
     }

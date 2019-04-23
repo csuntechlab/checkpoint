@@ -41,28 +41,25 @@ class AdminSettingsController extends Controller
         $payPeriodName = $this->payPeriodModelRepo->getPayPeriodName($request['payPeriodTypeId']);
 
         /** if the type is custom then we need a start and an end date */
-        if ($payPeriodName == 'Custom') {
-            if (!$request->has('endDate')) return $this->noEndDateResponse();
-        }
+        if ($payPeriodName == 'Custom' && !$request->has('endDate'))  return $this->noEndDateResponse();
 
         $admin = Auth::user();
         $orgId = $admin->organization_id;
 
         // Regardless of payPeriod Type an organization settings must be created
-        $this->adminSettingsUtility->createOrganizationSettings(
+        return $this->adminSettingsUtility->createOrganizationSettings(
             $orgId,
             $request['categoriesOptIn'],
             $request['payPeriodTypeId'],
             $request['timeCalculatorTypeId']
         );
-        return ['message' => 'Success'];
     }
 
     private function noEndDateResponse()
     {
         $response =
             [
-                "message" => "Custom requires an End Date",
+                "message" => "Custom type requires an End Date",
                 "errors" => [
                     "endDate" => [
                         "End date is required!"
