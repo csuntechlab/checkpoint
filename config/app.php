@@ -221,6 +221,7 @@ return [
 
         /*********** Model Repository Service Providers **************/
         App\Providers\ModelRepository\PayPeriodTypeModelRepositoryServiceProvider::class,
+        App\Providers\ModelRepository\OrganizationSettingsModelRepositoryServiceProvider::class,
 
         /*********** METALAB Providers **************/
         /** Proxy Pass Provider */
