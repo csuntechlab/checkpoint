@@ -5,7 +5,7 @@ namespace App\Exceptions\LocationExceptions;
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class UserCreatedFailed extends Exception
+class UpdateOrganizationLocationFailed extends Exception
 {
     public function __construct()
     {

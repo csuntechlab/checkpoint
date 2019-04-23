@@ -27,7 +27,7 @@ class CreateOrganizationSettingsTable extends Migration
             $table->foreign('time_calculator_type_id')
                 ->references('id')
                 ->on('time_calculator_types');
-            $table->decimal('organization_radius')->default(10);
+            $table->boolean('categories')->default(0);
             $table->primary(['id', 'organization_id']);
         });
     }
