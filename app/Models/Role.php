@@ -14,6 +14,8 @@ class Role extends Model
      */
     protected $fillable = ['id', 'name'];
 
+    protected $hidden = ['id', 'pivot'];
+
     protected $table = 'roles';
 
     public $incrementing = false;

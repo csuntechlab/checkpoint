@@ -174,6 +174,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\LocationServiceProvider::class,
 
         /*********** Domain Service Providers **************/
 
@@ -210,6 +211,11 @@ return [
 
         /** UserInvite Service Provider */
         App\Providers\ApiProviders\UserInvitation\UserInvitationServiceProvider::class,
+
+        /*********** UserInvitation Service Providers **************/
+
+        /** User Service Provider */
+        App\Providers\ApiProviders\User\UserServiceProvider::class,
 
         /*********** METALAB Providers **************/
         /** Proxy Pass Provider */

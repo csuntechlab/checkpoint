@@ -20,8 +20,6 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $request['invite_code'] = "000-000";
-
-        return $this->registerUtility->register($request['name'], $request['email'], $request['password'], $request['invite_code']);
+        return $this->registerUtility->register($request['name'], $request['email'], $request['password'], $request['invitation_code']);
     }
 }

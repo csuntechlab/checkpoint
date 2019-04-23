@@ -18,6 +18,7 @@ class CreateLocationsTable extends Migration
             $table->text('address');
             $table->decimal('lat', 15, 10);
             $table->decimal('lng', 15, 10);
+            $table->decimal('radius');
         });
     }
 
