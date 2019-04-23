@@ -10,8 +10,16 @@ use App\ModelRepositoryInterfaces\PayPeriodTypeModelRepositoryInterface;
 
 class PayPeriodTypeModelRepository implements PayPeriodTypeModelRepositoryInterface
 {
-    public function getPayPeriodTypeById(string $payPeriodTypeId): PayPeriodType
+
+    private function getPayPeriodName(string $payPeriodTypeId)
     {
-        return PayPeriodType::where('id', $payPeriodTypeId)->first();
+        $payPeriodType = PayPeriodType::where('id', $payPeriodTypeId)->firstOrFail();
+        return $payPeriodType->name;
+    }
+
+    public function isPayPeriodType(string $typeName, string $payPeriodTypeId): bool
+    {
+        $payPeriodName = $this->getPayPeriodName($payPeriodTypeId);
+        return $payPeriodName == $typeName;
     }
 }

@@ -31,18 +31,18 @@ class AdminSettingsController extends Controller
      * The only special case:
      *      If organization settings pay_period_type is custom 
      *      we would need to have a start date and end date
+     * 
      */
-
-
     public function setOrganizationSettings(Request $request)
     {
-        $payPeriodType = $this->payPeriodModelRepo->getPayPeriodTypeById($request['payPeriodTypeId']);
-        return $payPeriodType;
+        $isCustomType = $this->payPeriodModelRepo->isPayPeriodType('Custom', $request['payPeriodTypeId']);
 
-        // if ($this->payPeriodTypeIsCustom()) {
-        //     dd('logic works')
-        //     // set org settings 
-        // }
+        if ($isCustomType) {
+            /** if the type is custom then we need a start and an end date */
+            if (!$request->has('endDate')) {
+                return $this->noEndDateResponse();
+            }
+        }
 
         return $this->adminSettingsUtility->setOrganizationSettings(
             $request['categoriesOptIn'],
@@ -50,5 +50,19 @@ class AdminSettingsController extends Controller
             $request['timeCalculatorTypeId'],
             $request['startDate']
         );
+    }
+
+    private function noEndDateResponse()
+    {
+        $response =
+            [
+                "message" => "Custom requires an End Date",
+                "errors" => [
+                    "endDate" => [
+                        "End date is required!"
+                    ]
+                ]
+            ];
+        return $response;
     }
 }
