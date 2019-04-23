@@ -3,34 +3,19 @@ namespace App\Services;
 
 use App\Contracts\AdminSettingsContract;
 
-// Auth
-use Illuminate\Support\Facades\Auth;
-
-// Models
-use App\Models\PayPeriodType;
-use App\Models\OrganizationSettings;
-use App\DomainValueObjects\UUIDGenerator\UUID;
+// Interfaces
+use App\ModelRepositoryInterfaces\OrganizationSettingsModelRepositoryInterface;
 
 class AdminSettingsService implements AdminSettingsContract
 {
-    public function setOrganizationSettings($categoriesOptIn, $payPeriodTypeId, $timeCalculatorTypeId, $startDate)
+
+    protected $organizationSettingsMoRepo;
+    public function __construct(OrganizationSettingsModelRepositoryInterface $organizationSettingsModelRepositoryInterface)
     {
-        $admin = Auth::user();
-        $orgId = $admin->organization_id;
-
-        try {
-            $settings = OrganizationSettings::create([
-                'id' => UUID::generate(),
-                'organization_id' => $orgId,
-                'pay_period_type_id' => $payPeriodTypeId,
-                'time_calculator_type_id' => $timeCalculatorTypeId,
-                'categories' => $categoriesOptIn
-            ]);
-        } catch (\Exception $e) {
-            dd($e);
-        }
-
-
-        return $settings;
+        $this->organizationSettingsMoRepo = $organizationSettingsModelRepositoryInterface;
+    }
+    public function createOrganizationSettings($orgId, $categoriesOptIn, $payPeriodTypeId, $timeCalculatorTypeId)
+    {
+        return $this->organizationSettingsMoRepo->create($orgId, $payPeriodTypeId, $timeCalculatorTypeId, $categoriesOptIn);
     }
 }

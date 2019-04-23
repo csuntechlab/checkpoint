@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+// Auth
+use Illuminate\Support\Facades\Auth;
+
 // Contracts
 use App\Contracts\AdminSettingsContract;
 
@@ -33,23 +36,26 @@ class AdminSettingsController extends Controller
      *      we would need to have a start date and end date
      * 
      */
-    public function setOrganizationSettings(Request $request)
+    public function createOrganizationSettings(Request $request)
     {
-        $isCustomType = $this->payPeriodModelRepo->isPayPeriodType('Custom', $request['payPeriodTypeId']);
+        $payPeriodName = $this->payPeriodModelRepo->getPayPeriodName($request['payPeriodTypeId']);
 
-        if ($isCustomType) {
-            /** if the type is custom then we need a start and an end date */
-            if (!$request->has('endDate')) {
-                return $this->noEndDateResponse();
-            }
+        /** if the type is custom then we need a start and an end date */
+        if ($payPeriodName == 'Custom') {
+            if (!$request->has('endDate')) return $this->noEndDateResponse();
         }
 
-        return $this->adminSettingsUtility->setOrganizationSettings(
+        $admin = Auth::user();
+        $orgId = $admin->organization_id;
+
+        // Regardless of payPeriod Type an organization settings must be created
+        $this->adminSettingsUtility->createOrganizationSettings(
+            $orgId,
             $request['categoriesOptIn'],
             $request['payPeriodTypeId'],
-            $request['timeCalculatorTypeId'],
-            $request['startDate']
+            $request['timeCalculatorTypeId']
         );
+        return ['message' => 'Success'];
     }
 
     private function noEndDateResponse()

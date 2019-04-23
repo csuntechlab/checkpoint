@@ -4,5 +4,5 @@ namespace App\ModelRepositoryInterfaces;
 
 interface PayPeriodTypeModelRepositoryInterface
 {
-    public function isPayPeriodType(string $typeName, string $payPeriodTypeId): bool;
+    public function getPayPeriodName(string $payPeriodTypeId): string;
 }

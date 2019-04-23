@@ -3,5 +3,10 @@ namespace App\Contracts;
 
 interface AdminSettingsContract
 {
-    public function setOrganizationSettings($categoriesOptIn, $payPeriodTypeId, $timeCalculatorTypeId, $startDate);
+    public function createOrganizationSettings(
+        $orgId,
+        $categoriesOptIn,
+        $payPeriodTypeId,
+        $timeCalculatorTypeId
+    );
 }

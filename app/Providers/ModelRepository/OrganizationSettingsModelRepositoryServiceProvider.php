@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers\ModelRepository;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -24,7 +24,7 @@ class OrganizationSettingsModelRepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\ModelRepositoryInterfaces\OrganizationSettingModelRepositoryInterface',
+            'App\ModelRepositoryInterfaces\OrganizationSettingsModelRepositoryInterface',
             'App\ModelRepositories\OrganizationSettingsModelRepository'
         );
     }
