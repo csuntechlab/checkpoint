@@ -22,7 +22,7 @@ class TimeSheetService implements TimeSheetContract
         try{
             $id = Auth::User()->organization_id;
 
-            $timeSheet = TimeSheet::getCurrentTimeSheet($date, $id)->get();
+            $timeSheet = TimeSheet::getCurrentTimeSheet($date, $id)->firstOrFail();
         } catch (\Exception $e) {
             throw new GetTimeSheetFailed();
         }

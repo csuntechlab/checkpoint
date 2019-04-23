@@ -10,12 +10,12 @@ class TimeSheet extends Model
     public $timestamps = false;
 
     protected $hidden = [
-        'org_id'
+        'organization_id'
     ];
 
     public function scopeGetCurrentTimesheet($query, $date, $id)
     {
-        return $query->where('org_id', $id)
+        return $query->where('organization_id', $id)
         ->where('start_date', '<=', $date)
         ->where('end_date', '>=', $date);
     }

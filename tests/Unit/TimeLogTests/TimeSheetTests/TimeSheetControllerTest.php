@@ -74,8 +74,12 @@ class TimeSheetControllerTest extends TestCase
       ])->json('GET', '/api/current/timesheet', $request);
 
       $response = $response->getOriginalContent();
-      dd($response);
-      $response = json_encode($response);
+
+      $start_date = Carbon::parse($response->start_date);
+      $end_date = Carbon::parse($response->end_date);
+      $current_date = Carbon::parse($request['date']);
+
+      $this->assertTrue($current_date->between($start_date, $end_date));
   }
 
 }
