@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\Admin\AdminSettingsRequest;
 
 // Auth
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ use App\Contracts\AdminSettingsContract;
 
 // Model Repository Interfaces
 use App\ModelRepositoryInterfaces\PayPeriodTypeModelRepositoryInterface;
+
 
 class AdminSettingsController extends Controller
 {
@@ -36,7 +38,7 @@ class AdminSettingsController extends Controller
      *      we would need to have a start date and end date
      * 
      */
-    public function createOrganizationSettings(Request $request)
+    public function createOrganizationSettings(AdminSettingsRequest $request)
     {
         $payPeriodName = $this->payPeriodModelRepo->getPayPeriodName($request['payPeriodTypeId']);
 
