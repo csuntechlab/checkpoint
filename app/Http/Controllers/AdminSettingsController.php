@@ -22,8 +22,13 @@ class AdminSettingsController extends Controller
      * 2. Pay Period type ... also set initial start and end date
      * 3. Set how you want to calculate time, but this should be the main focus of the next iteration.
      */
-    public function setOrganizationSettings()
+    public function setOrganizationSettings(Request $request)
     {
-        return $this->adminSettingsUtility->setOrganizationSettings();
+        return $this->adminSettingsUtility->setOrganizationSettings(
+            $request['categoriesOptIn'],
+            $request['payPeriodTypeId'],
+            $request['timeCalculatorTypeId'],
+            $request['startDate']
+        );
     }
 }
