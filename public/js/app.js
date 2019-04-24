@@ -2067,10 +2067,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
-/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
+/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var q__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! q */ "./node_modules/q/q.js");
+/* harmony import */ var q__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(q__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -2121,11 +2125,82 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [vuelidate__WEBPACK_IMPORTED_MODULE_0__["validationMixin"]],
+  validations: {
+    form: {
+      organization_name: {
+        alphaNum: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["alphaNum"],
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      },
+      first_name: {
+        alpha: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["alpha"],
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      },
+      last_name: {
+        alpha: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["alpha"],
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      },
+      email: {
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["email"],
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      },
+      password: {
+        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(6),
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      },
+      password_confirmation: {
+        sameAsPassword: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["sameAs"])("password"),
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      },
+      address_number: {
+        numeric: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["numeric"],
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      },
+      street: {
+        alpha: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["alpha"],
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      },
+      city: {
+        alpha: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["alpha"],
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      },
+      country: {
+        alpha: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["alpha"],
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      },
+      zip_code: {
+        numeric: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["numeric"],
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      },
+      state: {
+        alpha: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["alpha"],
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      }
+    }
+  },
   data: function data() {
     return {
+      showPassword: false,
       organization_name: null,
       first_name: null,
       last_name: null,
@@ -2142,46 +2217,6 @@ __webpack_require__.r(__webpack_exports__);
       imageUrl: null,
       imageFile: null
     };
-  },
-  validations: {
-    form: {
-      organization_name: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-      },
-      first_name: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-      },
-      last_name: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-      },
-      email: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-      },
-      password: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-      },
-      password_confirmation: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-      },
-      address_number: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-      },
-      street: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-      },
-      city: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-      },
-      country: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-      },
-      zip_code: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-      },
-      state: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
-      }
-    }
   },
   computed: {},
   methods: {
@@ -2213,7 +2248,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     submit: function submit() {
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/register_admin", {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/register_admin", {
         organization_name: this.organization_name,
         first_name: this.first_name,
         last_name: this.last_name,
@@ -5446,7 +5481,11 @@ var render = function() {
                     { attrs: { "xs-12": "" } },
                     [
                       _c("v-text-field", {
-                        attrs: { label: "Organization Name", required: "" },
+                        attrs: {
+                          "prepend-icon": "business",
+                          label: "Organization Name",
+                          required: ""
+                        },
                         model: {
                           value: _vm.organization_name,
                           callback: function($$v) {
@@ -5457,7 +5496,11 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("v-text-field", {
-                        attrs: { label: "First Name", required: "" },
+                        attrs: {
+                          "prepend-icon": "person",
+                          label: "First Name",
+                          required: ""
+                        },
                         model: {
                           value: _vm.first_name,
                           callback: function($$v) {
@@ -5468,7 +5511,11 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("v-text-field", {
-                        attrs: { label: "Last Name", required: "" },
+                        attrs: {
+                          "prepend-icon": "person",
+                          label: "Last Name",
+                          required: ""
+                        },
                         model: {
                           value: _vm.last_name,
                           callback: function($$v) {
@@ -5480,7 +5527,8 @@ var render = function() {
                       _vm._v(" "),
                       _c("v-text-field", {
                         attrs: {
-                          label: "E-mail (This will be your username)",
+                          "prepend-icon": "email",
+                          label: "E-mail",
                           required: ""
                         },
                         model: {
@@ -5494,9 +5542,19 @@ var render = function() {
                       _vm._v(" "),
                       _c("v-text-field", {
                         attrs: {
-                          type: "password",
+                          "append-icon": _vm.showPassword
+                            ? "visibility"
+                            : "visibility_off",
+                          counter: 0,
+                          type: _vm.showPassword ? "text" : "password",
+                          "prepend-icon": "lock",
                           label: "Password",
                           required: ""
+                        },
+                        on: {
+                          "click:append": function($event) {
+                            _vm.showPassword = !_vm.showPassword
+                          }
                         },
                         model: {
                           value: _vm.password,
@@ -5510,6 +5568,7 @@ var render = function() {
                       _c("v-text-field", {
                         attrs: {
                           type: "password",
+                          "prepend-icon": "lock",
                           label: "Re-Type Password",
                           required: ""
                         },
@@ -5523,7 +5582,10 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("v-text-field", {
-                        attrs: { label: "Address Number" },
+                        attrs: {
+                          "prepend-icon": "place",
+                          label: "Address Number"
+                        },
                         model: {
                           value: _vm.address_number,
                           callback: function($$v) {
@@ -5534,7 +5596,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("v-text-field", {
-                        attrs: { label: "Street" },
+                        attrs: { "prepend-icon": "map", label: "Street" },
                         model: {
                           value: _vm.street,
                           callback: function($$v) {
@@ -5545,7 +5607,10 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("v-text-field", {
-                        attrs: { label: "City" },
+                        attrs: {
+                          "prepend-icon": "location_city",
+                          label: "City"
+                        },
                         model: {
                           value: _vm.city,
                           callback: function($$v) {
@@ -5556,7 +5621,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("v-text-field", {
-                        attrs: { label: "Country" },
+                        attrs: { "prepend-icon": "place", label: "Country" },
                         model: {
                           value: _vm.country,
                           callback: function($$v) {
@@ -5567,7 +5632,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("v-text-field", {
-                        attrs: { label: "Zip Code" },
+                        attrs: { "prepend-icon": "place", label: "Zip Code" },
                         model: {
                           value: _vm.zip_code,
                           callback: function($$v) {
@@ -5578,7 +5643,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("v-text-field", {
-                        attrs: { label: "State" },
+                        attrs: { "prepend-icon": "place", label: "State" },
                         model: {
                           value: _vm.state,
                           callback: function($$v) {
