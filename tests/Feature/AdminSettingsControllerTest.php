@@ -33,7 +33,5 @@ class AdminSettingsControllerTest extends TestCase
         $this->seed('RoleSeeder');
         $this->seed('UsersTableSeeder');
         $this->seed('TimeSheetSeeder');
-        $this->user = \App\User::where('id', 1)->first();
-        $this->actingAs($this->user);
     }
 }

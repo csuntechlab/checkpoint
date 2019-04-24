@@ -13,7 +13,8 @@ use App\Contracts\AdminSettingsContract;
 
 // Model Repository Interfaces
 use App\ModelRepositoryInterfaces\PayPeriodTypeModelRepositoryInterface;
-
+use App\Models\PayPeriodType;
+use App\Models\TimeCalculatorType;
 
 class AdminSettingsController extends Controller
 {
@@ -38,22 +39,22 @@ class AdminSettingsController extends Controller
      *      we would need to have a start date and end date
      * 
      */
-    public function createOrganizationSettings(AdminSettingsRequest $request)
-    {
-        $payPeriodName = $this->payPeriodModelRepo->getPayPeriodName($request['payPeriodTypeId']);
-
+    public function createOrganizationSettings(
+        AdminSettingsRequest $request,
+        PayPeriodType $payPeriodType,
+        TimeCalculatorType $timeCalculatorType
+    ) {
         /** if the type is custom then we need a start and an end date */
-        if ($payPeriodName == 'Custom' && !$request->has('endDate'))  return $this->noEndDateResponse();
+        if ($payPeriodType->name == 'Custom' && !$request->has('endDate'))  return $this->noEndDateResponse();
 
         $admin = Auth::user();
-        $orgId = $admin->organization_id;
 
         // Regardless of payPeriod Type an organization settings must be created
         return $this->adminSettingsUtility->createOrganizationSettings(
-            $orgId,
+            $admin->organization_id,
             $request['categoriesOptIn'],
-            $request['payPeriodTypeId'],
-            $request['timeCalculatorTypeId']
+            $payPeriodType->id,
+            $timeCalculatorType->id
         );
     }
 

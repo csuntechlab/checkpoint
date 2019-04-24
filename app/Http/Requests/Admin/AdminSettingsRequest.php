@@ -27,8 +27,6 @@ class AdminSettingsRequest extends FormRequest
             'startDate' => 'required|Date',
             'endDate' => 'Date',
             'categoriesOptIn' => 'required|bool',
-            'payPeriodTypeId' => 'required|exists:pay_period_types,id',
-            'timeCalculatorTypeId' => 'required|exists:time_calculator_types,id',
         ];
     }
 
@@ -37,8 +35,6 @@ class AdminSettingsRequest extends FormRequest
         return [
             'startDate.required' => 'Start date is required!',
             'categoriesOptIn.required' => 'Categories is required!',
-            'payPeriodTypeId.required' => 'Pay Period Type is required!',
-            'timeCalculatorTypeId.required' => 'Time Calculator Type is required!',
         ];
     }
 }
