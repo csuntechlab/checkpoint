@@ -32,7 +32,7 @@
         <v-spacer></v-spacer>
         <v-layout>
           <v-flex>
-            <v-btn color="teal lighten-3" @click="pickFile" v-model="imageName">Upload Logo</v-btn>
+            <v-btn color="teal lighten-3" @click="pickFile" v-model="imageFile">Upload Logo</v-btn>
             <input
               type="file"
               style="display: none"
@@ -101,7 +101,7 @@ export default {
         fr.readAsDataURL(files[0]);
         fr.addEventListener("load", () => {
           this.imageUrl = fr.result;
-          this.imageFile = files[0]; // this is an image file that can be sent to server...
+          this.imageFile = files[0];
         });
       } else {
         this.imageName = "";
@@ -124,7 +124,7 @@ export default {
           country: this.country,
           zip_code: this.zip_code,
           state: this.state,
-          logo: this.imagefile
+          logo: this.imageFile
         })
         .then(function(response) {
           console.log(response.data);
