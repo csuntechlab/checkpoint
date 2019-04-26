@@ -142,7 +142,8 @@ class RegisterAdminControllerTest extends TestCase
       'user' => [
         'name' => "John Doe",
         'email' => "JohnDoe@email.com",
-      ]
+      ],
+      'role' => "Admin"
     ];
     $expectedResponse = json_encode($expectedResponse);
     $this->assertEquals($response, $expectedResponse);

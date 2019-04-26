@@ -203,6 +203,9 @@ return [
         App\Providers\ApiProviders\TimeLog\Repository\TimeLogClockInRepositoryServiceProvider::class,
         App\Providers\ApiProviders\TimeLog\Repository\TimeLogClockOutRepositoryServiceProvider::class,
 
+        /** TimeSheet Service Provider */
+        App\Providers\ApiProviders\TimeLog\TimeSheetServiceProvider::class,
+
 
         /*********** UserInvitation Service Providers **************/
 

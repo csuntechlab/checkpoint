@@ -7,6 +7,8 @@ use App\DomainValueObjects\UUIDGenerator\UUID;
 
 //Models
 use App\User;
+use App\Models\UserRole;
+use App\Models\Role;
 use App\Models\Organization;
 use App\DomainValueObjects\Location\Address;
 
@@ -25,7 +27,7 @@ class RegisterAdminService implements RegisterAdminContract
     $email,
     $password,
     $organization_id
-  ): User
+  )
   {
     try {
       $user = User::create([
@@ -34,11 +36,20 @@ class RegisterAdminService implements RegisterAdminContract
         'email' => $email,
         'password' => Hash::make($password)
       ]);
+
+      $role = UserRole::create([
+        'id' => UUID::generate(),
+        'user_id' => $user->id,
+        'role_id' => 1
+      ]);
+
+      $role_name = $user->role()->first();
+
     } catch (\Exception $e) {
       throw new UserCreatedFailed();
     }
 
-    return $user;
+    return [$user, $role, $role_name];
   }
 
   public function registerOrganization(
