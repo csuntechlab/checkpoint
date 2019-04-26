@@ -35,13 +35,16 @@ class RegisterAdminController extends Controller
       $request['logo']
     );
 
-    $user = $this->registerAdminUtility->registerAdminUser(
+    $admin = $this->registerAdminUtility->registerAdminUser(
       $name,
       $request['email'],
       $request['password'],
       $organization->id
     );
+    
+    $user = $admin[0];
+    $role = $admin[2]->name;
 
-    return compact(['organization', 'user']);
+    return compact(['organization', 'user', 'role']);
   }
 }
