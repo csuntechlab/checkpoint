@@ -11,6 +11,7 @@ class UserRole extends Model
     public $incrementing = false;
     public $timestamps = false;
 
+    protected $fillable = ['id', 'user_id', 'role_id'];
     protected $hidden = ['id', 'user_id', 'role_id'];
 
     public function role()
