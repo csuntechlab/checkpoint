@@ -10,7 +10,7 @@ use App\Http\Requests\Admin\AdminSettingsRequest;
 //Contracts
 use \App\Http\Controllers\AdminSettingsController;
 use \App\Contracts\AdminSettingsContract;
-
+use App\User;
 
 class AdminSettingsControllerTest extends TestCase
 {
@@ -31,7 +31,10 @@ class AdminSettingsControllerTest extends TestCase
         $this->seed('PayPeriodTypeSeeder');
         $this->seed('OrganizationSeeder');
         $this->seed('RoleSeeder');
-        $this->seed('UsersTableSeeder');
-        $this->seed('TimeSheetSeeder');
+    }
+
+    public function test_mock_admin_settings_controller_test()
+    {
+        // User::create([]);
     }
 }

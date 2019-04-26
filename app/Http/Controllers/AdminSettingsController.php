@@ -46,12 +46,14 @@ class AdminSettingsController extends Controller
         if ($payPeriodType->name == 'Custom' && !$request->has('endDate'))  return $this->noEndDateResponse();
 
         $user = Auth::user();
+        $organizationId = $user->organization_id;
 
         $this->authorize('isAdmin', User::class);
 
+
         // Regardless of payPeriod Type an organization settings must be created
         return $this->adminSettingsUtility->createOrganizationSettings(
-            $user->organization_id,
+            $organizationId,
             $request['categoriesOptIn'],
             $payPeriodType->id,
             $timeCalculatorType->id
