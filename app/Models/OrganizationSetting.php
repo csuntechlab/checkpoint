@@ -15,4 +15,17 @@ class OrganizationSetting extends Model
     ];
 
     protected $hidden = ['organization_id'];
+
+    public function isCompleted()
+    {
+        $payPeriodTypeId = $this->pay_period_type_id !== null;
+        $categories =  $this->categories !== null;
+
+        // TODO: Remove once time calculator is being worked on
+        return  $payPeriodTypeId && $categories;
+
+        $timeCalculatorTypeId = $this->time_calculator_type_id !== null;
+
+        return  $payPeriodTypeId && $categories && $timeCalculatorTypeId;
+    }
 }

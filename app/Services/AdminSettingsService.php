@@ -23,8 +23,9 @@ class AdminSettingsService implements AdminSettingsContract
     {
         $organizationSetting  = $this->organizationSettings($organizationId);
         $payPeriodType = PayPeriodType::all();
-        // $payPeriodType = TimeCalculatorType::all();
-        return compact(['organizationSetting', 'payPeriodType']);
+        // $timePeriodType = TimeCalculatorType::all(); // TODO: comment out once time calculator is being worked on
+        $completed = $organizationSetting->isCompleted();
+        return compact(['organizationSetting', 'payPeriodType', 'completed']);
     }
 
     public function updateCategories($organizationId, $categoriesOptIn)
