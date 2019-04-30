@@ -40,7 +40,6 @@ class UserModelRepository implements UserModelRepositoryInterface
             'password' => Hash::make($password)
         ]);
         $role = $this->assignRole($user, $roleId);
-
         return compact(['user', 'role']);
     }
 }
