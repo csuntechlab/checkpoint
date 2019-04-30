@@ -220,6 +220,7 @@ return [
         App\Providers\ApiProviders\Admin\AdminSettingsProvider::class,
 
         /*********** Model Repository Service Providers **************/
+        App\Providers\ModelRepository\UserModelRepositoryServiceProvider::class,
 
 
         /*********** METALAB Providers **************/

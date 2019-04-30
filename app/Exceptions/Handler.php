@@ -5,12 +5,15 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+// Build Response
 use App\Exceptions\BuildResponse\BuildResponse;
 
+// Exceptions
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Illuminate\Auth\Access\AuthorizationException;
+use  Illuminate\Database\QueryException;
 
 class Handler extends ExceptionHandler
 {
@@ -57,6 +60,11 @@ class Handler extends ExceptionHandler
             return BuildResponse::buildHandlerResponse($message, $stats_code);
         } else if ($e instanceof AccessDeniedHttpException || $e instanceof AuthorizationException) {
             $message = 'Unauthorized access.';
+            $stats_code = 409;
+            return BuildResponse::buildHandlerResponse($message, $stats_code);
+        } else if ($e instanceof QueryException) {
+            // dd($e->message);
+            $message = 'Unable to resolve Resource.';
             $stats_code = 409;
             return BuildResponse::buildHandlerResponse($message, $stats_code);
         }

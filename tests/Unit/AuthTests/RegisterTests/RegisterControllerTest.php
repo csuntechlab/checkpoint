@@ -63,6 +63,7 @@ class RegisterControllerTest extends TestCase
         $this->assertEquals($expectedResponse, $response);
     }
 
+    // This test sometimes fails cause of the invite code, TODO: Investigate
     public function test_register_http_call()
     {
         $userInvitation = UserInvitation::all()->random();
@@ -84,8 +85,13 @@ class RegisterControllerTest extends TestCase
         $response = $response->getOriginalContent();
         $response = json_encode($response);
         $actualResponse = [
-            "name" => $name,
-            "email" => $email
+            "user" => [
+                "name" => $name,
+                "email" => $email
+            ],
+            "role" => [
+                "name" => "Employee"
+            ]
         ];
         $actualResponse = json_encode($actualResponse);
         $this->assertEquals($response, $actualResponse);
