@@ -14,15 +14,11 @@ use App\Models\TimeCalculatorType;
 class AdminSettingsService implements AdminSettingsContract
 {
 
-    protected $organizationSettingsMoRepo;
-    public function __construct(OrganizationSettingModelRepositoryInterface $organizationSettingsModelRepositoryInterface)
-    {
-        $this->organizationSettingsMoRepo = $organizationSettingsModelRepositoryInterface;
-    }
     private function organizationSettings($organizationId)
     {
-        return OrganizationSetting::where('organization_id', $organizationId)->first();
+        return OrganizationSetting::where('organization_id', $organizationId)->firstOrFail();
     }
+
     public function currentOrganizationSettings($organizationId)
     {
         $organizationSetting  = $this->organizationSettings($organizationId);
