@@ -4,6 +4,9 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 
+use Mockery;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 // TB Requests
 use App\Http\Requests\Admin\AdminSettingsRequest;
 
@@ -14,6 +17,7 @@ use App\User;
 
 class AdminSettingsControllerTest extends TestCase
 {
+    use DatabaseMigrations;
     private $controller;
     private $utility;
     private $repository;
@@ -36,5 +40,6 @@ class AdminSettingsControllerTest extends TestCase
     public function test_mock_admin_settings_controller_test()
     {
         // User::create([]);
+        $this->assertTrue(true);
     }
 }
