@@ -2,7 +2,7 @@
 namespace App\ModelRepositoryInterfaces;
 
 
-interface OrganizationSettingsModelRepositoryInterface
+interface OrganizationSettingModelRepositoryInterface
 {
     public function create($orgId, $payPeriodTypeId, $timeCalculatorTypeId, $categoriesOptIn);
 }

@@ -3,7 +3,7 @@ namespace App\Contracts;
 
 interface AdminSettingsContract
 {
-    public function createOrganizationSettings(
+    public function createOrganizationSetting(
         $orgId,
         $categoriesOptIn,
         $payPeriodTypeId,

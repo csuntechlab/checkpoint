@@ -37,7 +37,7 @@ class AdminSettingsController extends Controller
      *      we would need to have a start date and end date
      * 
      */
-    public function createOrganizationSettings(
+    public function createOrganizationSetting(
         AdminSettingsRequest $request,
         PayPeriodType $payPeriodType,
         TimeCalculatorType $timeCalculatorType
@@ -52,7 +52,7 @@ class AdminSettingsController extends Controller
 
 
         // Regardless of payPeriod Type an organization settings must be created
-        return $this->adminSettingsUtility->createOrganizationSettings(
+        return $this->adminSettingsUtility->createOrganizationSetting(
             $organizationId,
             $request['categoriesOptIn'],
             $payPeriodType->id,

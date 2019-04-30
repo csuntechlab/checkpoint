@@ -4,17 +4,17 @@ namespace App\Services;
 use App\Contracts\AdminSettingsContract;
 
 // Interfaces
-use App\ModelRepositoryInterfaces\OrganizationSettingsModelRepositoryInterface;
+use App\ModelRepositoryInterfaces\OrganizationSettingModelRepositoryInterface;
 
 class AdminSettingsService implements AdminSettingsContract
 {
 
     protected $organizationSettingsMoRepo;
-    public function __construct(OrganizationSettingsModelRepositoryInterface $organizationSettingsModelRepositoryInterface)
+    public function __construct(OrganizationSettingModelRepositoryInterface $organizationSettingsModelRepositoryInterface)
     {
         $this->organizationSettingsMoRepo = $organizationSettingsModelRepositoryInterface;
     }
-    public function createOrganizationSettings($orgId, $categoriesOptIn, $payPeriodTypeId, $timeCalculatorTypeId)
+    public function createOrganizationSetting($orgId, $categoriesOptIn, $payPeriodTypeId, $timeCalculatorTypeId)
     {
         return $this->organizationSettingsMoRepo->create($orgId, $payPeriodTypeId, $timeCalculatorTypeId, $categoriesOptIn);
     }

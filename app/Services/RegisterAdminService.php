@@ -18,7 +18,7 @@ use App\Exceptions\OrganizationExceptions\OrganizationCreatedFailed;
 
 //Contracts
 use App\Contracts\RegisterAdminContract;
-use App\Models\OrganizationSettings;
+use App\Models\OrganizationSetting;
 
 class RegisterAdminService implements RegisterAdminContract
 {
@@ -64,7 +64,7 @@ class RegisterAdminService implements RegisterAdminContract
         'address' => $address->__toString(),
         'logo' => $logo
       ]);
-      OrganizationSettings::create([
+      OrganizationSetting::create([
         'organization_id' => $organizationId
       ]);
     } catch (\Exception $e) {

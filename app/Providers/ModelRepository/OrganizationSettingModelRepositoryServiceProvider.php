@@ -4,7 +4,7 @@ namespace App\Providers\ModelRepository;
 
 use Illuminate\Support\ServiceProvider;
 
-class OrganizationSettingsModelRepositoryServiceProvider extends ServiceProvider
+class OrganizationSettingModelRepositoryServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -24,8 +24,8 @@ class OrganizationSettingsModelRepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\ModelRepositoryInterfaces\OrganizationSettingsModelRepositoryInterface',
-            'App\ModelRepositories\OrganizationSettingsModelRepository'
+            'App\ModelRepositoryInterfaces\OrganizationSettingModelRepositoryInterface',
+            'App\ModelRepositories\OrganizationSettingModelRepository'
         );
     }
 }

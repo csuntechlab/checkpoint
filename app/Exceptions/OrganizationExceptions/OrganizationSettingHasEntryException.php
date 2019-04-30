@@ -5,7 +5,7 @@ namespace App\Exceptions\OrganizationExceptions;
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class OrganizationSettingsHasEntryException extends Exception
+class OrganizationSettingHasEntryException extends Exception
 {
     public function __construct()
     {

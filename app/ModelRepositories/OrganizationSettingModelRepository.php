@@ -2,21 +2,21 @@
 namespace App\ModelRepositories;
 
 // Models
-use App\Models\OrganizationSettings;
+use App\Models\OrganizationSetting;
 use App\DomainValueObjects\UUIDGenerator\UUID;
 
 // Interface
-use App\ModelRepositoryInterfaces\OrganizationSettingsModelRepositoryInterface;
+use App\ModelRepositoryInterfaces\OrganizationSettingModelRepositoryInterface;
 
 // Exceptions
-use App\Exceptions\OrganizationExceptions\OrganizationSettingsHasEntryException;
+use App\Exceptions\OrganizationExceptions\OrganizationSettingHasEntryException;
 
-class OrganizationSettingsModelRepository implements OrganizationSettingsModelRepositoryInterface
+class OrganizationSettingModelRepository implements OrganizationSettingModelRepositoryInterface
 {
     public function create($orgId, $payPeriodTypeId, $timeCalculatorTypeId, $categoriesOptIn)
     {
         try {
-            $settings = OrganizationSettings::create([
+            $settings = OrganizationSetting::create([
                 'id' => UUID::generate(),
                 'organization_id' => $orgId,
                 'pay_period_type_id' => $payPeriodTypeId,
@@ -24,7 +24,7 @@ class OrganizationSettingsModelRepository implements OrganizationSettingsModelRe
                 'categories' => $categoriesOptIn
             ]);
         } catch (\Exception $e) {
-            throw new OrganizationSettingsHasEntryException();
+            throw new OrganizationSettingHasEntryException();
         }
         return $settings;
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrganizationSettingsTable extends Migration
+class CreateOrganizationSettingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -38,6 +38,6 @@ class CreateOrganizationSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(' organization_settings');
+        Schema::dropIfExists('organization_settings');
     }
 }
