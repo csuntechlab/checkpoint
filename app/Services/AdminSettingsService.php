@@ -19,11 +19,39 @@ class AdminSettingsService implements AdminSettingsContract
     {
         $this->organizationSettingsMoRepo = $organizationSettingsModelRepositoryInterface;
     }
+    private function organizationSettings($organizationId)
+    {
+        return OrganizationSetting::where('organization_id', $organizationId)->first();
+    }
     public function currentOrganizationSettings($organizationId)
     {
-        $organizationSetting  = OrganizationSetting::where('organization_id', $organizationId)->first();
+        $organizationSetting  = $this->organizationSettings($organizationId);
         $payPeriodType = PayPeriodType::all();
         // $payPeriodType = TimeCalculatorType::all();
         return compact(['organizationSetting', 'payPeriodType']);
+    }
+
+    public function updateCategories($organizationId, $categoriesOptIn)
+    {
+        try {
+            $organizationSetting  = $this->organizationSettings($organizationId);
+            $organizationSetting->categories  = $categoriesOptIn;
+            $organizationSetting->save();
+        } catch (\Exception $e) {
+            throw new OrganizationSettingEntryDidNotSave('Categories');
+        }
+        return $organizationSetting;
+    }
+
+    public function updatePayPeriod($organizationId, $payPeriodTypeId)
+    {
+        try {
+            $organizationSetting  = $this->organizationSettings($organizationId);
+            $organizationSetting->pay_period_type_id  = $payPeriodTypeId;
+            $organizationSetting->save();
+        } catch (\Exception $e) {
+            throw new OrganizationSettingEntryDidNotSave('Pay Period');
+        }
+        return $organizationSetting;
     }
 }

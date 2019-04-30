@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Contracts\AdminSettingsContract;
 
 // Model Repository Interfaces
-use App\ModelRepositoryInterfaces\PayPeriodTypeModelRepositoryInterface;
 use App\Models\PayPeriodType;
 use App\Models\TimeCalculatorType;
 use App\User;
@@ -49,20 +48,21 @@ class AdminSettingsController extends Controller
      *      we would need to have a start date AND end date
      * 
      */
-    public function updateCategoriesOptIn(AdminSettingCategoriesRequest $request)
+    public function updateCategories(AdminSettingCategoriesRequest $request)
     {
-        dd($request);
+        $organizationId  = (Auth::user())->organization_id;
+        return $this->adminSettingsUtility->updateCategories($organizationId, $request['categoriesOptIn']);
     }
 
-    public function updatePayPeriod(AdminSettingPayPeriodRequest $request, PayPeriodType $payPeriodType)
+    public function updatePayPeriod(PayPeriodType $payPeriodType, AdminSettingPayPeriodRequest $request)
     {
-        dd($request);
         if ($payPeriodType->name == 'Custom' && !$request->has('endDate'))  return $this->noEndDateResponse();
+
+        $this->authorize('isAdmin', User::class);
 
         $organizationId  = (Auth::user())->organization_id;
 
-        $this->authorize('isAdmin', User::class);
-        dd('Hellro');
+        return $this->adminSettingsUtility->updatePayPeriod($organizationId, $payPeriodType->id);
     }
 
     private function noEndDateResponse()

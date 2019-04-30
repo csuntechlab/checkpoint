@@ -13,4 +13,6 @@ class OrganizationSetting extends Model
     protected $fillable = [
         'organization_id', 'pay_period_type_id', 'time_calculator_type_id', 'categories'
     ];
+
+    protected $hidden = ['organization_id'];
 }

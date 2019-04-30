@@ -5,22 +5,24 @@ namespace App\Exceptions\OrganizationExceptions;
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class OrganizationSettingHasEntryException extends Exception
+class OrganizationSettingEntryDidNotSave extends Exception
 {
-    public function __construct()
+    private $entry;
+    public function __construct($entry)
     {
+        $this->entry = $entry;
         parent::__construct();
     }
 
     /**
      * Render an exception into an HTTP response.
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function render()
     {
-        $message = 'Organization Settings has been created already.';
-        $status_code = 409;
+        $message = 'Organization Setting ' . $this->entry . ' was not saved.';
+        $status_code = 500;
         return BuildResponse::build_response($message, $status_code);
-    } //
+    }
 }
