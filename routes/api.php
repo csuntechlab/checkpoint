@@ -39,4 +39,7 @@ Route::middleware('auth:api')->get('user/profile', 'UserController@profile');
 // SETTINGS
 Route::middleware('auth:api')->post('/update/location/{id?}/', 'LocationController@update');
 
-Route::middleware('auth:api')->post('/organization/settings/{payPeriodTypeId}/{timeCalculatorTypeId}', 'AdminSettingsController@createOrganizationSetting');
+// Organization Settings
+Route::middleware('auth:api')->post('/organization/settings/categories', 'AdminSettingsController@updatePayPeriod');
+Route::middleware('auth:api')->post('/organization/settings/pay/period/{payPeriodTypeId}', 'AdminSettingsController@updatePayPeriod');
+Route::middleware('auth:api')->post('/organization/settings', 'AdminSettingsController@currentOrganizationSettings');

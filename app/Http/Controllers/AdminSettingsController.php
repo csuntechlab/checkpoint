@@ -1,9 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\AdminSettingsRequest;
+// Requests
+use App\Http\Requests\Admin\AdminSettingCategoriesRequest;
+use App\Http\Requests\Admin\AdminSettingPayPeriodRequest;
 
 // Auth
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,7 @@ use App\Models\PayPeriodType;
 use App\Models\TimeCalculatorType;
 use App\User;
 
+
 class AdminSettingsController extends Controller
 {
     protected $adminSettingsUtility;
@@ -27,6 +29,16 @@ class AdminSettingsController extends Controller
     }
 
     /**
+     * Return current state of Organization Settings 
+     * AND return all() Pay Period , time calc(NEXT ITERATION)
+     * */
+    public function currentOrganizationSettings()
+    {
+        $organizationId  = (Auth::user())->organization_id;
+        return $this->adminSettingsUtility->currentOrganizationSettings($organizationId);
+    }
+
+    /**
      * The admin should only at this moment have three settings, 
      * 1. opt_in or out of categories 
      * 2. Pay Period type ... also set initial start and end date
@@ -34,30 +46,23 @@ class AdminSettingsController extends Controller
      * 
      * The only special case:
      *      If organization settings pay_period_type is custom 
-     *      we would need to have a start date and end date
+     *      we would need to have a start date AND end date
      * 
      */
-    public function createOrganizationSetting(
-        AdminSettingsRequest $request,
-        PayPeriodType $payPeriodType,
-        TimeCalculatorType $timeCalculatorType
-    ) {
-        /** if the type is custom then we need a start and an end date */
+    public function updateCategoriesOptIn(AdminSettingCategoriesRequest $request)
+    {
+        dd($request);
+    }
+
+    public function updatePayPeriod(AdminSettingPayPeriodRequest $request, PayPeriodType $payPeriodType)
+    {
+        dd($request);
         if ($payPeriodType->name == 'Custom' && !$request->has('endDate'))  return $this->noEndDateResponse();
 
-        $user = Auth::user();
-        $organizationId = $user->organization_id;
+        $organizationId  = (Auth::user())->organization_id;
 
         $this->authorize('isAdmin', User::class);
-
-
-        // Regardless of payPeriod Type an organization settings must be created
-        return $this->adminSettingsUtility->createOrganizationSetting(
-            $organizationId,
-            $request['categoriesOptIn'],
-            $payPeriodType->id,
-            $timeCalculatorType->id
-        );
+        dd('Hellro');
     }
 
     private function noEndDateResponse()

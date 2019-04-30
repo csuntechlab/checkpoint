@@ -8,8 +8,9 @@ class OrganizationSetting extends Model
 {
     public $incrementing = false;
     public $timestamps = false;
+    protected $primaryKey = 'organization_id';
 
     protected $fillable = [
-        'id', 'organization_id', 'pay_period_type_id', 'time_calculator_type_id', 'categories'
+        'organization_id', 'pay_period_type_id', 'time_calculator_type_id', 'categories'
     ];
 }

@@ -1,12 +1,9 @@
 <?php
 namespace App\Contracts;
 
+use App\Models\OrganizationSetting;
+
 interface AdminSettingsContract
 {
-    public function createOrganizationSetting(
-        $orgId,
-        $categoriesOptIn,
-        $payPeriodTypeId,
-        $timeCalculatorTypeId
-    );
+    public function currentOrganizationSettings($organizationId);
 }

@@ -26,7 +26,7 @@ class CreateOrganizationSettingTable extends Migration
             $table->foreign('time_calculator_type_id')
                 ->references('id')
                 ->on('time_calculator_types');
-            $table->boolean('categories')->nullable();
+            $table->boolean('categories')->default(0);
             $table->primary('organization_id');
         });
     }

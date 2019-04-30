@@ -6,6 +6,11 @@ use App\Contracts\AdminSettingsContract;
 // Interfaces
 use App\ModelRepositoryInterfaces\OrganizationSettingModelRepositoryInterface;
 
+// Models
+use App\Models\OrganizationSetting;
+use App\Models\PayPeriodType;
+use App\Models\TimeCalculatorType;
+
 class AdminSettingsService implements AdminSettingsContract
 {
 
@@ -14,8 +19,11 @@ class AdminSettingsService implements AdminSettingsContract
     {
         $this->organizationSettingsMoRepo = $organizationSettingsModelRepositoryInterface;
     }
-    public function createOrganizationSetting($orgId, $categoriesOptIn, $payPeriodTypeId, $timeCalculatorTypeId)
+    public function currentOrganizationSettings($organizationId)
     {
-        return $this->organizationSettingsMoRepo->create($orgId, $payPeriodTypeId, $timeCalculatorTypeId, $categoriesOptIn);
+        $organizationSetting  = OrganizationSetting::where('organization_id', $organizationId)->first();
+        $payPeriodType = PayPeriodType::all();
+        // $payPeriodType = TimeCalculatorType::all();
+        return compact(['organizationSetting', 'payPeriodType']);
     }
 }
