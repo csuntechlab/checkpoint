@@ -4,8 +4,6 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Exceptions\UserInvitationExceptions\UserInviteCreationFailed;
 use App\Exceptions\UserInvitationExceptions\UserAlreadyRegistered;
 
 use App\Services\UserInvitationService;
@@ -16,6 +14,8 @@ use App\User;
 use App\Models\Organization;
 use App\Models\Role;
 use \App\Models\UserInvitation;
+use App\Http\Controllers\RegisterController;
+use App\Http\Requests\Auth\RegisterRequest;
 
 class UserInvitationServiceTest extends TestCase
 {
@@ -29,7 +29,6 @@ class UserInvitationServiceTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->registerService = new RegisterService();
         $this->service = new UserInvitationService();
         $this->seed('TimeCalculatorTypeSeeder');
         $this->seed('PayPeriodTypeSeeder');
@@ -89,12 +88,18 @@ class UserInvitationServiceTest extends TestCase
 
         $name = $userInvitation->name;
         $email = $userInvitation->email;
-        $password = "tes3t@email.com";
+        $password = "secret";
         $inviteCode = $userInvitation->invite_code;
         $roleId = $userInvitation->role_id;
         $orgId = $userInvitation->organization_id;
 
-        $response = $this->registerService->register($name, $email, $password, $inviteCode);
+        $input['name'] = $name;
+        $input['email'] = $email;
+        $input['password'] = $password;
+        $input['password_confirmation'] = $password;
+        $input['invitation_code'] = $inviteCode;
+
+        $response = $this->json('POST', "/api/register", $input);
 
         $this->expectException('App\Exceptions\UserInvitationExceptions\UserAlreadyRegistered');
         $response = $this->service->inviteNewUser($orgId, $roleId, $name, $email);
