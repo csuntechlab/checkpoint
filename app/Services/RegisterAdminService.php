@@ -18,7 +18,7 @@ use App\Exceptions\OrganizationExceptions\OrganizationCreatedFailed;
 
 //Contracts
 use App\Contracts\RegisterAdminContract;
-
+use App\Models\OrganizationSettings;
 
 class RegisterAdminService implements RegisterAdminContract
 {
@@ -27,8 +27,7 @@ class RegisterAdminService implements RegisterAdminContract
     $email,
     $password,
     $organization_id
-  )
-  {
+  ) {
     try {
       $user = User::create([
         'organization_id' => $organization_id,
@@ -44,7 +43,6 @@ class RegisterAdminService implements RegisterAdminContract
       ]);
 
       $role_name = $user->role()->first();
-
     } catch (\Exception $e) {
       throw new UserCreatedFailed();
     }
@@ -58,14 +56,19 @@ class RegisterAdminService implements RegisterAdminContract
     $logo
   ): Organization
   {
+    $organizationId = UUID::generate();
     try {
       $organization = Organization::create([
-        'id' => UUID::generate(),
+        'id' => $organizationId,
         'organization_name' => $organization_name,
         'address' => $address->__toString(),
         'logo' => $logo
       ]);
+      OrganizationSettings::create([
+        'organization_id' => $organizationId
+      ]);
     } catch (\Exception $e) {
+      dd($e);
       throw new OrganizationCreatedFailed();
     }
 

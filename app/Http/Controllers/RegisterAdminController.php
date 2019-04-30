@@ -41,7 +41,7 @@ class RegisterAdminController extends Controller
       $request['password'],
       $organization->id
     );
-    
+
     $user = $admin[0];
     $role = $admin[2]->name;
 

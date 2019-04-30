@@ -14,21 +14,20 @@ class CreateOrganizationSettingsTable extends Migration
     public function up()
     {
         Schema::create('organization_settings', function (Blueprint $table) {
-            $table->uuid('id')->unique();
             $table->uuid('organization_id')->unique();
             $table->foreign('organization_id')
                 ->references('id')
                 ->on('organizations');
-            $table->uuid('pay_period_type_id');
+            $table->uuid('pay_period_type_id')->nullable();
             $table->foreign('pay_period_type_id')
                 ->references('id')
                 ->on('pay_period_types');
-            $table->uuid('time_calculator_type_id');
+            $table->uuid('time_calculator_type_id')->nullable();
             $table->foreign('time_calculator_type_id')
                 ->references('id')
                 ->on('time_calculator_types');
-            $table->boolean('categories')->default(0);
-            $table->primary(['id', 'organization_id']);
+            $table->boolean('categories')->nullable();
+            $table->primary('organization_id');
         });
     }
 
@@ -39,6 +38,6 @@ class CreateOrganizationSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organization_settings');
+        Schema::dropIfExists(' organization_settings');
     }
 }

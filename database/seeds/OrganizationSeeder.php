@@ -42,7 +42,6 @@ class OrganizationSeeder extends Seeder
             ]);
 
             OrganizationSettings::create([
-                'id' => UUID::generate(),
                 'organization_id' =>  $orgId,
                 'pay_period_type_id' =>  PayPeriodType::all()->random()->id,
                 'time_calculator_type_id' =>  TimeCalculatorType::all()->random()->id,
