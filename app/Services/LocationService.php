@@ -19,7 +19,7 @@ use App\Contracts\LocationContract;
 
 class LocationService implements LocationContract
 {
-    public function updateOrganizationLocation(
+    public function addOrganizationLocation(
         Address $address,
         $longitude,
         $latitude,
@@ -42,7 +42,7 @@ class LocationService implements LocationContract
         return $location;
     }
 
-    public function updateProjectLocation(
+    public function addProjectLocation(
         Address $address,
         $longitude,
         $latitude,

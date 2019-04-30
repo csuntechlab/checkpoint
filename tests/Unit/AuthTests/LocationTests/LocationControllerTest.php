@@ -35,7 +35,7 @@ class LocationControllerTest extends TestCase
     $this->actingAs($this->user);
   }
 
-  public function test_update_organization_location()
+  public function test_add_organization_location()
   {
     $request = [
       'longitude' => 42.09,
@@ -63,17 +63,17 @@ class LocationControllerTest extends TestCase
     $expectedResponse = [];
 
     $this->retriever
-      ->shouldReceive('updateOrganizationLocation')
+      ->shouldReceive('addOrganizationLocation')
       ->with($address, $longitude, $latitude, $radius)
       ->once()
       ->andReturn($expectedResponse);
 
-    $response = $this->retriever->updateOrganizationLocation($address, $longitude, $latitude, $radius);
+    $response = $this->retriever->addOrganizationLocation($address, $longitude, $latitude, $radius);
 
     $this->assertEquals($expectedResponse, $response);
   }
 
-  public function test_update_project_location()
+  public function test_add_project_location()
   {
     $request = [
       'id' => "some_project_id",
@@ -102,17 +102,17 @@ class LocationControllerTest extends TestCase
 
     $expectedResponse = [];
     $this->retriever
-      ->shouldReceive('updateProjectLocation')
+      ->shouldReceive('addProjectLocation')
       ->with($address, $longitude, $latitude, $radius, $id)
       ->once()
       ->andReturn($expectedResponse);
 
-    $response = $this->retriever->updateProjectLocation($address, $longitude, $latitude, $radius, $id);
+    $response = $this->retriever->addProjectLocation($address, $longitude, $latitude, $radius, $id);
 
     $this->assertEquals($expectedResponse, $response);
   }
 
-  public function test_update_location_http_call_for_organization()
+  public function test_add_location_http_call_for_organization()
   {
     $request = [
       'longitude' => 42.09,
@@ -132,7 +132,7 @@ class LocationControllerTest extends TestCase
       'Accept' => 'application/json',
       'Content-Type' => 'application/x-www-form-urlencoded',
       'Authorization' => $token
-    ])->json('POST', '/api/update/location', $request)->getOriginalContent();
+    ])->json('POST', '/api/add/location', $request)->getOriginalContent();
 
     $id = $response->id;
     $response = json_encode($response);

@@ -37,4 +37,4 @@ Route::middleware('auth:api')->post('/invite', 'UserInvitationController@inviteN
 Route::middleware('auth:api')->get('user/profile', 'UserController@profile');
 
 // SETTINGS
-Route::middleware('auth:api')->post('/update/location/{id?}/', 'LocationController@update');
+Route::middleware('auth:api')->post('/add/location/{id?}/', 'LocationController@add');

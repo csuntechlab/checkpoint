@@ -22,7 +22,7 @@ class LocationController extends Controller
         $this->locationUtility = $locationContract;
     }
 
-    public function update(LocationRequest $request, $id = null)
+    public function add(LocationRequest $request, $id = null)
     {
 
         $longitude = $request['longitude'];
@@ -38,9 +38,9 @@ class LocationController extends Controller
         );
 
         if($id == null){
-            return $this->locationUtility->updateOrganizationLocation($address, $longitude, $latitude, $radius);
+            return $this->locationUtility->addOrganizationLocation($address, $longitude, $latitude, $radius);
         }else{
-            return $this->locationUtility->updateProjectLocation($address, $longitude, $latitude, $radius, $id);
+            return $this->locationUtility->addProjectLocation($address, $longitude, $latitude, $radius, $id);
         }
 
     }
