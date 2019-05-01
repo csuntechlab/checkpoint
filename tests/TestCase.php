@@ -7,6 +7,8 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Services\LoginService;
+use App\ModelRepositories\UserModelRepository;
+use App\Models\Organization;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -28,5 +30,18 @@ abstract class TestCase extends BaseTestCase
         $method = $this->get_private_method($classPath, $function);
         $response = $method->invoke($service, $user);
         return $response['token_type'] . " " . $response['access_token'];
+    }
+
+    public function createAdminUser()
+    {
+        $userModelRepository = new UserModelRepository();
+
+        $name = "name";
+        $email = "name";
+        $password = "name";
+        $organizationId = Organization::all()->random()->id;
+        $adminRoleId = 1;
+
+        return $userModelRepository->create($name, $email, $password, $organizationId, $adminRoleId)["user"];
     }
 }

@@ -7,18 +7,17 @@ use Tests\TestCase;
 use Mockery;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-// TB Requests
-use App\Http\Requests\Admin\AdminSettingsRequest;
-
-//Contracts
-use \App\Http\Controllers\AdminSettingsController;
-use \App\Contracts\AdminSettingsContract;
-use App\User;
-use App\ModelRepositories\UserModelRepository;
-use App\Models\Organization;
+// Requests
 use App\Http\Requests\Admin\AdminSettingCategoriesRequest;
-use App\Models\PayPeriodType;
 use App\Http\Requests\Admin\AdminSettingPayPeriodRequest;
+
+// Models
+use App\Models\PayPeriodType;
+//Contracts
+use \App\Contracts\AdminSettingsContract;
+
+// Controllers
+use \App\Http\Controllers\AdminSettingsController;
 
 class AdminSettingsControllerTest extends TestCase
 {
@@ -43,19 +42,7 @@ class AdminSettingsControllerTest extends TestCase
         $this->seed('PayPeriodTypeSeeder');
         $this->seed('OrganizationSeeder');
         $this->seed('RoleSeeder');
-        $this->createUser();
-    }
-    private function createUser()
-    {
-        $userModelRepository = new UserModelRepository();
-
-        $name = "name";
-        $email = "name";
-        $password = "name";
-        $organizationId = Organization::all()->random()->id;
-        $adminRoleId = 1;
-
-        $this->user = $userModelRepository->create($name, $email, $password, $organizationId, $adminRoleId)["user"];
+        $this->user = $this->createAdminUser();
         $this->actingAs($this->user);
     }
 

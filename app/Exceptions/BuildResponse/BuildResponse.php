@@ -18,8 +18,7 @@ class BuildResponse
         string $collection,
         bool $success = true,
         int $status_code = 200
-    ): array
-    {
+    ): array {
         return [
             'collection' => $collection,
             'success' => ($success ? true : false),
@@ -45,7 +44,7 @@ class BuildResponse
         $response = self::build_response_array($collection, $success, $status_code);
         $response['message'] = $message;
 
-        return $response;
+        return response($response, 401);
     }
 
     public static function buildHandlerResponse(
@@ -53,6 +52,6 @@ class BuildResponse
         int $status_code
     ) {
         $response = self::build_response($message, $status_code);
-        return response($response);
+        return response($response, 401);
     }
 }
