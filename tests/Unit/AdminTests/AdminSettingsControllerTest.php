@@ -14,13 +14,20 @@ use App\Http\Requests\Admin\AdminSettingsRequest;
 use \App\Http\Controllers\AdminSettingsController;
 use \App\Contracts\AdminSettingsContract;
 use App\User;
+use App\ModelRepositories\UserModelRepository;
+use App\Models\Organization;
+use App\Http\Requests\Admin\AdminSettingCategoriesRequest;
+use App\Models\PayPeriodType;
+use App\Http\Requests\Admin\AdminSettingPayPeriodRequest;
 
 class AdminSettingsControllerTest extends TestCase
 {
     use DatabaseMigrations;
     private $controller;
     private $utility;
+    private $userModelRepository;
     private $repository;
+    private $user = null;
 
     private $classPath = '\App\Http\Controllers\AdminSettingsController';
 
@@ -29,17 +36,171 @@ class AdminSettingsControllerTest extends TestCase
         parent::setUp();
         $this->utility = Mockery::mock(AdminSettingsContract::class);
         $this->controller = new AdminSettingsController($this->utility);
+
         $this->seed('PassportSeeder');
         $this->seed('PassportSeeder');
         $this->seed('TimeCalculatorTypeSeeder');
         $this->seed('PayPeriodTypeSeeder');
         $this->seed('OrganizationSeeder');
         $this->seed('RoleSeeder');
+        $this->createUser();
+    }
+    private function createUser()
+    {
+        $userModelRepository = new UserModelRepository();
+
+        $name = "name";
+        $email = "name";
+        $password = "name";
+        $organizationId = Organization::all()->random()->id;
+        $adminRoleId = 1;
+
+        $this->user = $userModelRepository->create($name, $email, $password, $organizationId, $adminRoleId)["user"];
+        $this->actingAs($this->user);
     }
 
-    public function test_mock_admin_settings_controller_test()
+    public function test_mock_admin_settings_currentOrganizationSettings_test()
     {
-        // User::create([]);
-        $this->assertTrue(true);
+        $expectedResponse = [
+            "organizationSetting" => [
+                "pay_period_type_id" => "id",
+                "time_calculator_type_id" => null,
+                "categories" => 1
+            ],
+            "payPeriodType" => [
+                [
+                    "id" => "id",
+                    "name" => "Weekly"
+                ],
+                [
+                    "id" => "id",
+                    "name" => "Monthly"
+                ],
+                [
+                    "id" => "id",
+                    "name" => "Yearly"
+                ],
+                [
+                    "id" => "id",
+                    "name" => "Custom"
+                ]
+            ],
+            "completed" => true
+        ];
+
+        $this->utility
+            ->shouldReceive('currentOrganizationSettings')
+            ->once()
+            ->andReturn($expectedResponse);
+
+        $response = $this->controller->currentOrganizationSettings();
+        $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function test_mock_admin_settings_updateCategories_test()
+    {
+        $input = ['categoriesOptIn' => 1];
+
+        $request = new AdminSettingCategoriesRequest($input);
+
+        $expectedResponse = [
+            "pay_period_type_id" => "id",
+            "time_calculator_type_id" => null,
+            "categories" => 1
+        ];
+
+        $this->utility
+            ->shouldReceive('updateCategories')
+            ->with($this->user->organization_id, $request['categoriesOptIn'])
+            ->once()
+            ->andReturn($expectedResponse);
+
+        $response = $this->controller->updateCategories($request);
+        $this->assertEquals($expectedResponse, $response);
+    }
+
+    private function getPayPeriodByName($name)
+    {
+        return PayPeriodType::where('name', $name)->first();
+    }
+
+    public function test_mock_admin_settings_update_payPeriod()
+    {
+        $startDate = '2019-04-07';
+        $endDate = '2019-04-30';
+
+        $payPeriodType = $this->getPayPeriodByName("Monthly");
+
+        // $input = ['startDate' => $startDate, 'endDate' => $endDate];
+        $input = ['startDate' => $startDate];
+
+        $request = new AdminSettingPayPeriodRequest($input);
+
+        $expectedResponse = [
+            "pay_period_type_id" => $payPeriodType->id,
+            "time_calculator_type_id" => null,
+            "categories" => 1
+        ];
+
+        $this->utility
+            ->shouldReceive('updatePayPeriod')
+            ->with($this->user->organization_id, $payPeriodType->id)
+            ->once()
+            ->andReturn($expectedResponse);
+
+        $response = $this->controller->updatePayPeriod($payPeriodType, $request);
+        $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function test_mock_admin_settings_update_payPeriod_custom_fails()
+    {
+        $startDate = '2019-04-07';
+        $payPeriodType = $this->getPayPeriodByName("Custom");
+        $input = ['startDate' => $startDate];
+
+        $request = new AdminSettingPayPeriodRequest($input);
+
+        $expectedResponse = [
+            "message" => "Custom type requires an End Date",
+            "errors" => [
+                "endDate" => [
+                    "End date is required!"
+                ]
+            ]
+        ];
+
+        $this->utility
+            ->shouldReceive('updatePayPeriod')
+            ->with($this->user->organization_id, $payPeriodType->id)
+            ->andReturn($expectedResponse);
+
+        $response = $this->controller->updatePayPeriod($payPeriodType, $request);
+
+        $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function test_mock_admin_settings_update_payPeriod_custom_passes()
+    {
+        $startDate = '2019-04-07';
+        $endDate = '2019-04-30';
+        $payPeriodType = $this->getPayPeriodByName("Custom");
+        $input = ['startDate' => $startDate, 'endDate' => $endDate];
+
+        $request = new AdminSettingPayPeriodRequest($input);
+
+        $expectedResponse = [
+            "pay_period_type_id" => $payPeriodType->id,
+            "time_calculator_type_id" => null,
+            "categories" => 1
+        ];
+
+        $this->utility
+            ->shouldReceive('updatePayPeriod')
+            ->with($this->user->organization_id, $payPeriodType->id)
+            ->andReturn($expectedResponse);
+
+        $response = $this->controller->updatePayPeriod($payPeriodType, $request);
+
+        $this->assertEquals($expectedResponse, $response);
     }
 }

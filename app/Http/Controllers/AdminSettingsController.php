@@ -33,6 +33,7 @@ class AdminSettingsController extends Controller
      * */
     public function currentOrganizationSettings()
     {
+        $this->authorize('isAdmin', User::class);
         $organizationId  = (Auth::user())->organization_id;
         return $this->adminSettingsUtility->currentOrganizationSettings($organizationId);
     }
@@ -50,18 +51,17 @@ class AdminSettingsController extends Controller
      */
     public function updateCategories(AdminSettingCategoriesRequest $request)
     {
+        $this->authorize('isAdmin', User::class);
         $organizationId  = (Auth::user())->organization_id;
         return $this->adminSettingsUtility->updateCategories($organizationId, $request['categoriesOptIn']);
     }
 
     public function updatePayPeriod(PayPeriodType $payPeriodType, AdminSettingPayPeriodRequest $request)
     {
+        $this->authorize('isAdmin', User::class);
         if ($payPeriodType->name == 'Custom' && !$request->has('endDate'))  return $this->noEndDateResponse();
 
-        $this->authorize('isAdmin', User::class);
-
         $organizationId  = (Auth::user())->organization_id;
-
         return $this->adminSettingsUtility->updatePayPeriod($organizationId, $payPeriodType->id);
     }
 
