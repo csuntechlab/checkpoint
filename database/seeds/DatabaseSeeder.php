@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LocationSeeder::class);
         $this->call(UserInvitationsTableSeeder::class);
         $this->call(TimeSheetSeeder::class);
+        $this->call(TimeLogSeeder::class);
     }
 }
