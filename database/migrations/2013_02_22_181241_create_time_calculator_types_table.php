@@ -16,7 +16,6 @@ class CreateTimeCalculatorTypesTable extends Migration
         Schema::create('time_calculator_types', function (Blueprint $table) {
             $table->uuid('id')->unique();
             $table->string('name')->unique();
-            $table->string('display_name');
             $table->primary(['id', 'name']);
         });
     }

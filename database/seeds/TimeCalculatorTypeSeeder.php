@@ -14,22 +14,19 @@ class TimeCalculatorTypeSeeder extends Seeder
      */
     public function run()
     {
-        $name = 'meta+lab';
-        $display_name = 'META+LAB';
-        $this->create_type($name, $display_name);
+        $name = 'META+LAB';
+        $this->createType($name);
 
-        $name = 'build_poder';
-        $display_name = 'Builde Poder';
-        $this->create_type($name, $display_name);
+        $name = 'Build Poder';
+        $this->createType($name);
     }
 
-    private function create_type($name, $display)
+    private function createType($name)
     {
         $id = UUID::generate();
         TimeCalculatorType::create([
             'id' => $id,
             'name' => $name,
-            'display_name' => $display
         ]);
     }
 }

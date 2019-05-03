@@ -107,7 +107,7 @@ class RegisterAdminControllerTest extends TestCase
         ]
       ]
     ];
-    
+
     $expectedResponse = json_encode($expectedResponse);
 
     $this->assertEquals($response, $expectedResponse);
@@ -135,15 +135,17 @@ class RegisterAdminControllerTest extends TestCase
     $response = $response->getOriginalContent();
     $response = json_encode($response);
     $expectedResponse = [
-      'organization' => [
-        'organization_name' => "META+LAB",
-        'logo' => "logo.jpg"
+      "user" => [
+        "name" => "John Doe",
+        "email" => "JohnDoe@email.com",
       ],
-      'user' => [
-        'name' => "John Doe",
-        'email' => "JohnDoe@email.com",
+      "role" => [
+        "name" => "Admin"
       ],
-      'role' => "Admin"
+      "organization" => [
+        "organization_name" => "META+LAB",
+        "logo" => "logo.jpg",
+      ],
     ];
     $expectedResponse = json_encode($expectedResponse);
     $this->assertEquals($response, $expectedResponse);
