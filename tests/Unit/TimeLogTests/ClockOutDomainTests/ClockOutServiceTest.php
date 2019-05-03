@@ -28,7 +28,7 @@ class ClockOutServiceTest extends TestCase
     {
         parent::setUp();
         $this->clockOutLogicUtility = Mockery::mock(TImeLogClockOutModelRepositoryInterface::class);
-        $this->service = new ClockOutService($this->clockOutLogicUtility);
+        $this->service = new ClockOutService();
         $this->seed('PassportSeeder');
         $this->seed('TimeCalculatorTypeSeeder');
         $this->seed('PayPeriodTypeSeeder');
@@ -59,8 +59,6 @@ class ClockOutServiceTest extends TestCase
 
         $totalHours = 20.19;
 
-        $logUuid = $timeLog->id;
-
         $expectedResponse =  [
             "message_success" => "Clock out was successful",
             "time_sheet_id" => "id",
@@ -69,12 +67,11 @@ class ClockOutServiceTest extends TestCase
             "time" => $time,
         ];
 
-        $this->clockOutLogicUtility
-            ->shouldReceive('getTimeLog')
-            ->with($this->user->id, $logUuid)
-            ->once()->andReturn($timeLog);
+        // $this->clockOutLogicUtility
+        //     ->with($this->user->id, $timeLog)
+        //     ->andReturn($timeLog);
 
-        $response = $this->service->clockOut($date, $time, $logUuid);
+        $response = $this->service->clockOut($date, $time, $timeLog);
 
         $this->assertArrayHasKey('message_success', $response);
         $this->assertArrayHasKey('time_sheet_id', $response);

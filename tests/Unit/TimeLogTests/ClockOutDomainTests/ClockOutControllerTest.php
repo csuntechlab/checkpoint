@@ -16,7 +16,7 @@ use \App\User;
 //Contracts
 use \App\Http\Controllers\ClockOutController;
 use \App\Contracts\ClockOutContract;
-use App\Http\Requests\ClockOutRequest;
+use App\Http\Requests\ClockInOutRequest;
 
 class ClockOutControllerTest extends TestCase
 {
@@ -45,7 +45,7 @@ class ClockOutControllerTest extends TestCase
             "logId" => $logId
         ];
 
-        $request = new ClockOutRequest($input);
+        $request = new ClockInOutRequest($input);
 
         $expectedResponse =  [
             "message_success" => "Clock out was successful",
