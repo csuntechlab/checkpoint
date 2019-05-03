@@ -1,11 +1,9 @@
 <?php
 namespace App\Contracts;
 
-use App\Models\OrganizationSetting;
-
 interface AdminSettingsContract
 {
-    public function currentOrganizationSettings($organizationId);
+    public function getOrganizationSettings($organizationId);
 
     public function updateCategories($organizationId, $categoriesOptIn);
 

@@ -31,11 +31,11 @@ class AdminSettingsController extends Controller
      * Return current state of Organization Settings 
      * AND return all() Pay Period , time calc(NEXT ITERATION)
      * */
-    public function currentOrganizationSettings()
+    public function getOrganizationSettings()
     {
         $this->authorize('isAdmin', User::class);
         $organizationId  = (Auth::user())->organization_id;
-        return $this->adminSettingsUtility->currentOrganizationSettings($organizationId);
+        return $this->adminSettingsUtility->getOrganizationSettings($organizationId);
     }
 
     /**

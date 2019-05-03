@@ -19,7 +19,7 @@ class AdminSettingsService implements AdminSettingsContract
         return OrganizationSetting::where('organization_id', $organizationId)->firstOrFail();
     }
 
-    public function currentOrganizationSettings($organizationId)
+    public function getOrganizationSettings($organizationId)
     {
         $organizationSetting  = $this->organizationSettings($organizationId);
         $payPeriodType = PayPeriodType::all();

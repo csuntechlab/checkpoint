@@ -29,9 +29,9 @@ class AdminSettingsServiceTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function test_currentOrganizationSettings_service()
+    public function test_getOrganizationSettings_service()
     {
-        $response = $this->service->currentOrganizationSettings($this->user->organization_id);
+        $response = $this->service->getOrganizationSettings($this->user->organization_id);
         $this->assertArrayHasKey('organizationSetting', $response);
         $this->assertArrayHasKey('payPeriodType', $response);
         $this->assertArrayHasKey('completed', $response);

@@ -42,4 +42,4 @@ Route::middleware('auth:api')->post('/update/location/{id?}/', 'LocationControll
 // Organization Settings
 Route::middleware('auth:api')->post('/organization/settings/categories', 'AdminSettingsController@updateCategories');
 Route::middleware('auth:api')->post('/organization/settings/pay/period/{payPeriodTypeId}', 'AdminSettingsController@updatePayPeriod');
-Route::middleware('auth:api')->post('/organization/settings', 'AdminSettingsController@currentOrganizationSettings');
+Route::middleware('auth:api')->post('/organization/settings', 'AdminSettingsController@getOrganizationSettings');
