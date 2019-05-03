@@ -25,7 +25,7 @@ class LocationService implements LocationContract
         $latitude,
         $radius
     ) {
-        try{
+        try {
             $user = Auth::User();
 
             $location = Location::create([
@@ -49,7 +49,7 @@ class LocationService implements LocationContract
         $radius,
         $id
     ) {
-        try{
+        try {
             $user = Auth::User();
 
             $location = Location::create([

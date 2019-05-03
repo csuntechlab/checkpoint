@@ -8,8 +8,7 @@ use App\Models\Organization;
 use App\DomainValueObjects\UUIDGenerator\UUID;
 
 $factory->define(Program::class, function (Faker $faker) {
-    $uuid = new UUID('location');
-    $id = $uuid->toString;
+    $uuid = UUID::generate();
     $organizationId = Organization::first();
     $name = "backend";
     return [
