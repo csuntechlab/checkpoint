@@ -40,6 +40,73 @@ class AdminSettingsServiceTest extends TestCase
         $completed = $response['completed'];
         $this->assertInstanceOf(OrganizationSetting::class, $organizationSetting);
         $this->assertInternalType('boolean', $completed);
-        // dd($response);
+        $this->assertCount(4, $payPeriodType);
+    }
+
+    private function updateCategories($categoriesOpt)
+    {
+        return $this->service->updateCategories($this->user->organization_id, $categoriesOpt);
+    }
+
+    private function categoriesAssertions($categoriesOpt)
+    {
+        $response = $this->updateCategories($categoriesOpt);
+        $this->assertArrayHasKey('organization_id', $response);
+        $this->assertArrayHasKey('pay_period_type_id', $response);
+        $this->assertArrayHasKey('time_calculator_type_id', $response);
+        $this->assertArrayHasKey('categories', $response);
+        $this->assertEquals($categoriesOpt, $response['categories']);
+    }
+
+
+    public function test_updateCategories_optIn()
+    {
+        $categoriesOptIn = 1;
+        $this->categoriesAssertions($categoriesOptIn);
+    }
+
+    public function test_updateCategories_optOut()
+    {
+        $categoriesOptOut = 0;
+        $this->categoriesAssertions($categoriesOptOut);
+    }
+
+    private function updatePayPeriod($name)
+    {
+        $payPeriodType = PayPeriodType::where('name', $name)->first();
+        return $this->service->updatePayPeriod($this->user->organization_id, $payPeriodType->id);
+    }
+
+    private function assertsForUpdatePayPeriod($response)
+    {
+        $this->assertArrayHasKey('organization_id', $response);
+        $this->assertArrayHasKey('pay_period_type_id', $response);
+        $this->assertArrayHasKey('time_calculator_type_id', $response);
+        $this->assertArrayHasKey('categories', $response);
+        $this->assertNotNull($response['pay_period_type_id']);
+    }
+
+    public function test_updatePayPeriod_Weekly()
+    {
+        $response = $this->updatePayPeriod('Weekly');
+        $this->assertsForUpdatePayPeriod($response);
+    }
+
+    public function test_updatePayPeriod_Monthly()
+    {
+        $response = $this->updatePayPeriod('Monthly');
+        $this->assertsForUpdatePayPeriod($response);
+    }
+
+    public function test_updatePayPeriod_Yearly()
+    {
+        $response = $this->updatePayPeriod('Yearly');
+        $this->assertsForUpdatePayPeriod($response);
+    }
+
+    public function test_updatePayPeriod_Custom()
+    {
+        $response = $this->updatePayPeriod('Custom');
+        $this->assertsForUpdatePayPeriod($response);
     }
 }
