@@ -16,7 +16,6 @@ class CreatePayPeriodTypesTable extends Migration
         Schema::create('pay_period_types', function (Blueprint $table) {
             $table->uuid('id')->unique();
             $table->string('name')->unique();
-            $table->string('display_name');
             $table->primary(['id', 'name']);
         });
     }

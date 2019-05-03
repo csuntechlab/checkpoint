@@ -42,8 +42,6 @@ class UserInvitationService implements UserInvitationContract
                 'invite_code' => $token
             ]);
         } catch (\Exception $e) {
-
-            dd($e);
             throw new UserInviteCreationFailed();
         }
         return [
