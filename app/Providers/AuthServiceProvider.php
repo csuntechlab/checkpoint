@@ -6,10 +6,8 @@ use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
-
 // Models
 use App\User;
-
 
 // Policies
 use App\Policies\UserPolicy;

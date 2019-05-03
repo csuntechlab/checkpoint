@@ -1,15 +1,20 @@
 <?php
-
 namespace App\Http\Controllers;
+
+// Auth
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Controller;
 
 // Request
 use App\Http\Requests\ClockInOutRequest;
 
+// Models
+use App\User;
+use App\Models\TimeLog;
+
 // Contract
 use App\Contracts\ClockOutContract;
-use App\Models\TimeLog;
 
 class ClockOutController extends Controller
 {
@@ -22,7 +27,7 @@ class ClockOutController extends Controller
 
     public function clockOut(ClockInOutRequest $request, TimeLog $timeLog): array
     {
-        dd($timeLog);
-        return $this->clockOutUtility->clockOut($request['date'], $request['time'], $request['logId']);
+        (Auth::user())->authorizeTimeLog($timeLog);
+        return $this->clockOutUtility->clockOut($request['date'], $request['time'], $timeLog);
     }
 }
