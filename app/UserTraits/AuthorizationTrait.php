@@ -35,7 +35,6 @@ trait AuthorizationTrait
         return true;
     }
 
-    // public function update(User $user, TimeLog $timeLog)
     public function authorizeTimeLog(TimeLog $timeLog)
     {
         if (
