@@ -7,6 +7,7 @@ use App\DomainValueObjects\Location\Address;
 
 // Models
 use App\User;
+use App\Models\Project;
 use App\Models\Location;
 use App\Models\Organization;
 
@@ -25,7 +26,7 @@ class LocationService implements LocationContract
         $latitude,
         $radius
     ) {
-        try{
+        try {
             $user = Auth::User();
 
             $location = Location::create([
@@ -47,13 +48,13 @@ class LocationService implements LocationContract
         $longitude,
         $latitude,
         $radius,
-        $id
+        Project $project
     ) {
-        try{
+        try {
             $user = Auth::User();
 
             $location = Location::create([
-                'id' => $id,
+                'id' => $project->id,
                 'address' => $address->__toString(),
                 'lat' => $latitude,
                 'lng' => $longitude,

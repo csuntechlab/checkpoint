@@ -33,6 +33,10 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('timeLogId', function ($value) {
             return \App\Models\TimeLog::where('id', $value)->firstOrFail();
         });
+
+        Route::bind('projectId', function ($value) {
+            return \App\Models\Project::where('id', $value)->firstOrFail();
+        });
     }
 
     /**

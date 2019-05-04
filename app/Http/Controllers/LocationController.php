@@ -8,6 +8,7 @@ use App\Http\Requests\LocationRequest;
 
 use App\Http\Controllers\Controller;
 use App\Contracts\LocationContract;
+use App\Models\Project;
 
 class LocationController extends Controller
 {
@@ -19,9 +20,8 @@ class LocationController extends Controller
     }
 
     // We should type hint with Project 
-    public function update(LocationRequest $request, $id = null)
+    public function update(LocationRequest $request, Project $project = null)
     {
-
         $longitude = $request['longitude'];
         $latitude = $request['latitude'];
         $radius = $request['radius'];
@@ -34,10 +34,10 @@ class LocationController extends Controller
             $request['zip']
         );
 
-        if ($id == null) {
+        if ($project == null) {
             return $this->locationUtility->updateOrganizationLocation($address, $longitude, $latitude, $radius);
         } else {
-            return $this->locationUtility->updateProjectLocation($address, $longitude, $latitude, $radius, $id);
+            return $this->locationUtility->updateProjectLocation($address, $longitude, $latitude, $radius, $project);
         }
     }
 }

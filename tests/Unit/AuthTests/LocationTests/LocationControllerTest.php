@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Http\Controllers\LocationController;
 use App\Contracts\LocationContract;
+use App\Models\Project;
 
 class LocationControllerTest extends TestCase
 {
@@ -31,6 +32,7 @@ class LocationControllerTest extends TestCase
     $this->seed('OrganizationSeeder');
     $this->seed('RoleSeeder');
     $this->seed('UsersTableSeeder');
+    $this->seed('ProjectSeeder'); // seeds also UserProject table
     $this->user = \App\User::where('id', 1)->first();
     $this->actingAs($this->user);
   }
@@ -90,7 +92,7 @@ class LocationControllerTest extends TestCase
     $latitude = $request['latitude'];
     $longitude = $request['longitude'];
     $radius = $request['radius'];
-    $id = $request['id'];
+    $project = Project::where('organization_id', $this->user->organization_id)->first();
 
     $address = new Address(
       $request['address_number'],
@@ -103,11 +105,11 @@ class LocationControllerTest extends TestCase
     $expectedResponse = [];
     $this->retriever
       ->shouldReceive('updateProjectLocation')
-      ->with($address, $longitude, $latitude, $radius, $id)
+      ->with($address, $longitude, $latitude, $radius, $project)
       ->once()
       ->andReturn($expectedResponse);
 
-    $response = $this->retriever->updateProjectLocation($address, $longitude, $latitude, $radius, $id);
+    $response = $this->retriever->updateProjectLocation($address, $longitude, $latitude, $radius, $project);
 
     $this->assertEquals($expectedResponse, $response);
   }
