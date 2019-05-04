@@ -14,6 +14,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Http\Controllers\LocationController;
 use App\Contracts\LocationContract;
 use App\Models\Project;
+use App\Models\UserRole;
+use App\DomainValueObjects\UUIDGenerator\UUID;
 
 class LocationControllerTest extends TestCase
 {
@@ -34,6 +36,7 @@ class LocationControllerTest extends TestCase
     $this->seed('UsersTableSeeder');
     $this->seed('ProjectSeeder'); // seeds also UserProject table
     $this->user = \App\User::where('id', 1)->first();
+    UserRole::create(['id' => UUID::generate(), 'user_id' => $this->user->id, 'role_id' => 1]);
     $this->actingAs($this->user);
   }
 
@@ -135,6 +138,7 @@ class LocationControllerTest extends TestCase
       'Content-Type' => 'application/x-www-form-urlencoded',
       'Authorization' => $token
     ])->json('POST', '/api/update/location', $request)->getOriginalContent();
+
 
     $id = $response->id;
     $response = json_encode($response);
