@@ -31,8 +31,7 @@ class TimeSheetRequest extends FormRequest
     public function messages()
     {
         return [
-            'date' => "date is required!"
+            'date' => array('required', 'Date'),
         ];
     }
-
 }
