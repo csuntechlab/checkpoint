@@ -10,6 +10,7 @@ use App\Models\TimeLog;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Exceptions\AuthExceptions\UnauthorizedUser;
 use App\Models\Project;
+use App\Models\Organization;
 
 trait AuthorizationTrait
 {
@@ -38,10 +39,11 @@ trait AuthorizationTrait
 
     public function authorizeTimeLog(TimeLog $timeLog)
     {
-        if (
-            $this->id !== $timeLog->user_id
-            && $this->organization_id !== $timeLog->organization_id
-        ) throw new AuthorizationException();
+        $inCorrectUser = ($this->id !== $timeLog->user_id);
+        $inCorrectOrganization = ($this->organization_id !== $timeLog->organization_id);
+
+        if ($inCorrectUser || $inCorrectOrganization)  throw new AuthorizationException();
+
         return true;
     }
 

@@ -7,6 +7,6 @@ use App\Models\Project;
 
 interface LocationContract
 {
-    public function updateOrganizationLocation(Address $address, $longitude, $latitude, $radius);
+    public function updateOrganizationLocation(Address $address, $longitude, $latitude, $radius, $organizationId);
     public function updateProjectLocation(Address $address, $longitude, $latitude, $radius, Project $project);
 }

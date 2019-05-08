@@ -6,14 +6,8 @@ namespace App\Services;
 use App\DomainValueObjects\Location\Address;
 
 // Models
-use App\User;
 use App\Models\Project;
 use App\Models\Location;
-use App\Models\Organization;
-
-
-// Auth
-use Illuminate\Support\Facades\Auth;
 
 // Contracts
 use App\Contracts\LocationContract;
@@ -24,13 +18,12 @@ class LocationService implements LocationContract
         Address $address,
         $longitude,
         $latitude,
-        $radius
+        $radius,
+        $organizationId
     ) {
         try {
-            $user = Auth::User();
-
             $location = Location::create([
-                'id' => $user->organization_id,
+                'id' => $organizationId,
                 'address' => $address->__toString(),
                 'lat' => $latitude,
                 'lng' => $longitude,
@@ -51,8 +44,6 @@ class LocationService implements LocationContract
         Project $project
     ) {
         try {
-            $user = Auth::User();
-
             $location = Location::create([
                 'id' => $project->id,
                 'address' => $address->__toString(),
