@@ -217,6 +217,9 @@ return [
         /** User Service Provider */
         App\Providers\ApiProviders\User\UserServiceProvider::class,
 
+        /** Program Service Provider */
+        App\Providers\ApiProviders\ProgramServiceProvider::class,
+
         /*********** Admin Service Providers **************/
 
         /** AdminSettings Service Provider */

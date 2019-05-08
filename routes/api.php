@@ -43,3 +43,9 @@ Route::middleware('auth:api')->post('/update/location/{id?}/', 'LocationControll
 Route::middleware('auth:api')->post('/organization/settings/categories', 'AdminSettingsController@updateCategories');
 Route::middleware('auth:api')->post('/organization/settings/pay/period/{payPeriodTypeId}', 'AdminSettingsController@updatePayPeriod');
 Route::middleware('auth:api')->post('/organization/settings', 'AdminSettingsController@getOrganizationSettings');
+
+// PROGRAM
+Route::middleware('auth:api')->post('/program/create', 'ProgramController@create');
+Route::middleware('auth:api')->get('/program/all', 'ProgramController@all');
+Route::middleware('auth:api')->post('/program/update/{programId}', 'ProgramController@update/{programId}');
+Route::middleware('auth:api')->post('/program/delete/{programId}', 'ProgramController@delete/{programId}');

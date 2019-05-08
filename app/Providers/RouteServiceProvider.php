@@ -31,6 +31,11 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('payPeriodTypeId', function ($value) {
             return \App\Models\PayPeriodType::where('id', $value)->firstOrFail();
         });
+
+
+        Route::bind('programId', function ($value) {
+            return \App\Models\Project::where('id', $value)->firstOrFail();
+        });
     }
 
     /**
