@@ -27,15 +27,20 @@ class AdminSettingsController extends Controller
         $this->adminSettingsUtility = $adminSettingsContract;
     }
 
+    private function authorizeUser()
+    {
+        $user = Auth::user();
+        $user->isAdmin();
+        return $user->organization_id;
+    }
+
     /**
      * Return current state of Organization Settings 
      * AND return all() Pay Period , time calc(NEXT ITERATION)
      * */
     public function getOrganizationSettings()
     {
-        $user = Auth::user();
-        $user->isAdmin();
-        $organizationId  = $user->organization_id;
+        $organizationId = $this->authorizeUser();
         return $this->adminSettingsUtility->getOrganizationSettings($organizationId);
     }
 

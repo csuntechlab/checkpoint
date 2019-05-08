@@ -22,6 +22,7 @@ class LocationControllerTest extends TestCase
   use DatabaseMigrations;
   private $controller;
   private $retriever;
+  private $adminUser;
 
   public function setUp()
   {
@@ -35,9 +36,9 @@ class LocationControllerTest extends TestCase
     $this->seed('RoleSeeder');
     $this->seed('UsersTableSeeder');
     $this->seed('ProjectSeeder'); // seeds also UserProject table
-    $this->user = \App\User::where('id', 1)->first();
-    UserRole::create(['id' => UUID::generate(), 'user_id' => $this->user->id, 'role_id' => 1]);
-    $this->actingAs($this->user);
+    $this->adminUser = \App\User::where('id', 1)->first();
+    UserRole::create(['id' => UUID::generate(), 'user_id' => $this->adminUser->id, 'role_id' => 1]);
+    $this->actingAs($this->adminUser);
   }
 
   public function test_update_organization_location()
@@ -57,6 +58,8 @@ class LocationControllerTest extends TestCase
     $longitude = $request['longitude'];
     $radius = $request['radius'];
 
+    $organizationId = $this->adminUser->organization_id;
+
     $address = new Address(
       $request['address_number'],
       $request['street'],
@@ -69,11 +72,11 @@ class LocationControllerTest extends TestCase
 
     $this->retriever
       ->shouldReceive('updateOrganizationLocation')
-      ->with($address, $longitude, $latitude, $radius)
+      ->with($address, $longitude, $latitude, $radius, $organizationId)
       ->once()
       ->andReturn($expectedResponse);
 
-    $response = $this->retriever->updateOrganizationLocation($address, $longitude, $latitude, $radius);
+    $response = $this->retriever->updateOrganizationLocation($address, $longitude, $latitude, $radius, $organizationId);
 
     $this->assertEquals($expectedResponse, $response);
   }
@@ -95,7 +98,7 @@ class LocationControllerTest extends TestCase
     $latitude = $request['latitude'];
     $longitude = $request['longitude'];
     $radius = $request['radius'];
-    $project = Project::where('organization_id', $this->user->organization_id)->first();
+    $project = Project::where('organization_id', $this->adminUser->organization_id)->first();
 
     $address = new Address(
       $request['address_number'],
@@ -130,7 +133,7 @@ class LocationControllerTest extends TestCase
       'zip' => "91324",
     ];
 
-    $token = $this->get_auth_token($this->user);
+    $token = $this->get_auth_token($this->adminUser);
 
 
     $response = $this->withHeaders([
