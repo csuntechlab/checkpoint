@@ -27,4 +27,9 @@ class TimeSheetController extends Controller
 
         return $this->timeSheetUtility->getTimeSheetByDate($date);
     }
+
+    public function getCurrentTimeSheet(Request $request)
+    {
+        return $this->timeSheetUtility->getCurrentTimeSheet();
+    }
 }
