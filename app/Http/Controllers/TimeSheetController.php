@@ -20,11 +20,11 @@ class TimeSheetController extends Controller
         $this->timeSheetUtility = $timeSheetContract;
     }
 
-    public function getCurrentTimeSheet(TimeSheetRequest $request)
+    public function getTimeSheetByDate(Request $request)
     {
 
-        $date = Carbon::parse($request['date']);
+        $date = Carbon::parse($request->date);
 
-        return $this->timeSheetUtility->getCurrentTimeSheet($date);
+        return $this->timeSheetUtility->getTimeSheetByDate($date);
     }
 }

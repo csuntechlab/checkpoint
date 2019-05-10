@@ -38,7 +38,7 @@ class TimeSheetControllerTest extends TestCase
     $this->actingAs($this->user);
   }
   
-  public function test_getCurrentTimeSheet()
+  public function test_getTimeSheetByDate()
   {
     $request = [
         'date' => Carbon::now()
@@ -49,21 +49,30 @@ class TimeSheetControllerTest extends TestCase
     $expectedResponse = [];
 
     $this->retriever
-        ->shouldReceive('getCurrentTimeSheet')
+        ->shouldReceive('getTimeSheetByDate')
         ->with($date)
         ->Once()
         ->andReturn($expectedResponse);
 
-    $response = $this->retriever->getCurrentTimeSheet($date);
+    $response = $this->retriever->getTimeSheetByDate($date);
 
     $this->assertEquals($expectedResponse, $response);
   }
 
-  public function test_getCurrentTimeSheet_http_call()
+  public function test_getTimeSheetByDate_http_call()
   {
       $request = [
           'date' => Carbon::now()->toDateTimeString()
       ];
+
+      $date = Carbon::now();
+
+      $month = $date->month;
+      $day = $date->day;
+      $year = $date->year;
+
+      $date = $year.'-'.$month.'-'.$year;
+      $api_route = '/api/timesheet?='.$date;
 
       $token = $this->get_auth_token($this->user);
 
@@ -71,7 +80,7 @@ class TimeSheetControllerTest extends TestCase
           'Accept' => 'application/json',
           'Content-Type' => 'application/x-ww-form-urlencoded',
           'Authorization' => $token
-      ])->json('GET', '/api/current/timesheet', $request);
+      ])->json('GET', $api_route, $request);
 
       $response = $response->getOriginalContent();
 

@@ -17,12 +17,12 @@ use App\Contracts\TimeSheetContract;
 
 class TimeSheetService implements TimeSheetContract
 {
-    public function getCurrentTimeSheet($date)
+    public function getTimeSheetByDate($date)
     {
         try{
             $id = Auth::User()->organization_id;
 
-            $timeSheet = TimeSheet::getCurrentTimeSheet($date, $id)->firstOrFail();
+            $timeSheet = TimeSheet::getTimeSheet($date, $id)->firstOrFail();
         } catch (\Exception $e) {
             throw new GetTimeSheetFailed();
         }
