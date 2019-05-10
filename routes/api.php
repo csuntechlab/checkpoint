@@ -38,3 +38,8 @@ Route::middleware('auth:api')->get('user/profile', 'UserController@profile');
 
 // SETTINGS
 Route::middleware('auth:api')->post('/add/location/{id?}/', 'LocationController@add');
+
+// Organization Settings
+Route::middleware('auth:api')->post('/organization/settings/categories', 'AdminSettingsController@updateCategories');
+Route::middleware('auth:api')->post('/organization/settings/pay/period/{payPeriodTypeId}', 'AdminSettingsController@updatePayPeriod');
+Route::middleware('auth:api')->post('/organization/settings', 'AdminSettingsController@getOrganizationSettings');

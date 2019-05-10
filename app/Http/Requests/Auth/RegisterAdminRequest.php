@@ -33,6 +33,7 @@ class RegisterAdminRequest extends FormRequest
           'street' => 'required',
           'city' => 'required',
           'country' => 'required',
+          'state' => 'required',
           'zip_code' => 'required'
         ];
     }
@@ -53,6 +54,7 @@ class RegisterAdminRequest extends FormRequest
           'address_number.required' => 'One address is required!',
           'city.required' => 'City is required!',
           'country.required' => 'Country is required!',
+          'state.required' => 'State is required!',
           'zip_code.required' => 'Zip code is required!'
         ];
     }
