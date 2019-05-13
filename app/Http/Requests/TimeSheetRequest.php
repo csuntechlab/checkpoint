@@ -24,14 +24,14 @@ class TimeSheetRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'required'
+            'date' => 'required|date'
         ];
     }
 
     public function messages()
     {
         return [
-            'date' => "date is required!"
+            'date.required' => "date is required!"
         ];
     }
 
