@@ -1,12 +1,7 @@
 <template>
-    <v-toolbar>
-      <v-toolbar-title>Checkpoint</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-btn to="/login" flat>Login</v-btn>
-        <v-btn to="/signup" flat>Sign up</v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <router-link to="/admin" class="navbar-brand">Checkpoint</router-link>
+    </nav>
 </template>
 <script>
 export default {};
