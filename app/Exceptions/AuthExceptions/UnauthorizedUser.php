@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Exceptions\LocationExceptions;
+namespace App\Exceptions\AuthExceptions;
 
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class UpdateOrganizationLocationFailed extends Exception
+class UnauthorizedUser extends Exception
 {
-    public function __construct()
+    protected $role;
+
+    public function __construct($role)
     {
+        $this->role = $role;
         parent::__construct();
     }
 
@@ -19,8 +22,8 @@ class UpdateOrganizationLocationFailed extends Exception
      */
     public function render()
     {
-        $message = 'Organization Location was not updated.';
-        $status_code = 500;
+        $message = 'Unauthorized access. User is not ' . $this->role . '.';
+        $status_code = 401;
         return BuildResponse::build_response($message, $status_code);
     }
 }
