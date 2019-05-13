@@ -11,9 +11,8 @@ import axios from 'axios';
 axios.defaults.baseURL = checkpoint.url;
 axios.defaults.headers.common['X-CSRF-Token'] = checkpoint.token;
 
-// Vuetify
-import Vuetify from 'vuetify';
-Vue.use(Vuetify);
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 // Vuelidate
 Vue.use(Vuelidate)
