@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 // Requests
-use App\Http\Requests\ClockInOutRequest;
+use App\Http\Requests\ClockRequest;
 
 // Contracts
 use App\Contracts\ClockInContract;
@@ -19,7 +19,7 @@ class ClockInController extends Controller
         $this->clockInUtility = $clockInContract;
     }
 
-    public function clockIn(ClockInOutRequest $request): array
+    public function clockIn(ClockRequest $request): array
     {
         return $this->clockInUtility->clockIn($request['date'], $request['time']);
     }
