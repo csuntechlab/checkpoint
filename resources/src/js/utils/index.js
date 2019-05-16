@@ -1,5 +1,7 @@
 //UTILS
 //Utility/Helper Methods
+import _ from 'lodash';
+
 function formIsValid(data, submitForm, clearForm) {
     this.$v.$touch();
     if (!this.$v.$invalid) {
@@ -9,9 +11,19 @@ function formIsValid(data, submitForm, clearForm) {
             clearForm();
         }
     } else {
-        this.$store.dispatch('showAlert', { status: 'danger', message: 'Missing Required Fields! Try Again.' });
+        console.log('form in error');
     }
 }
-export default {
-    formIsValid
+
+function updateForm(field, data, parent) {
+    if (parent) {
+        this.form[parent][field] = data;
+    } else {
+        this.form[field] = data;
+    }
+}
+
+export {
+    formIsValid,
+    updateForm
 }

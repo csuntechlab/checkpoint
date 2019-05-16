@@ -4,8 +4,6 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Exceptions\UserInvitationExceptions\UserInviteCreationFailed;
 use App\Exceptions\UserInvitationExceptions\UserAlreadyRegistered;
 
 use App\Services\UserInvitationService;
@@ -16,6 +14,8 @@ use App\User;
 use App\Models\Organization;
 use App\Models\Role;
 use \App\Models\UserInvitation;
+use App\Http\Controllers\RegisterController;
+use App\Http\Requests\Auth\RegisterRequest;
 
 class UserInvitationServiceTest extends TestCase
 {
@@ -29,23 +29,19 @@ class UserInvitationServiceTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->registerService = new RegisterService();
         $this->service = new UserInvitationService();
-        $this->seed('PassportSeeder');
         $this->seed('TimeCalculatorTypeSeeder');
         $this->seed('PayPeriodTypeSeeder');
-        $this->seed('OrganizationSeeder');
+        $this->seed('OrganizationSeeder'); //seeds org and settings
+        $this->seed('CategorySeeder');
         $this->seed('RoleSeeder');
         $this->seed('UsersTableSeeder');
+        $this->seed('ProjectSeeder'); // seeds also UserProject table
+        $this->seed('LocationSeeder');
+        $this->seed('UserInvitationsTableSeeder');
         $this->user = User::first();
         $this->role = Role::where('name', 'Employee')->first();
         $this->actingAs($this->user);
-
-        $name = "tes3t@email.com";
-        $email = "tes3t@email.com";
-        $password = "tes3t@email.com";
-        $inviteCode = "000-000";
-        $registerResponse = $this->registerService->register($name, $email, $password, $inviteCode);
     }
 
     /**
@@ -55,25 +51,23 @@ class UserInvitationServiceTest extends TestCase
      */
     public function test_user_invitation_service()
     {
-        $userId = $this->user->id;
-        $userId = $this->user->name;
+        $orgId = Organization::all()->random()->id;
         $name = "John Goober";
         $email = "j0hNGewB3r@email.com";
-        // TODO: Tony - grabbing from roles table not working for some reason
-        $roleId = 1;
+        $roleId = $this->role->id;
 
-        $response = $this->service->inviteNewUser($userId, $roleId, $name, $email);
+        $response = $this->service->inviteNewUser($orgId, $roleId, $name, $email);
 
         $this->assertArrayHasKey('email', $response);
     }
 
     public function test_user_invite_service_deletes_row_same_email()
     {
-        $orgId = Organization::first()->id;
+        $orgId = Organization::all()->random()->id;
         $name = 'John Booger';
         $email = 'tony@tony.com';
         // TODO: Tony - grabbing from roles table not working for some reason
-        $roleId = 3;
+        $roleId = $this->role->id;
 
         $response = $this->service->inviteNewUser($orgId, $roleId, $name, $email);
 
@@ -88,19 +82,26 @@ class UserInvitationServiceTest extends TestCase
         $this->assertNotEquals($previousInviteCode, $newInviteCode);
     }
 
-    public function test_user_invite_service_thows_error_registered_email()
+    public function test_user_invite_service_throws_error_registered_email()
     {
+        $userInvitation = UserInvitation::all()->random();
 
-        $orgId = Organization::first()->id;
-        $name = 'John Booger';
-        $email = "tes3t@email.com";
-        // TODO: Tony - grabbing from roles table not working for some reason
-        $roleId = 3;
+        $name = $userInvitation->name;
+        $email = $userInvitation->email;
+        $password = "secret";
+        $inviteCode = $userInvitation->invite_code;
+        $roleId = $userInvitation->role_id;
+        $orgId = $userInvitation->organization_id;
+
+        $input['name'] = $name;
+        $input['email'] = $email;
+        $input['password'] = $password;
+        $input['password_confirmation'] = $password;
+        $input['invitation_code'] = $inviteCode;
+
+        $response = $this->json('POST', "/api/register", $input);
 
         $this->expectException('App\Exceptions\UserInvitationExceptions\UserAlreadyRegistered');
-
         $response = $this->service->inviteNewUser($orgId, $roleId, $name, $email);
-
-        $this->assertArrayHasKey('message_error', $response);
     }
 }

@@ -2,11 +2,15 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Hash;
-use App\DomainValueObjects\UUIDGenerator\UUID;
+use \Illuminate\Support\Facades\DB;
 
+// Domain Value Objects
+use App\DomainValueObjects\UUIDGenerator\UUID;
 
 //Models
 use App\User;
+use App\Models\UserRole;
+use App\Models\Role;
 use App\Models\Organization;
 use App\DomainValueObjects\Location\Address;
 
@@ -16,45 +20,58 @@ use App\Exceptions\OrganizationExceptions\OrganizationCreatedFailed;
 
 //Contracts
 use App\Contracts\RegisterAdminContract;
+use App\Models\OrganizationSetting;
 
+// Model Repos
+use App\ModelRepositoryInterfaces\UserModelRepositoryInterface;
 
 class RegisterAdminService implements RegisterAdminContract
 {
-  public function registerAdminUser(
-    $name,
-    $email,
-    $password,
-    $organization_id
-  ): User
-  {
-    try {
-      $user = User::create([
-        'organization_id' => $organization_id,
-        'name' => $name,
-        'email' => $email,
-        'password' => Hash::make($password)
-      ]);
-    } catch (\Exception $e) {
-      throw new UserCreatedFailed();
-    }
 
-    return $user;
+  protected $userModelRepo;
+
+  public function __construct(UserModelRepositoryInterface $userRepositoryInterface)
+  {
+    $this->userModelRepo = $userRepositoryInterface;
   }
 
-  public function registerOrganization(
-    $organization_name,
+  public function createAdmin($organizationName, Address $address, $logo, $name, $email, $password)
+  {
+    return DB::transaction(function () use ($organizationName,  $address, $logo, $name, $email, $password) {
+      $organization = $this->createOrganization($organizationName, $address, $logo);
+      $adminRoleId = 1;
+      $user = $this->userModelRepo->create(
+        $name,
+        $email,
+        $password,
+        $organization->id,
+        $adminRoleId
+      );
+      $role = $user['role'];
+      $user = $user['user'];
+      return compact(['user', 'role', 'organization']);
+    });
+  }
+
+  public function createOrganization(
+    $organizationName,
     Address $address,
     $logo
   ): Organization
   {
+    $organizationId = UUID::generate();
     try {
       $organization = Organization::create([
-        'id' => UUID::generate(),
-        'organization_name' => $organization_name,
+        'id' => $organizationId,
+        'organization_name' => $organizationName,
         'address' => $address->__toString(),
         'logo' => $logo
       ]);
+      OrganizationSetting::create([
+        'organization_id' => $organizationId
+      ]);
     } catch (\Exception $e) {
+      dd($e);
       throw new OrganizationCreatedFailed();
     }
 

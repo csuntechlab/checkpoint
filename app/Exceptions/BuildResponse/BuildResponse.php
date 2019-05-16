@@ -44,6 +44,6 @@ class BuildResponse
         $response = self::build_response_array($collection, $success, $status_code);
         $response['message'] = $message;
 
-        return $response;
+        return response($response, 401);
     }
 }

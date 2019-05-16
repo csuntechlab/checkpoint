@@ -1,49 +1,52 @@
 <?php
 namespace App\Services;
 
-use Illuminate\Support\Facades\Hash;
-
 //Models
-use App\User;
-use App\Models\Organization;
 use App\Models\UserInvitation;
-
-//Exceptions
-use App\Exceptions\AuthExceptions\UserCreatedFailed;
 
 //Contracts
 use App\Contracts\RegisterContract;
 
+// Exceptions
+use App\Exceptions\UserInvitationExceptions\UserInvitationNotFound;
+
+// Model Repositories
+use App\ModelRepositoryInterfaces\UserModelRepositoryInterface;
+
+use \Illuminate\Support\Facades\DB;
 
 class RegisterService implements RegisterContract
 {
-    public function register($name, $email, $password, $inviteCode): User
+    protected $userModelRepo;
+
+    public function __construct(UserModelRepositoryInterface $userRepositoryInterface)
     {
-        $orgId = $this->getOrganizationIdByUserInvitation($email, $inviteCode);
-
-        try {
-            $user = User::create([
-                'name' => $name,
-                'email' => $email,
-                'password' => Hash::make($password),
-                'organization_id' => $orgId
-            ]);
-        } catch (\Exception $e) {
-            throw new UserCreatedFailed();
-        }
-
-        return $user;
+        $this->userModelRepo = $userRepositoryInterface;
     }
 
-
-
-    private function getOrganizationIdByUserInvitation(string $email, string $inviteCode): string
+    public function register($name, $email, $password, $inviteCode)
     {
-        // $orgId = UserInvitation::where('email', $email)->where('invite_code', $inviteCode)->first();
+        $userInvitation = $this->getOrganizationIdByUserInvitation($email, $inviteCode);
 
-        //TODO HardCode
-        $orgId = Organization::first();
+        return DB::transaction(function () use ($name, $email, $password, $userInvitation) {
+            $userInvitation->delete();
+            return  $this->userModelRepo->create(
+                $name,
+                $email,
+                $password,
+                $userInvitation->organization_id,
+                $userInvitation->role_id
+            );
+        });
+    }
 
-        return $orgId->id;
+    private function getOrganizationIdByUserInvitation(string $email, string $inviteCode): UserInvitation
+    {
+        $userInvitation = UserInvitation::where('email', $email)->where('invite_code', $inviteCode)->firstOrFail();
+
+        if ($userInvitation == null) {
+            throw new UserInvitationNotFound();
+        }
+        return $userInvitation;
     }
 }

@@ -29,19 +29,13 @@ class RegisterAdminController extends Controller
       $request['zip_code']
     );
 
-    $organization = $this->registerAdminUtility->registerOrganization(
+    return $this->registerAdminUtility->createAdmin(
       $request['organization_name'],
       $address,
-      $request['logo']
-    );
-
-    $user = $this->registerAdminUtility->registerAdminUser(
+      $request['logo'],
       $name,
       $request['email'],
-      $request['password'],
-      $organization->id
+      $request['password']
     );
-
-    return compact(['organization', 'user']);
   }
 }

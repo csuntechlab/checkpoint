@@ -50,7 +50,6 @@ class RegisterAdminControllerTest extends TestCase
 
     $expectedResponse = [];
 
-
     $this->retriever
       ->shouldReceive('register')
       ->with($request)
@@ -60,6 +59,58 @@ class RegisterAdminControllerTest extends TestCase
     $response = $this->retriever->register($request);
 
     $this->assertEquals($expectedResponse, $response);
+  }
+
+  public function test_registerAdmin_http_call_throws_exception_with_bad_request()
+  {
+    $request = [];
+
+    $response = $this->json('POST', "/api/register_admin", $request);
+    $response = $response->getOriginalContent();
+    $response = json_encode($response);
+
+    $expectedResponse = [
+      "message" => "The given data was invalid.",
+      "errors" => [
+        "organization_name" => [
+          0 => "Organization is required!"
+        ],
+        "first_name" => [
+          0 => "First name is required!"
+        ],
+        "last_name" => [
+          0 => "Last name is required!"
+        ],
+        "email" => [
+          0 => "Email is required!"
+        ],
+        "password" => [
+          0 => "Password is required!"
+        ],
+        "address_number" => [
+          0 => "One address is required!"
+        ],
+        "street" => [
+          0 => "The street field is required."
+        ],
+        "city" => [
+          0 => "City is required!"
+        ],
+        "country" => [
+          0 => "Country is required!"
+        ],
+        "state" => [
+          0 => "State is required!"
+        ],
+        "zip_code" => [
+          0 => "Zip code is required!"
+        ]
+      ]
+    ];
+
+    $expectedResponse = json_encode($expectedResponse);
+
+    $this->assertEquals($response, $expectedResponse);
   }
 
   public function test_registerAdmin_http_call()
@@ -84,14 +135,17 @@ class RegisterAdminControllerTest extends TestCase
     $response = $response->getOriginalContent();
     $response = json_encode($response);
     $expectedResponse = [
-      'organization' => [
-        'organization_name' => "META+LAB",
-        'logo' => "logo.jpg"
+      "user" => [
+        "name" => "John Doe",
+        "email" => "JohnDoe@email.com",
       ],
-      'user' => [
-        'name' => "John Doe",
-        'email' => "JohnDoe@email.com",
-      ]
+      "role" => [
+        "name" => "Admin"
+      ],
+      "organization" => [
+        "organization_name" => "META+LAB",
+        "logo" => "logo.jpg",
+      ],
     ];
     $expectedResponse = json_encode($expectedResponse);
     $this->assertEquals($response, $expectedResponse);

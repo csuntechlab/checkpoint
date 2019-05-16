@@ -9,7 +9,7 @@ use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\DomainValueObjects\Location\Address;
 
 use App\Models\Organization;
-use App\Models\OrganizationSettings;
+use App\Models\OrganizationSetting;
 use App\Models\PayPeriodType;
 use App\Models\TimeCalculatorType;
 
@@ -41,8 +41,7 @@ class OrganizationSeeder extends Seeder
                 'logo' => $logoLocation
             ]);
 
-            OrganizationSettings::create([
-                'id' => UUID::generate(),
+            OrganizationSetting::create([
                 'organization_id' =>  $orgId,
                 'pay_period_type_id' =>  PayPeriodType::all()->random()->id,
                 'time_calculator_type_id' =>  TimeCalculatorType::all()->random()->id,

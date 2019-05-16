@@ -174,6 +174,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\LocationServiceProvider::class,
 
         /*********** Domain Service Providers **************/
 
@@ -202,11 +203,28 @@ return [
         App\Providers\ApiProviders\TimeLog\Repository\TimeLogClockInRepositoryServiceProvider::class,
         App\Providers\ApiProviders\TimeLog\Repository\TimeLogClockOutRepositoryServiceProvider::class,
 
+        /** TimeSheet Service Provider */
+        App\Providers\ApiProviders\TimeLog\TimeSheetServiceProvider::class,
+
 
         /*********** UserInvitation Service Providers **************/
 
         /** UserInvite Service Provider */
         App\Providers\ApiProviders\UserInvitation\UserInvitationServiceProvider::class,
+
+        /*********** User Service Providers **************/
+
+        /** User Service Provider */
+        App\Providers\ApiProviders\User\UserServiceProvider::class,
+
+        /*********** Admin Service Providers **************/
+
+        /** AdminSettings Service Provider */
+        App\Providers\ApiProviders\Admin\AdminSettingsProvider::class,
+
+        /*********** Model Repository Service Providers **************/
+        App\Providers\ModelRepository\UserModelRepositoryServiceProvider::class,
+
 
         /*********** METALAB Providers **************/
         /** Proxy Pass Provider */
