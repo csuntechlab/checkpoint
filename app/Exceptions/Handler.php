@@ -54,7 +54,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        // dd('hello');
         if ($e instanceof HttpException || $e instanceof NotFoundHttpException || $e instanceof ModelNotFoundException) {
             $message = 'Resource could not be resolved';
             $stats_code = 409;
@@ -68,7 +67,6 @@ class Handler extends ExceptionHandler
             $stats_code = 409;
             return BuildResponse::buildHandlerResponse($message, $stats_code);
         }
-        // dd($e->message);
         return parent::render($request, $e);
     }
 }
