@@ -38,10 +38,11 @@ class TimeSheetControllerTest extends TestCase
     $this->actingAs($this->user);
   }
   
-  public function test_getCurrentTimeSheet()
+  public function test_getTimeSheetByDate()
   {
     $request = [
-        'date' => Carbon::now()
+      //using current date for this test ensures something will be in the DB when we query
+      'date' => Carbon::now() 
     ];
 
     $date = $request['date'];
@@ -49,20 +50,67 @@ class TimeSheetControllerTest extends TestCase
     $expectedResponse = [];
 
     $this->retriever
-        ->shouldReceive('getCurrentTimeSheet')
+        ->shouldReceive('getTimeSheetByDate')
         ->with($date)
         ->Once()
         ->andReturn($expectedResponse);
 
-    $response = $this->retriever->getCurrentTimeSheet($date);
+    $response = $this->retriever->getTimeSheetByDate($date);
 
     $this->assertEquals($expectedResponse, $response);
+  }
+
+  public function test_getCurrentTimeSheet()
+  {
+    $expectedResponse = [];
+
+    $this->retriever
+        ->shouldReceive('getCurrentTimeSheet')
+        ->Once()
+        ->andReturn($expectedResponse);
+
+    $response = $this->retriever->getCurrentTimeSheet();
+
+    $this->assertEquals($expectedResponse, $response);
+  }
+
+  public function test_getTimeSheetByDate_http_call()
+  {
+      $request = [
+          //using current date for this test ensures something will be in the DB when we query
+          'date' => Carbon::now()->toDateTimeString()
+      ];
+
+      $date = Carbon::now();
+
+      $month = $date->month;
+      $day = $date->day;
+      $year = $date->year;
+
+      $date = $year.'-'.$month.'-'.$year;
+      $api_route = '/api/timesheet?='.$date;
+
+      $token = $this->get_auth_token($this->user);
+
+      $response = $this->withHeaders([
+          'Accept' => 'application/json',
+          'Content-Type' => 'application/x-ww-form-urlencoded',
+          'Authorization' => $token
+      ])->json('GET', $api_route, $request);
+
+      $response = $response->getOriginalContent();
+
+      $start_date = Carbon::parse($response->start_date);
+      $end_date = Carbon::parse($response->end_date);
+      $current_date = Carbon::parse($request['date']);
+
+      $this->assertTrue($current_date->between($start_date, $end_date));
   }
 
   public function test_getCurrentTimeSheet_http_call()
   {
       $request = [
-          'date' => Carbon::now()->toDateTimeString()
+        'date' => Carbon::now()->toDateTimeString()
       ];
 
       $token = $this->get_auth_token($this->user);
