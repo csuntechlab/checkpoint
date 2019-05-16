@@ -13,12 +13,16 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Http\Controllers\LocationController;
 use App\Contracts\LocationContract;
+use App\Models\Project;
+use App\Models\UserRole;
+use App\DomainValueObjects\UUIDGenerator\UUID;
 
 class LocationControllerTest extends TestCase
 {
   use DatabaseMigrations;
   private $controller;
   private $retriever;
+  private $adminUser;
 
   public function setUp()
   {
@@ -31,8 +35,10 @@ class LocationControllerTest extends TestCase
     $this->seed('OrganizationSeeder');
     $this->seed('RoleSeeder');
     $this->seed('UsersTableSeeder');
-    $this->user = \App\User::where('id', 1)->first();
-    $this->actingAs($this->user);
+    $this->seed('ProjectSeeder'); // seeds also UserProject table
+    $this->adminUser = \App\User::where('id', 1)->first();
+    UserRole::create(['id' => UUID::generate(), 'user_id' => $this->adminUser->id, 'role_id' => 1]);
+    $this->actingAs($this->adminUser);
   }
 
   public function test_update_organization_location()
@@ -52,6 +58,8 @@ class LocationControllerTest extends TestCase
     $longitude = $request['longitude'];
     $radius = $request['radius'];
 
+    $organizationId = $this->adminUser->organization_id;
+
     $address = new Address(
       $request['address_number'],
       $request['street'],
@@ -63,12 +71,12 @@ class LocationControllerTest extends TestCase
     $expectedResponse = [];
 
     $this->retriever
-      ->shouldReceive('updateOrganizationLocation')
-      ->with($address, $longitude, $latitude, $radius)
+      ->shouldReceive('update')
+      ->with($address, $longitude, $latitude, $radius, $organizationId)
       ->once()
       ->andReturn($expectedResponse);
 
-    $response = $this->retriever->updateOrganizationLocation($address, $longitude, $latitude, $radius);
+    $response = $this->retriever->update($address, $longitude, $latitude, $radius, $organizationId);
 
     $this->assertEquals($expectedResponse, $response);
   }
@@ -90,7 +98,7 @@ class LocationControllerTest extends TestCase
     $latitude = $request['latitude'];
     $longitude = $request['longitude'];
     $radius = $request['radius'];
-    $id = $request['id'];
+    $project = Project::where('organization_id', $this->adminUser->organization_id)->first();
 
     $address = new Address(
       $request['address_number'],
@@ -103,11 +111,11 @@ class LocationControllerTest extends TestCase
     $expectedResponse = [];
     $this->retriever
       ->shouldReceive('updateProjectLocation')
-      ->with($address, $longitude, $latitude, $radius, $id)
+      ->with($address, $longitude, $latitude, $radius, $project)
       ->once()
       ->andReturn($expectedResponse);
 
-    $response = $this->retriever->updateProjectLocation($address, $longitude, $latitude, $radius, $id);
+    $response = $this->retriever->updateProjectLocation($address, $longitude, $latitude, $radius, $project);
 
     $this->assertEquals($expectedResponse, $response);
   }
@@ -125,7 +133,7 @@ class LocationControllerTest extends TestCase
       'zip' => "91324",
     ];
 
-    $token = $this->get_auth_token($this->user);
+    $token = $this->get_auth_token($this->adminUser);
 
 
     $response = $this->withHeaders([
@@ -133,6 +141,7 @@ class LocationControllerTest extends TestCase
       'Content-Type' => 'application/x-www-form-urlencoded',
       'Authorization' => $token
     ])->json('POST', '/api/update/location', $request)->getOriginalContent();
+
 
     $id = $response->id;
     $response = json_encode($response);

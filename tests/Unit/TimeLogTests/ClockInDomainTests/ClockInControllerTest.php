@@ -10,7 +10,7 @@ use Mockery;
 use Carbon\Carbon;
 
 // TB Requests
-use App\Http\Requests\ClockInRequest;
+use App\Http\Requests\ClockRequest;
 
 //Contracts
 use \App\Http\Controllers\ClockInController;
@@ -55,7 +55,7 @@ class ClockInControllerTest extends TestCase
             "time" => $time
         ];
 
-        $request = new ClockInRequest($input);
+        $request = new ClockRequest($input);
 
         $expectedResponse = [
             "message_success" => "Clock in was successfull",

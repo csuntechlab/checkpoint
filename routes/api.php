@@ -27,7 +27,7 @@ Route::post('/register_admin', 'RegisterAdminController@register');
 
 // CLOCK IN
 Route::middleware('auth:api')->post('/clock/in', 'ClockInController@clockIn');
-Route::middleware('auth:api')->post('/clock/out', 'ClockOutController@clockOut');
+Route::middleware('auth:api')->post('/clock/out/{timeLogId}', 'ClockOutController@clockOut');
 Route::middleware('auth:api')->get('/timesheet', 'TimeSheetController@getTimeSheetByDate');
 Route::middleware('auth:api')->get('/current/timesheet', 'TimeSheetController@getCurrentTimeSheet');
 
@@ -38,7 +38,7 @@ Route::middleware('auth:api')->post('/invite', 'UserInvitationController@inviteN
 Route::middleware('auth:api')->get('user/profile', 'UserController@profile');
 
 // SETTINGS
-Route::middleware('auth:api')->post('/update/location/{id?}/', 'LocationController@update');
+Route::middleware('auth:api')->post('/update/location/{projectId?}/', 'LocationController@update');
 
 // Organization Settings
 Route::middleware('auth:api')->post('/organization/settings/categories', 'AdminSettingsController@updateCategories');

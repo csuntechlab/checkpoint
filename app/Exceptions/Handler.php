@@ -57,16 +57,16 @@ class Handler extends ExceptionHandler
         if ($e instanceof HttpException || $e instanceof NotFoundHttpException || $e instanceof ModelNotFoundException) {
             $message = 'Resource could not be resolved';
             $stats_code = 409;
-            return BuildResponse::buildHandlerResponse($message, $stats_code);
+            return BuildResponse::build_response($message, $stats_code);
         } else if ($e instanceof AccessDeniedHttpException || $e instanceof AuthorizationException) {
             $message = 'Unauthorized access.';
             $stats_code = 409;
-            return BuildResponse::buildHandlerResponse($message, $stats_code);
+            return BuildResponse::build_response($message, $stats_code);
         } else if ($e instanceof QueryException) {
             // dd($e->message);
             $message = 'Unable to resolve Resource.';
             $stats_code = 409;
-            return BuildResponse::buildHandlerResponse($message, $stats_code);
+            return BuildResponse::build_response($message, $stats_code);
         }
         return parent::render($request, $e);
     }

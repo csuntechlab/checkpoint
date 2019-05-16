@@ -34,5 +34,4 @@ class TimeSheetRequest extends FormRequest
             'date.required' => "date is required!"
         ];
     }
-
 }
