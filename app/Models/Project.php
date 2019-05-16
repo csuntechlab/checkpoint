@@ -11,8 +11,17 @@ class Project extends Model
     public $incrementing = false;
     public $timestamps = false;
 
-    protected $hidden = ['organization_id', 'name', 'pivot'];
-    protected $fillable = ['organization_id', 'name', 'id', 'display_name'];
+    protected $hidden = [
+        'organization_id',
+        'name',
+        'pivot'
+    ];
+    protected $fillable = [
+        'organization_id',
+        'name',
+        'id',
+        'display_name'
+    ];
 
     public function users()
     {

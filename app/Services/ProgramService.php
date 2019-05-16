@@ -1,6 +1,8 @@
 <?php
 namespace App\Services;
 
+use \Illuminate\Support\Facades\DB;
+
 // Domain Value Objects
 use App\DomainValueObjects\UUIDGenerator\UUID;
 
@@ -18,16 +20,7 @@ class ProgramService implements ProgramContract
     private function generateName($displayName)
     {
         $name = preg_replace("/[^a-z0-9_-\s]+/i", "", $displayName);
-        $name = strtolower($name);
-        return $name;
-    }
-
-    private function duplicate($name): bool
-    {
-        $duplicate = Project::where('name', $name)->first();
-        dd($duplicate);
-        $duplicate == null ? true : false;
-        return $duplicate;
+        return strtolower($name);
     }
 
     public function create($organizationId, $displayName)
@@ -43,7 +36,7 @@ class ProgramService implements ProgramContract
                 'name' => $name,
                 'display_name' => $displayName,
             ]);
-        } catch (\Exception $e) {
+        } catch (\Exception $e) { // Handles duplicate
             throw $e;
         }
 

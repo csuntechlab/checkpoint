@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+// Request
+use App\Http\Requests\ProgramRequest;
 // Auth
 use Illuminate\Support\Facades\Auth;
-
+// Models
+use App\Models\Project;
 // Contracts
 use App\Contracts\ProgramContract;
-use App\Models\Project;
-use App\Http\Requests\ProgramRequest;
 
 class ProgramController extends Controller
 {

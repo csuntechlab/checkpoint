@@ -48,5 +48,5 @@ Route::middleware('auth:api')->post('/organization/settings', 'AdminSettingsCont
 // PROGRAM
 Route::middleware('auth:api')->get('/program/all', 'ProgramController@all');
 Route::middleware('auth:api')->post('/program/create', 'ProgramController@create');
-Route::middleware('auth:api')->put('/program/update/{programId}', 'ProgramController@update/{programId}');
-Route::middleware('auth:api')->delete('/program/delete/{programId}', 'ProgramController@delete/{programId}');
+Route::middleware('auth:api')->put('/program/update/{programId}', 'ProgramController@update');
+Route::middleware('auth:api')->delete('/program/delete/{programId}', 'ProgramController@delete');
