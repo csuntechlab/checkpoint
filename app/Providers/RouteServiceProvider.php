@@ -23,8 +23,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
 
         // Explicit Binding
@@ -32,6 +30,9 @@ class RouteServiceProvider extends ServiceProvider
             return \App\Models\PayPeriodType::where('id', $value)->firstOrFail();
         });
 
+        Route::bind('timeLogId', function ($value) {
+            return \App\Models\TimeLog::where('id', $value)->firstOrFail();
+        });
 
         Route::bind('programId', function ($value) {
             return \App\Models\Project::where('id', $value)->firstOrFail();
@@ -48,8 +49,6 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
-
-        //
     }
 
     /**

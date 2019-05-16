@@ -46,12 +46,4 @@ class BuildResponse
 
         return response($response, 401);
     }
-
-    public static function buildHandlerResponse(
-        string $message,
-        int $status_code
-    ) {
-        $response = self::build_response($message, $status_code);
-        return response($response, 401);
-    }
 }

@@ -7,15 +7,17 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+// Models
 use App\Models\Role;
 use App\Models\Location;
-use App\Models\UserRole;
 use App\Models\Project;
-use App\Models\UserProject;
+
+// Traits
+use App\UserTraits\AuthorizationTrait;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, AuthorizationTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -52,10 +54,5 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
-    }
-
-    public function isRole($role)
-    {
-        return $this->role->contains('name', $role);
     }
 }

@@ -30,8 +30,6 @@ class ProgramService implements ProgramContract
         return $duplicate;
     }
 
-    // TODO: THROW EXCEPTION
-    // Check for duplicate
     public function create($organizationId, $displayName)
     {
         $name = $this->generateName($displayName);
@@ -46,8 +44,6 @@ class ProgramService implements ProgramContract
                 'display_name' => $displayName,
             ]);
         } catch (\Exception $e) {
-            // throw Model
-            // dd($e);
             throw $e;
         }
 
@@ -58,7 +54,6 @@ class ProgramService implements ProgramContract
     {
         try {
             return Project::with('location')->get();
-            // return Project::all();
         } catch (\Exception $e) {
             throw $e;
         }
