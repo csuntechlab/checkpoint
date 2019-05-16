@@ -19,7 +19,7 @@ class ProgramService implements ProgramContract
 {
     private function generateName($displayName)
     {
-        $name = preg_replace("/[^a-z0-9_-\s]+/i", "", $displayName);
+        $name = preg_replace("/[^a-z0-9_]+/i", "", $displayName);
         return strtolower($name);
     }
 
@@ -52,7 +52,7 @@ class ProgramService implements ProgramContract
         }
     }
 
-    public function update($program, $displayName)
+    public function update(Project $program, $displayName)
     {
         $name = $this->generateName($displayName);
 
@@ -68,7 +68,7 @@ class ProgramService implements ProgramContract
         });
     }
 
-    public function delete($program)
+    public function delete(Project $program)
     {
         try {
             $program->delete();
