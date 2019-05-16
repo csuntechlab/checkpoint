@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+// Auth
+use Illuminate\Support\Facades\Auth;
+
+// Contracts
 use App\Contracts\ProgramContract;
+use App\Models\Project;
+use App\Http\Requests\ProgramRequest;
 
 class ProgramController extends Controller
 {
@@ -13,24 +19,27 @@ class ProgramController extends Controller
         $this->programUtility = $programContract;
     }
 
-
-    public function create(Request $request)
+    public function all()
     {
-        dd("Create");
+        $user = Auth::user();
+        $organizationId = $user->organization_id;
+        return $this->programUtility->all($organizationId);
     }
 
-    public function all(Request $request)
+    public function create(ProgramRequest $request)
     {
-        dd("All");
+        $user = Auth::user();
+        $organizationId = $user->organization_id;
+        return $this->programUtility->create($organizationId, $request['display_name']);
     }
 
-    public function update(Request $request)
+    public function update(ProgramRequest $request, Project $program)
     {
-        dd("update");
+        return $this->programUtility->update($program, $request['display_name']);
     }
 
-    public function delete(Request $request)
+    public function delete(Project $program)
     {
-        dd("delete");
+        return $this->programUtility->delete($program);
     }
 }

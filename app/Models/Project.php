@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\UserProject;
 use App\User;
 
 class Project extends Model
@@ -12,7 +11,8 @@ class Project extends Model
     public $incrementing = false;
     public $timestamps = false;
 
-    protected $hidden = ['location', 'id', 'organization_id', 'name', 'pivot'];
+    protected $hidden = ['organization_id', 'name', 'pivot'];
+    protected $fillable = ['organization_id', 'name', 'id', 'display_name'];
 
     public function users()
     {
