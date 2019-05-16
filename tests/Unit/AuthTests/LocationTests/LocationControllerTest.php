@@ -110,12 +110,12 @@ class LocationControllerTest extends TestCase
 
     $expectedResponse = [];
     $this->retriever
-      ->shouldReceive('updateProjectLocation')
+      ->shouldReceive('updateLocation')
       ->with($address, $longitude, $latitude, $radius, $project)
       ->once()
       ->andReturn($expectedResponse);
 
-    $response = $this->retriever->updateProjectLocation($address, $longitude, $latitude, $radius, $project);
+    $response = $this->retriever->updateLocation($address, $longitude, $latitude, $radius, $project);
 
     $this->assertEquals($expectedResponse, $response);
   }
