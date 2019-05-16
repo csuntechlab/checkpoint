@@ -32,7 +32,7 @@ class LocationController extends Controller
     public function update(LocationRequest $request, Project $project = null)
     {
         $user = Auth::user();
-        $user->isAdmin();
+        $organizationId = $user->getOrganizationIdAuthorizeAdmin();
         $longitude = $request['longitude'];
         $latitude = $request['latitude'];
         $radius = $request['radius'];
@@ -46,10 +46,10 @@ class LocationController extends Controller
         );
 
         if ($project == null) {
-            return $this->locationUtility->updateOrganizationLocation($address, $longitude, $latitude, $radius, $user->organization_id);
+            return $this->locationUtility->update($address, $longitude, $latitude, $radius, $organizationId);
         } else {
             $user->authorizeProject($project);
-            return $this->locationUtility->updateProjectLocation($address, $longitude, $latitude, $radius, $project);
+            return $this->locationUtility->update($address, $longitude, $latitude, $radius, $project->id);
         }
     }
 }

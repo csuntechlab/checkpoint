@@ -19,22 +19,22 @@ trait AuthorizationTrait
         return $this->role->contains('name', $role);
     }
 
-    public function isAdmin()
+    public function getOrganizationIdAuthorizeAdmin()
     {
         if (!$this->isRole('Admin')) throw new UnauthorizedUser('Admin');
-        return true;
+        return $this->organization_id;
     }
 
-    public function isStudent()
+    public function getOrganizationIdAuthorizeStudent()
     {
         if (!$this->isRole('Student')) throw new UnauthorizedUser('Student');
-        return true;
+        return $this->organization_id;
     }
 
-    public function isMentor()
+    public function getOrganizationIdAuthorizeMentor()
     {
         if (!$this->isRole('Mentor')) throw new UnauthorizedUser('Mentor');
-        return true;
+        return $this->organization_id;
     }
 
     public function authorizeTimeLog(TimeLog $timeLog)

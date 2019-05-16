@@ -14,16 +14,16 @@ use App\Contracts\LocationContract;
 
 class LocationService implements LocationContract
 {
-    public function updateOrganizationLocation(
+    public function update(
         Address $address,
         $longitude,
         $latitude,
         $radius,
-        $organizationId
+        $id
     ) {
         try {
             $location = Location::create([
-                'id' => $organizationId,
+                'id' => $id,
                 'address' => $address->__toString(),
                 'lat' => $latitude,
                 'lng' => $longitude,
@@ -31,28 +31,6 @@ class LocationService implements LocationContract
             ]);
         } catch (\Exception $e) {
             throw new UpdateOrganizationLocationFailed();
-        }
-
-        return $location;
-    }
-
-    public function updateProjectLocation(
-        Address $address,
-        $longitude,
-        $latitude,
-        $radius,
-        Project $project
-    ) {
-        try {
-            $location = Location::create([
-                'id' => $project->id,
-                'address' => $address->__toString(),
-                'lat' => $latitude,
-                'lng' => $longitude,
-                'radius' => $radius
-            ]);
-        } catch (\Exception $e) {
-            throw new UpdateProjectLocationFailed();
         }
 
         return $location;

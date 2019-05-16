@@ -22,9 +22,7 @@ class UserInvitationController extends Controller
     {
         $user = Auth::user();
 
-        $user->isAdmin();
-
-        $orgId = $user->organization_id;
+        $orgId = $user->getOrganizationIdAuthorizeAdmin();
 
         $roleId = (string)$request['roleId'];
 
