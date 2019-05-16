@@ -67,10 +67,6 @@ class ClockOutServiceTest extends TestCase
             "time" => $time,
         ];
 
-        // $this->clockOutLogicUtility
-        //     ->with($this->user->id, $timeLog)
-        //     ->andReturn($timeLog);
-
         $response = $this->service->clockOut($date, $time, $timeLog);
 
         $this->assertArrayHasKey('message_success', $response);
