@@ -8,9 +8,9 @@ interface CategoriesContract
 {
     public function createCategory($organizationId, $displayName);
     
-    public function allCategory();
+    public function allCategory($organizationId);
     
-    public function updateCategory($organizationId, $displayName, Category $category);
+    public function updateCategory(Category $category, $displayName);
     
     public function deleteCategory(Category $category);
 }

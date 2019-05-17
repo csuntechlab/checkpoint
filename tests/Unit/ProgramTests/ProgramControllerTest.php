@@ -8,7 +8,7 @@ use Mockery;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 // Requests
-use App\Http\Requests\ProgramRequest;
+use App\Http\Requests\DisplayNameRequest;
 
 // Models
 use App\Models\PayPeriodType;
@@ -41,6 +41,8 @@ class ProgramControllerTest extends TestCase
         $this->seed('PayPeriodTypeSeeder');
         $this->seed('OrganizationSeeder');
         $this->seed('RoleSeeder');
+        $this->seed('UsersTableSeeder');
+        $this->seed('ProgramSeeder'); // seeds also UserProgram table
         $this->user = $this->createAdminUser();
         $this->actingAs($this->user);
     }
@@ -48,7 +50,7 @@ class ProgramControllerTest extends TestCase
     public function test_program_controller_create()
     {
         $input = ['display_name' => 'display'];
-        $request = new ProgramRequest($input);
+        $request = new DisplayNameRequest($input);
 
         $expectedResponse = [
             "id" => 'id',
@@ -111,9 +113,9 @@ class ProgramControllerTest extends TestCase
     public function test_program_controller_update()
     {
         $input = ['display_name' => 'display'];
-        $request = new ProgramRequest($input);
+        $request = new DisplayNameRequest($input);
 
-        $program = new Program();
+        $program = Program::where('organization_id', $this->user->organization_id)->first();
 
 
         $expectedResponse = [
@@ -135,7 +137,7 @@ class ProgramControllerTest extends TestCase
 
     public function test_program_controller_delete()
     {
-        $program = new Program();
+        $program = Program::where('organization_id', $this->user->organization_id)->first();
 
         $expectedResponse = [
             "message" => 'Program was deleted.',

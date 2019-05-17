@@ -88,7 +88,7 @@ class ProgramServiceTest extends TestCase
         $displayName = "display-Name_New";
         $orgId = $this->user->organization_id;
         $response = $this->service->create($orgId, $displayName);
-        $this->expectException(\App\Exceptions\ProgramExceptions\DuplicateProgramName::class);
+        $this->expectException(\App\Exceptions\DuplicateName::class);
         $response = $this->service->create($orgId, $displayName);
     }
 }
