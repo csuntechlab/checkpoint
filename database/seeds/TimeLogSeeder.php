@@ -12,6 +12,6 @@ class TimeLogSeeder extends Seeder
      */
     public function run()
     {
-        factory(TimeLog::class)->create();
+        factory(TimeLog::class, 50)->create();
     }
 }

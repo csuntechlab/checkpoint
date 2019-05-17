@@ -25,19 +25,45 @@ $timeZone = 'America/Los_Angeles';
 $factory->define(TimeLog::class, function (Faker $faker) {
 
     $uuid = new UUID('log');
-    $user = User::where('id', 1)->first();
+    $user = User::all()->random();
     $orgId = $user->organization_id;
 
     $timeSheet = TimeSheet::where('organization_id', $orgId)->first();
 
-    $date =  "2019-02-01";
-    $time = "06:30:44";
+
+    // Generate a random date with ranges
+    // upper-limit -> today, lower-limit -> today-6months
+    $tempDate = Carbon::now()->subMonths(rand(0,6))->subDays(rand(0,7))->subHours(rand(0, 12));
+
+    $year = $tempDate->year;
+    $month = $tempDate->month;
+    $day = $tempDate->day;
+    $hour = $tempDate->hour;
+    $minute = $tempDate->minute;
+    $second = $tempDate->second;
+    
+    // String concatination
+    $date = $year.'-'.$month.'-'.$day;
+    $time = $hour.':'.$minute.':'.$second;
+
     $clockIn = new TimeStamp($date, $time);
 
     $carbonClockIn = $clockIn->carbon;
 
-    $date =  "2019-02-01";
-    $time = "09:30:44";
+    // Simulate a shift
+    $tempDate = $tempDate->addHours(rand(1,8));
+
+    $year = $tempDate->year;
+    $month = $tempDate->month;
+    $day = $tempDate->day;
+    $hour = $tempDate->hour;
+    $minute = $tempDate->minute;
+    $second = $tempDate->second;
+    
+    //string concatination
+    $date = $year.'-'.$month.'-'.$day;
+    $time = $hour.':'.$minute.':'.$second;
+
     $clockOut = new TimeStamp($date, $time);
 
     $carbonClockOut = $clockOut->carbon;
