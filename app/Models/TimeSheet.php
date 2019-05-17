@@ -13,7 +13,7 @@ class TimeSheet extends Model
         'organization_id'
     ];
 
-    public function scopeGetCurrentTimesheet($query, $date, $id)
+    public function scopeGetTimeSheet($query, $date, $id)
     {
         return $query->where('organization_id', $id)
         ->where('start_date', '<=', $date)

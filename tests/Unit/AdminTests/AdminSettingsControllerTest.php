@@ -46,7 +46,7 @@ class AdminSettingsControllerTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function test_mock_admin_settings_currentOrganizationSettings_test()
+    public function test_mock_admin_settings_getOrganizationSettings_test()
     {
         $expectedResponse = [
             "organizationSetting" => [
@@ -76,11 +76,11 @@ class AdminSettingsControllerTest extends TestCase
         ];
 
         $this->utility
-            ->shouldReceive('currentOrganizationSettings')
+            ->shouldReceive('getOrganizationSettings')
             ->once()
             ->andReturn($expectedResponse);
 
-        $response = $this->controller->currentOrganizationSettings();
+        $response = $this->controller->getOrganizationSettings();
         $this->assertEquals($expectedResponse, $response);
     }
 

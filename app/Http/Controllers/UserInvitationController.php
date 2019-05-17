@@ -17,11 +17,12 @@ class UserInvitationController extends Controller
         $this->userInvitationUtility = $userInvitationContract;
     }
 
+    // TODO: Add Route Model Binding to InviteNewUser
     public function inviteNewUser(Request $request): array
     {
         $user = Auth::user();
 
-        $orgId = $user->organization_id;
+        $orgId = $user->getOrganizationIdAuthorizeAdmin();
 
         $roleId = (string)$request['roleId'];
 
