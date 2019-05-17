@@ -29,7 +29,7 @@ class LocationController extends Controller
         $this->locationUtility = $locationContract;
     }
 
-    public function update(LocationRequest $request, Project $project = null)
+    public function createLocation(LocationRequest $request, Project $project = null)
     {
         $user = Auth::user();
         $organizationId = $user->getOrganizationIdAuthorizeAdmin();
@@ -46,10 +46,10 @@ class LocationController extends Controller
         );
 
         if ($project == null) {
-            return $this->locationUtility->update($address, $longitude, $latitude, $radius, $organizationId);
+            return $this->locationUtility->createLocation($address, $longitude, $latitude, $radius, $organizationId);
         } else {
             $user->authorizeProject($project);
-            return $this->locationUtility->update($address, $longitude, $latitude, $radius, $project->id);
+            return $this->locationUtility->createLocation($address, $longitude, $latitude, $radius, $project->id);
         }
     }
 }

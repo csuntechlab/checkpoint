@@ -71,12 +71,12 @@ class LocationControllerTest extends TestCase
     $expectedResponse = [];
 
     $this->retriever
-      ->shouldReceive('update')
+      ->shouldReceive('createLocation')
       ->with($address, $longitude, $latitude, $radius, $organizationId)
       ->once()
       ->andReturn($expectedResponse);
 
-    $response = $this->retriever->update($address, $longitude, $latitude, $radius, $organizationId);
+    $response = $this->retriever->createLocation($address, $longitude, $latitude, $radius, $organizationId);
 
     $this->assertEquals($expectedResponse, $response);
   }
@@ -140,8 +140,7 @@ class LocationControllerTest extends TestCase
       'Accept' => 'application/json',
       'Content-Type' => 'application/x-www-form-urlencoded',
       'Authorization' => $token
-    ])->json('POST', '/api/update/location', $request)->getOriginalContent();
-
+    ])->json('POST', '/api/create/location', $request)->getOriginalContent();
 
     $id = $response->id;
     $response = json_encode($response);
