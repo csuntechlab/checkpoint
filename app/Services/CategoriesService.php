@@ -75,6 +75,6 @@ class CategoriesService implements CategoriesContract
             dd($e);
             throw $e;
         }
-        return ['message' => 'Program was deleted.'];
+        return ['message' => 'Category was deleted.'];
     }
 }
