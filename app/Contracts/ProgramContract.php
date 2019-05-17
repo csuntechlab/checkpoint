@@ -1,7 +1,7 @@
 <?php
 namespace App\Contracts;
 
-use App\Models\Project;
+use App\Models\Program;
 
 interface ProgramContract
 {
@@ -9,7 +9,7 @@ interface ProgramContract
 
     public function all($organizationId);
 
-    public function update(Project $program, $displayName);
+    public function update(Program $program, $displayName);
 
-    public function delete(Project $program);
+    public function delete(Program $program);
 }

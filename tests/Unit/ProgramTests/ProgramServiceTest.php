@@ -7,7 +7,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use App\Services\ProgramService;
-use App\Models\Project;
+use App\Models\Program;
 
 class ProgramServiceTest extends TestCase
 {
@@ -28,7 +28,7 @@ class ProgramServiceTest extends TestCase
         $this->seed('PayPeriodTypeSeeder');
         $this->seed('OrganizationSeeder');
         $this->seed('RoleSeeder');
-        $this->seed('ProjectSeeder');
+        $this->seed('ProgramSeeder');
         $this->seed('LocationSeeder');
         $this->user = $this->createAdminUser();
         $this->actingAs($this->user);
@@ -67,7 +67,7 @@ class ProgramServiceTest extends TestCase
     {
         $displayName = "display-Name_New";
         $orgId = $this->user->organization_id;
-        $program = Project::where('organization_id', $orgId)->first();
+        $program = Program::where('organization_id', $orgId)->first();
         $response = $this->service->update($program, $displayName);
         $this->assertEquals($displayName, $response->display_name);
         $this->assertNotNull($response->display_name);
@@ -78,7 +78,7 @@ class ProgramServiceTest extends TestCase
     {
         $expectedResponse = ["message" => "Program was deleted."];
         $orgId = $this->user->organization_id;
-        $program = Project::where('organization_id', $orgId)->first();
+        $program = Program::where('organization_id', $orgId)->first();
         $response = $this->service->delete($program);
         $this->assertEquals($response, $expectedResponse);
     }

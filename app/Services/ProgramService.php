@@ -7,7 +7,7 @@ use \Illuminate\Support\Facades\DB;
 use App\DomainValueObjects\UUIDGenerator\UUID;
 
 //Models
-use App\Models\Project;
+use App\Models\Program;
 
 //Exceptions
 
@@ -28,11 +28,11 @@ class ProgramService implements ProgramContract
     {
         $name = $this->generateName($displayName);
 
-        $projectId = UUID::generate();
+        $programId = UUID::generate();
 
         try {
-            $project = Project::create([
-                'id' => $projectId,
+            $program = Program::create([
+                'id' => $programId,
                 'organization_id' => $organizationId,
                 'name' => $name,
                 'display_name' => $displayName,
@@ -44,13 +44,13 @@ class ProgramService implements ProgramContract
             throw $e;
         }
 
-        return $project;
+        return $program;
     }
 
     public function allWithLocation($organizationId)
     {
         try {
-            return Project::with('location')->where('organization_id', $organizationId)->get();
+            return Program::with('location')->where('organization_id', $organizationId)->get();
         } catch (\Exception $e) {
             throw $e;
         }
@@ -59,13 +59,13 @@ class ProgramService implements ProgramContract
     public function all($organizationId)
     {
         try {
-            return Project::where('organization_id', $organizationId)->get();
+            return Program::where('organization_id', $organizationId)->get();
         } catch (\Exception $e) {
             throw $e;
         }
     }
 
-    public function update(Project $program, $displayName)
+    public function update(Program $program, $displayName)
     {
         $name = $this->generateName($displayName);
 
@@ -84,7 +84,7 @@ class ProgramService implements ProgramContract
         });
     }
 
-    public function delete(Project $program)
+    public function delete(Program $program)
     {
         try {
             $program->delete();

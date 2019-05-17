@@ -34,7 +34,7 @@ class UserControllerTest extends TestCase
         $this->seed('CategorySeeder');
         $this->seed('RoleSeeder');
         $this->seed('UsersTableSeeder');
-        $this->seed('ProjectSeeder'); // seeds also UserProject table
+        $this->seed('ProgramSeeder'); // seeds also UserProgram table
         $this->seed('LocationSeeder');
         $this->seed('UserInvitationsTableSeeder');
         $this->seed('TimeSheetSeeder');
@@ -59,7 +59,7 @@ class UserControllerTest extends TestCase
             'email' => $email,
             'role' => $role,
             'userLocation' => [["address" => "8601\\tMichale Route\\tKiehnstad\\tRhode Island\\t00675", "lat" => "-64.7822090000", "lng" => "-64.0216350000", "radius" => "13.00"], ["address" => "8601\\tMichale Route\\tKiehnstad\\tRhode Island\\t00675", "lat" => "-64.7822090000", "lng" => "-64.0216350000", "radius" => "13.00"],],
-            'userProject' => [['display_name' => 'projectName', 'users' => [['name' => 'name',        'email' => 'email@email.com',        'role' => [['name' => 'mentor']]], ['name' => 'name',        'email' => 'email@email.com',        'role' => [['name' => 'mentor']]]]], ['display_name' => 'projectName', 'users' => [['name' => 'name',        'email' => 'email@email.com',        'role' => [['name' => 'mentor']]], ['name' => 'name',        'email' => 'email@email.com',        'role' => [['name' => 'mentor']]]]]],
+            'userProgram' => [['display_name' => 'programName', 'users' => [['name' => 'name',        'email' => 'email@email.com',        'role' => [['name' => 'mentor']]], ['name' => 'name',        'email' => 'email@email.com',        'role' => [['name' => 'mentor']]]]], ['display_name' => 'programName', 'users' => [['name' => 'name',        'email' => 'email@email.com',        'role' => [['name' => 'mentor']]], ['name' => 'name',        'email' => 'email@email.com',        'role' => [['name' => 'mentor']]]]]],
         ];
 
         $expectedResponse = json_encode($expectedResponse);
@@ -86,15 +86,15 @@ class UserControllerTest extends TestCase
         $this->assertArrayHasKey('name', $response);
         $this->assertArrayHasKey('email', $response);
         $this->assertArrayHasKey('userLocation', $response);
-        $this->assertArrayHasKey('userProject', $response);
+        $this->assertArrayHasKey('userProgram', $response);
         $this->assertArrayHasKey('role', $response);
 
-        $userProject = $response->userProject[0];
+        $userProgram = $response->userProgram[0];
 
-        $this->assertArrayHasKey('display_name', $userProject);
-        $this->assertArrayHasKey('users', $userProject);
+        $this->assertArrayHasKey('display_name', $userProgram);
+        $this->assertArrayHasKey('users', $userProgram);
 
-        $mentors = $userProject->users[0];
+        $mentors = $userProgram->users[0];
 
         $this->assertArrayHasKey('name', $mentors);
         $this->assertArrayHasKey('email', $mentors);

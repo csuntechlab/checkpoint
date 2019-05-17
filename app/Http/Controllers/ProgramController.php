@@ -7,7 +7,7 @@ use App\Http\Requests\ProgramRequest;
 // Auth
 use Illuminate\Support\Facades\Auth;
 // Models
-use App\Models\Project;
+use App\Models\Program;
 // Contracts
 use App\Contracts\ProgramContract;
 
@@ -33,12 +33,12 @@ class ProgramController extends Controller
         return $this->programUtility->create($organizationId, $request['display_name']);
     }
 
-    public function update(ProgramRequest $request, Project $program)
+    public function update(ProgramRequest $request, Program $program)
     {
         return $this->programUtility->update($program, $request['display_name']);
     }
 
-    public function delete(Project $program)
+    public function delete(Program $program)
     {
         return $this->programUtility->delete($program);
     }

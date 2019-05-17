@@ -1,6 +1,6 @@
 {
     "_readme": [
-        "This file locks the dependencies of your project to a known state",
+        "This file locks the dependencies of your program to a known state",
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
@@ -184,7 +184,7 @@
             "require-dev": {
                 "phpunit/phpunit": "@stable"
             },
-            "type": "project",
+            "type": "program",
             "autoload": {
                 "psr-4": {
                     "XdgBaseDir\\": "src/"
@@ -255,7 +255,7 @@
                 }
             ],
             "description": "Common String Manipulations with regard to casing and singular/plural rules.",
-            "homepage": "http://www.doctrine-project.org",
+            "homepage": "http://www.doctrine-program.org",
             "keywords": [
                 "inflection",
                 "pluralize",
@@ -311,7 +311,7 @@
                 }
             ],
             "description": "Base library for a lexer that can be used in Top-Down, Recursive Descent Parsers.",
-            "homepage": "http://www.doctrine-project.org",
+            "homepage": "http://www.doctrine-program.org",
             "keywords": [
                 "lexer",
                 "parser"
@@ -5441,7 +5441,7 @@
                     "role": "lead"
                 }
             ],
-            "description": "Library that helps with managing the version number of Git-hosted PHP projects",
+            "description": "Library that helps with managing the version number of Git-hosted PHP programs",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2016-10-03T07:35:21+00:00"
         },

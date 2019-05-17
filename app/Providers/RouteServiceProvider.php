@@ -35,7 +35,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::bind('programId', function ($value) {
-            return \App\Models\Project::where('id', $value)->firstOrFail();
+            return \App\Models\Program::where('id', $value)->firstOrFail();
         });
     }
 

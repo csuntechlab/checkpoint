@@ -5,7 +5,7 @@ namespace App\Exceptions\LocationExceptions;
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class UpdateProjectLocationFailed extends Exception
+class UpdateProgramLocationFailed extends Exception
 {
     public function __construct()
     {
@@ -19,7 +19,7 @@ class UpdateProjectLocationFailed extends Exception
      */
     public function render()
     {
-        $message = 'Project Location was not updated.';
+        $message = 'Program Location was not updated.';
         $status_code = 500;
         return BuildResponse::build_response($message, $status_code);
     }

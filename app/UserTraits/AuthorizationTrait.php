@@ -9,7 +9,7 @@ use App\Models\TimeLog;
 // Exception
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Exceptions\AuthExceptions\UnauthorizedUser;
-use App\Models\Project;
+use App\Models\Program;
 use App\Models\Organization;
 
 trait AuthorizationTrait
@@ -47,9 +47,9 @@ trait AuthorizationTrait
         return true;
     }
 
-    public function authorizeProject(Project $project)
+    public function authorizeProgram(Program $program)
     {
-        if ($this->organization_id !== $project->organization_id) throw new AuthorizationException();
+        if ($this->organization_id !== $program->organization_id) throw new AuthorizationException();
         return true;
     }
 }

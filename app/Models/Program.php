@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\User;
 
-class Project extends Model
+class Program extends Model
 {
     public $incrementing = false;
     public $timestamps = false;
@@ -25,7 +25,7 @@ class Project extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_projects')->withPivot('id', 'user_id');
+        return $this->belongsToMany(User::class, 'user_programs')->withPivot('id', 'user_id');
     }
 
     public function location()

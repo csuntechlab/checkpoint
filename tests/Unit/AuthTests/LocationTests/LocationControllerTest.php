@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Http\Controllers\LocationController;
 use App\Contracts\LocationContract;
-use App\Models\Project;
+use App\Models\Program;
 use App\Models\UserRole;
 use App\DomainValueObjects\UUIDGenerator\UUID;
 
@@ -35,7 +35,7 @@ class LocationControllerTest extends TestCase
     $this->seed('OrganizationSeeder');
     $this->seed('RoleSeeder');
     $this->seed('UsersTableSeeder');
-    $this->seed('ProjectSeeder'); // seeds also UserProject table
+    $this->seed('ProgramSeeder'); // seeds also UserProgram table
     $this->adminUser = \App\User::where('id', 1)->first();
     UserRole::create(['id' => UUID::generate(), 'user_id' => $this->adminUser->id, 'role_id' => 1]);
     $this->actingAs($this->adminUser);
@@ -81,10 +81,10 @@ class LocationControllerTest extends TestCase
     $this->assertEquals($expectedResponse, $response);
   }
 
-  public function test_update_project_location()
+  public function test_update_program_location()
   {
     $request = [
-      'id' => "some_project_id",
+      'id' => "some_program_id",
       'longitude' => 42.09,
       'latitude' => 48.03,
       'radius' => 5,
@@ -98,7 +98,7 @@ class LocationControllerTest extends TestCase
     $latitude = $request['latitude'];
     $longitude = $request['longitude'];
     $radius = $request['radius'];
-    $project = Project::where('organization_id', $this->adminUser->organization_id)->first();
+    $program = Program::where('organization_id', $this->adminUser->organization_id)->first();
 
     $address = new Address(
       $request['address_number'],
@@ -111,11 +111,11 @@ class LocationControllerTest extends TestCase
     $expectedResponse = [];
     $this->retriever
       ->shouldReceive('updateLocation')
-      ->with($address, $longitude, $latitude, $radius, $project)
+      ->with($address, $longitude, $latitude, $radius, $program)
       ->once()
       ->andReturn($expectedResponse);
 
-    $response = $this->retriever->updateLocation($address, $longitude, $latitude, $radius, $project);
+    $response = $this->retriever->updateLocation($address, $longitude, $latitude, $radius, $program);
 
     $this->assertEquals($expectedResponse, $response);
   }

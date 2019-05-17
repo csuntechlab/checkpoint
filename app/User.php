@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 // Models
 use App\Models\Role;
 use App\Models\Location;
-use App\Models\Project;
+use App\Models\Program;
 
 // Traits
 use App\UserTraits\AuthorizationTrait;
@@ -41,9 +41,9 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
-    public function userProject()
+    public function userProgram()
     {
-        return $this->belongsToMany(Project::class, 'user_projects', 'user_id', 'project_id');
+        return $this->belongsToMany(Program::class, 'user_programs', 'user_id', 'program_id');
     }
 
     public function userLocation()

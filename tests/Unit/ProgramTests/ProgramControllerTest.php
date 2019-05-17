@@ -18,7 +18,7 @@ use App\Contracts\ProgramContract;
 
 // Controllers
 use App\Http\Controllers\ProgramController;
-use App\Models\Project;
+use App\Models\Program;
 
 class ProgramControllerTest extends TestCase
 {
@@ -113,7 +113,7 @@ class ProgramControllerTest extends TestCase
         $input = ['display_name' => 'display'];
         $request = new ProgramRequest($input);
 
-        $program = new Project();
+        $program = new Program();
 
 
         $expectedResponse = [
@@ -135,7 +135,7 @@ class ProgramControllerTest extends TestCase
 
     public function test_program_controller_delete()
     {
-        $program = new Project();
+        $program = new Program();
 
         $expectedResponse = [
             "message" => 'Program was deleted.',
