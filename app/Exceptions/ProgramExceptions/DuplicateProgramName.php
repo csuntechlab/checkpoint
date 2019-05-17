@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\ProgramExceptions;
 
 use Exception;
+use App\Exceptions\BuildResponse\BuildResponse;
 
-class TimeFrameNotValid extends Exception
+class DuplicateProgramName extends Exception
 {
-    public function __construct()
+    private $displayName;
+
+    public function __construct($displayName)
     {
+        $this->displayName = $displayName;
         parent::__construct();
     }
 
@@ -18,7 +22,7 @@ class TimeFrameNotValid extends Exception
      */
     public function render()
     {
-        $message = 'Time Frame was not valid.';
+        $message = 'Duplicate Entry: ' . $this->displayName . '.';
         $status_code = 409;
         return BuildResponse::build_response($message, $status_code);
     }

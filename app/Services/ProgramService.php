@@ -13,7 +13,8 @@ use App\Models\Project;
 
 //Contracts
 use App\Contracts\ProgramContract;
-
+use Illuminate\Database\QueryException;
+use App\Exceptions\ProgramExceptions\DuplicateProgramName;
 
 class ProgramService implements ProgramContract
 {
@@ -36,17 +37,29 @@ class ProgramService implements ProgramContract
                 'name' => $name,
                 'display_name' => $displayName,
             ]);
-        } catch (\Exception $e) { // Handles duplicate
+        } catch (\Exception $e) {
+            if ($e instanceof QueryException) { // Handles duplicate
+                throw new DuplicateProgramName($displayName);
+            }
             throw $e;
         }
 
         return $project;
     }
 
+    public function allWithLocation($organizationId)
+    {
+        try {
+            return Project::with('location')->where('organization_id', $organizationId)->get();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
     public function all($organizationId)
     {
         try {
-            return Project::with('location')->get();
+            return Project::where('organization_id', $organizationId)->get();
         } catch (\Exception $e) {
             throw $e;
         }
@@ -62,6 +75,9 @@ class ProgramService implements ProgramContract
                 $program->name = $name;
                 $program->save();
             } catch (\Exception $e) {
+                if ($e instanceof QueryException) { // Handles duplicate
+                    throw new DuplicateProgramName($displayName);
+                }
                 throw $e;
             }
             return $program;
