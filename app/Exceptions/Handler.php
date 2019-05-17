@@ -63,7 +63,6 @@ class Handler extends ExceptionHandler
             $stats_code = 409;
             return BuildResponse::build_response($message, $stats_code);
         } else if ($e instanceof QueryException) {
-            // dd($e->message);
             $message = 'Unable to resolve Resource.';
             $stats_code = 409;
             return BuildResponse::build_response($message, $stats_code);

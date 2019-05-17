@@ -17,7 +17,7 @@ Make sure you meet the necessary [Prerequisites](#prerequisites) in order to sta
 
 ## Serving the application
 
-To begin, navigate to the project root on your favorite terminal and run the following:
+To begin, navigate to the program root on your favorite terminal and run the following:
 
 ```
 docker-compose up -d
@@ -30,7 +30,7 @@ This will build and run the following containers:
 -   A database administration GUI - Adminer, named **checkpoint-adminer**
 -   MySQL service, named **checkpoint-mysql**
 
-⚠️ **Important** Inside the `docker-compose.yml` file, you will find the database configuration that needs to be included in the project's `.env` file. After you have done this you should be able to type `localhost:8080` on your favorite browser and see the application's landing page.
+⚠️ **Important** Inside the `docker-compose.yml` file, you will find the database configuration that needs to be included in the program's `.env` file. After you have done this you should be able to type `localhost:8080` on your favorite browser and see the application's landing page.
 
 To end the serve
 
@@ -44,11 +44,11 @@ To get into the docker container run
 docker exec -it checkpoint-server bash
 ```
 
-## Additional project set-up
+## Additional program set-up
 
 ### Seeding the application
 
-Once you have successfully served the application, you will need to seed the database. In order to do that you need to navigate to the project root on your favorite terminal and run the following:
+Once you have successfully served the application, you will need to seed the database. In order to do that you need to navigate to the program root on your favorite terminal and run the following:
 
 ```
 $ docker exec -it checkpoint-server bash

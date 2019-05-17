@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Exceptions\LocationExceptions;
+namespace App\Exceptions\ProgramExceptions;
 
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class UpdateProjectLocationFailed extends Exception
+class DuplicateProgramName extends Exception
 {
-    public function __construct()
+    private $displayName;
+
+    public function __construct($displayName)
     {
+        $this->displayName = $displayName;
         parent::__construct();
     }
 
@@ -19,8 +22,8 @@ class UpdateProjectLocationFailed extends Exception
      */
     public function render()
     {
-        $message = 'Project Location was not updated.';
-        $status_code = 500;
+        $message = 'Duplicate Entry: ' . $this->displayName . '.';
+        $status_code = 409;
         return BuildResponse::build_response($message, $status_code);
     }
 }

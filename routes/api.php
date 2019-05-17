@@ -38,9 +38,15 @@ Route::middleware('auth:api')->post('/invite', 'UserInvitationController@inviteN
 Route::middleware('auth:api')->get('user/profile', 'UserController@profile');
 
 // SETTINGS
-Route::middleware('auth:api')->post('/update/location/{projectId?}/', 'LocationController@update');
+Route::middleware('auth:api')->post('/update/location/{programId?}/', 'LocationController@update');
 
 // Organization Settings
 Route::middleware('auth:api')->post('/organization/settings/categories', 'AdminSettingsController@updateCategories');
 Route::middleware('auth:api')->post('/organization/settings/pay/period/{payPeriodTypeId}', 'AdminSettingsController@updatePayPeriod');
 Route::middleware('auth:api')->post('/organization/settings', 'AdminSettingsController@getOrganizationSettings');
+
+// PROGRAM
+Route::middleware('auth:api')->get('/program/all', 'ProgramController@all');
+Route::middleware('auth:api')->post('/program/create', 'ProgramController@create');
+Route::middleware('auth:api')->put('/program/update/{programId}', 'ProgramController@update');
+Route::middleware('auth:api')->delete('/program/delete/{programId}', 'ProgramController@delete');
