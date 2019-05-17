@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\User;
 use App\Models\Location;
-use App\Models\Project;
+use App\Models\Program;
 
 
-class UserProject extends Model
+class UserProgram extends Model
 {
     public $incrementing = false;
     public $timestamps = false;
 
-    protected $table = 'user_projects';
+    protected $table = 'user_programs';
 
-    protected $fillable = ['id', 'user_id', 'project_id'];
+    protected $fillable = ['id', 'user_id', 'program_id'];
 
     protected $hidden = ['id', 'user_id', 'pivot'];
 }

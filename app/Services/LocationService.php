@@ -6,7 +6,7 @@ namespace App\Services;
 use App\DomainValueObjects\Location\Address;
 
 // Models
-use App\Models\Project;
+use App\Models\Program;
 use App\Models\Location;
 
 // Contracts

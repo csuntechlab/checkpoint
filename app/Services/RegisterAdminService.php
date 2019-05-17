@@ -57,8 +57,7 @@ class RegisterAdminService implements RegisterAdminContract
     $organizationName,
     Address $address,
     $logo
-  ): Organization
-  {
+  ): Organization {
     $organizationId = UUID::generate();
     try {
       $organization = Organization::create([
@@ -71,7 +70,6 @@ class RegisterAdminService implements RegisterAdminContract
         'organization_id' => $organizationId
       ]);
     } catch (\Exception $e) {
-      dd($e);
       throw new OrganizationCreatedFailed();
     }
 

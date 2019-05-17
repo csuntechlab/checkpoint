@@ -7,10 +7,11 @@ use App\DomainValueObjects\UUIDGenerator\UUID;
 
 
 use App\User;
-use App\Models\Project;
-use App\Models\UserProject;
+use App\Models\Program;
+use App\Models\UserProgram;
 use App\Models\Organization;
-class ProjectSeeder extends Seeder
+
+class ProgramSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,41 +21,41 @@ class ProjectSeeder extends Seeder
     public function run(Faker $faker)
     {
         for ($i = 0; $i < 30; $i++) {
-            $projectId = UUID::generate();
+            $programId = UUID::generate();
             $organizationId = Organization::all()->random()->id;
 
-            $project = $this->createProject($projectId, $organizationId, $faker);
+            $program = $this->createProgram($programId, $organizationId, $faker);
 
             $users = User::where('organization_id', $organizationId)->get();
-            
+
             $users = $users->shuffle();
             $users = $users->all();
 
             foreach ($users as $user) {
-                $this->assignUsersToProjects($user, $project);
+                $this->assignUsersToPrograms($user, $program);
             }
         }
     }
 
-    private function assignUsersToProjects($user, $project)
+    private function assignUsersToPrograms($user, $program)
     {
-        UserProject::create([
+        UserProgram::create([
             'id' => UUID::generate(),
             'user_id' => $user->id,
-            'project_id' => $project->id
+            'program_id' => $program->id
         ]);
     }
 
-    private function createProject($projectId, $organizationId, Faker $faker)
+    private function createProgram($programId, $organizationId, Faker $faker)
     {
         $name = $faker->unique()->name;
-        $project = Project::create([
-            'id' => $projectId,
+        $program = Program::create([
+            'id' => $programId,
             'organization_id' => $organizationId,
             'name' => $name,
             'display_name' => $name
         ]);
 
-        return $project;
+        return $program;
     }
 }

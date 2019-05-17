@@ -18,7 +18,7 @@ use App\Http\Requests\LocationRequest;
 use App\Contracts\LocationContract;
 
 // Models
-use App\Models\Project;
+use App\Models\Program;
 
 class LocationController extends Controller
 {
@@ -29,7 +29,7 @@ class LocationController extends Controller
         $this->locationUtility = $locationContract;
     }
 
-    public function update(LocationRequest $request, Project $project = null)
+    public function update(LocationRequest $request, Program $program = null)
     {
         $user = Auth::user();
         $organizationId = $user->getOrganizationIdAuthorizeAdmin();
@@ -45,11 +45,11 @@ class LocationController extends Controller
             $request['zip']
         );
 
-        if ($project == null) {
+        if ($program == null) {
             return $this->locationUtility->update($address, $longitude, $latitude, $radius, $organizationId);
         } else {
-            $user->authorizeProject($project);
-            return $this->locationUtility->update($address, $longitude, $latitude, $radius, $project->id);
+            $user->authorizeProgram($program);
+            return $this->locationUtility->update($address, $longitude, $latitude, $radius, $program->id);
         }
     }
 }

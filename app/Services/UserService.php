@@ -20,8 +20,8 @@ class UserService implements UserContract
     {
         $profile = User::with([
             'role', 'userLocation',
-            'userProject.location',
-            'userProject.users.role'
+            'userProgram.location',
+            'userProgram.users.role'
         ])->where('id', $userId)->first();
 
         return $this->generateProfile($profile);
@@ -29,28 +29,28 @@ class UserService implements UserContract
 
     private function generateProfile($profile)
     {
-        $projects = $profile->userProject;
+        $programs = $profile->userProgram;
         $locations = $profile->userLocation;
 
-        $userProjects = collect();
+        $userPrograms = collect();
 
-        foreach ($projects as $project) {
-            $locations = $locations->concat($project->location);
+        foreach ($programs as $program) {
+            $locations = $locations->concat($program->location);
             $users = collect();
-            foreach ($project->users as $member) {
+            foreach ($program->users as $member) {
                 if ($member->isRole('Mentor')) {
                     $users->push($member);
                 }
             }
-            unset($project->users);
-            $project->users = $users;
-            $userProjects->push($project);
+            unset($program->users);
+            $program->users = $users;
+            $userPrograms->push($program);
         }
 
         unset($profile->userLocation);
-        unset($profile->userProject);
+        unset($profile->userProgram);
         $profile->userLocation = $locations;
-        $profile->userProject = $projects;
+        $profile->userProgram = $programs;
         return $profile;
     }
 }
