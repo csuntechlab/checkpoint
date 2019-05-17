@@ -3,5 +3,6 @@ namespace App\Contracts;
 
 interface TimeSheetContract
 {
-    public function getCurrentTimeSheet($date);
+    public function getTimeSheetbyDate($date);
+    public function getCurrentTimeSheet();
 }

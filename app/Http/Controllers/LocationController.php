@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers;
 
+// Auth
+use Illuminate\Support\Facades\Auth;
+
+// Controllers
+use App\Http\Controllers\Controller;
+
+// Domain Value Objects
 use App\DomainValueObjects\Location\Address;
 
+// Requests
 use App\Http\Requests\LocationRequest;
 
-use App\Http\Controllers\Controller;
+// Contract
 use App\Contracts\LocationContract;
+
+// Models
+use App\Models\Project;
 
 class LocationController extends Controller
 {
@@ -18,10 +29,10 @@ class LocationController extends Controller
         $this->locationUtility = $locationContract;
     }
 
-    // We should type hint with Project 
-    public function update(LocationRequest $request, $id = null)
+    public function update(LocationRequest $request, Project $project = null)
     {
-
+        $user = Auth::user();
+        $organizationId = $user->getOrganizationIdAuthorizeAdmin();
         $longitude = $request['longitude'];
         $latitude = $request['latitude'];
         $radius = $request['radius'];
@@ -34,10 +45,11 @@ class LocationController extends Controller
             $request['zip']
         );
 
-        if ($id == null) {
-            return $this->locationUtility->updateOrganizationLocation($address, $longitude, $latitude, $radius);
+        if ($project == null) {
+            return $this->locationUtility->update($address, $longitude, $latitude, $radius, $organizationId);
         } else {
-            return $this->locationUtility->updateProjectLocation($address, $longitude, $latitude, $radius, $id);
+            $user->authorizeProject($project);
+            return $this->locationUtility->update($address, $longitude, $latitude, $radius, $project->id);
         }
     }
 }
