@@ -8,13 +8,16 @@ use App\DomainValueObjects\UUIDGenerator\UUID;
 
 //Models
 use App\Models\Program;
+use App\User;
+use App\Models\UserProgram;
 
 //Exceptions
+use Illuminate\Database\QueryException;
 
 //Contracts
 use App\Contracts\ProgramContract;
-use Illuminate\Database\QueryException;
 use App\Exceptions\ProgramExceptions\DuplicateProgramName;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProgramService implements ProgramContract
 {
@@ -56,6 +59,16 @@ class ProgramService implements ProgramContract
         }
     }
 
+    public function allWithUsers($organizationId)
+    {
+        try {
+            return Program::with('users.role')->where('organization_id', $organizationId)->get();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+
     public function all($organizationId)
     {
         try {
@@ -92,5 +105,16 @@ class ProgramService implements ProgramContract
             throw $e;
         }
         return ['message' => 'Program was deleted.'];
+    }
+
+    public function removeUser(User $user, Program $program)
+    {
+        try {
+            $userProgram = UserProgram::where('user_id', $user->id)->where('program_id', $program->id)->firstOrFail();
+            $userProgram->delete();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+        return ['message' => 'User was deleted from ' . $program->display_name . '.'];
     }
 }

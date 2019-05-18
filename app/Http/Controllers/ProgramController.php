@@ -8,6 +8,7 @@ use App\Http\Requests\ProgramRequest;
 use Illuminate\Support\Facades\Auth;
 // Models
 use App\Models\Program;
+use App\User;
 // Contracts
 use App\Contracts\ProgramContract;
 
@@ -26,6 +27,20 @@ class ProgramController extends Controller
         return $this->programUtility->all($organizationId);
     }
 
+    public function allWithLocation()
+    {
+        $user = Auth::user();
+        $organizationId = $user->organization_id;
+        return $this->programUtility->allWithLocation($organizationId);
+    }
+
+    public function allWithUsers()
+    {
+        $user = Auth::user();
+        $organizationId = $user->organization_id;
+        return $this->programUtility->allWithUsers($organizationId);
+    }
+
     public function create(ProgramRequest $request)
     {
         $user = Auth::user();
@@ -41,5 +56,10 @@ class ProgramController extends Controller
     public function delete(Program $program)
     {
         return $this->programUtility->delete($program);
+    }
+
+    public function removeUser(User $user, Program $program)
+    {
+        return $this->programUtility->removeUser($user,$program);
     }
 }

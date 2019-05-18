@@ -2,6 +2,7 @@
 namespace App\Contracts;
 
 use App\Models\Program;
+use App\User;
 
 interface ProgramContract
 {
@@ -9,7 +10,13 @@ interface ProgramContract
 
     public function all($organizationId);
 
+    public function allWithLocation($organizationId);
+
+    public function allWithUsers($organizationId);
+
     public function update(Program $program, $displayName);
 
     public function delete(Program $program);
+
+    public function removeUser(User $user, Program $program);
 }
