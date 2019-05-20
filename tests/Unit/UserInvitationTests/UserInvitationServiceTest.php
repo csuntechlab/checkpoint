@@ -36,7 +36,7 @@ class UserInvitationServiceTest extends TestCase
         $this->seed('CategorySeeder');
         $this->seed('RoleSeeder');
         $this->seed('UsersTableSeeder');
-        $this->seed('ProjectSeeder'); // seeds also UserProject table
+        $this->seed('ProgramSeeder'); // seeds also UserProgram table
         $this->seed('LocationSeeder');
         $this->seed('UserInvitationsTableSeeder');
         $this->user = User::first();

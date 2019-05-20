@@ -18,7 +18,7 @@ use App\Http\Requests\LocationRequest;
 use App\Contracts\LocationContract;
 
 // Models
-use App\Models\Project;
+use App\Models\Program;
 
 class LocationController extends Controller
 {

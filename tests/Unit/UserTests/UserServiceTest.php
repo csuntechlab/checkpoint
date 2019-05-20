@@ -24,7 +24,7 @@ class UserServiceTest extends TestCase
         $this->seed('CategorySeeder');
         $this->seed('RoleSeeder');
         $this->seed('UsersTableSeeder');
-        $this->seed('ProjectSeeder'); // seeds also UserProject table
+        $this->seed('ProgramSeeder'); // seeds also UserProgram table
         $this->seed('LocationSeeder');
         $this->seed('UserInvitationsTableSeeder');
         $this->seed('TimeSheetSeeder');
@@ -39,15 +39,15 @@ class UserServiceTest extends TestCase
         $this->assertArrayHasKey('name', $response);
         $this->assertArrayHasKey('email', $response);
         $this->assertArrayHasKey('userLocation', $response);
-        $this->assertArrayHasKey('userProject', $response);
+        $this->assertArrayHasKey('userProgram', $response);
         $this->assertArrayHasKey('role', $response);
 
-        $userProject = $response->userProject[0];
+        $userProgram = $response->userProgram[0];
 
-        $this->assertArrayHasKey('display_name', $userProject);
-        $this->assertArrayHasKey('users', $userProject);
+        $this->assertArrayHasKey('display_name', $userProgram);
+        $this->assertArrayHasKey('users', $userProgram);
 
-        $mentors = $userProject->users[0];
+        $mentors = $userProgram->users[0];
 
         $this->assertArrayHasKey('name', $mentors);
         $this->assertArrayHasKey('email', $mentors);

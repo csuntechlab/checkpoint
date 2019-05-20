@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 use App\DomainValueObjects\Location\Address;
 
 use App\Models\Location;
-use App\Models\Project;
+use App\Models\Program;
 use App\Models\Organization;
 
 $factory->define(Location::class, function (Faker $faker) {
@@ -25,7 +25,7 @@ $factory->define(Location::class, function (Faker $faker) {
     $id = Organization::all()->random()->id;
 
     if ($randomNumber % 2 == 0) {
-        $id = Project::all()->random()->id;
+        $id = Program::all()->random()->id;
     }
 
     return [

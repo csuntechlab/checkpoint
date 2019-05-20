@@ -17,9 +17,10 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UsersTableSeeder::class);
-        $this->call(ProjectSeeder::class); // seeds also UserProject table
+        $this->call(ProgramSeeder::class); // seeds also UserProgram table
         $this->call(LocationSeeder::class);
         $this->call(UserInvitationsTableSeeder::class);
         $this->call(TimeSheetSeeder::class);
+        $this->call(TimeLogSeeder::class);
     }
 }

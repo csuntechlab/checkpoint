@@ -3,7 +3,7 @@ namespace App\Contracts;
 
 use App\DomainValueObjects\Location\Address;
 
-use App\Models\Project;
+use App\Models\Program;
 
 interface LocationContract
 {
