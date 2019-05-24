@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 // Request
 use App\Http\Requests\ProgramRequest;
+use App\Http\Requests\ProgramUserRequest;
 // Auth
 use Illuminate\Support\Facades\Auth;
 // Models
@@ -61,5 +62,10 @@ class ProgramController extends Controller
     public function removeUser(User $user, Program $program)
     {
         return $this->programUtility->removeUser($user,$program);
+    }
+
+    public function addUser(ProgramUserRequest $request)
+    {
+        return $this->programUtility->addUser($request['user'], $request['program']);
     }
 }

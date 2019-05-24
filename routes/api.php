@@ -52,4 +52,5 @@ Route::middleware('auth:api')->get('/program/all/users', 'ProgramController@allW
 Route::middleware('auth:api')->post('/program/create', 'ProgramController@create');
 Route::middleware('auth:api')->put('/program/update/{programId}', 'ProgramController@update');
 Route::middleware('auth:api')->delete('/program/delete/{programId}', 'ProgramController@delete');
+Route::middleware('auth:api')->post('/program/add/user', 'ProgramController@addUser');
 Route::middleware('auth:api')->delete('/program/remove/{userId}/{programId}', 'ProgramController@removeUser');

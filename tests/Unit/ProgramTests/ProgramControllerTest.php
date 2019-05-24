@@ -8,7 +8,9 @@ use Mockery;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 // Requests
+use Illuminate\Http\Request;
 use App\Http\Requests\ProgramRequest;
+use App\Http\Requests\ProgramUserRequest;
 
 // Models
 use App\Models\PayPeriodType;
@@ -18,7 +20,10 @@ use App\Contracts\ProgramContract;
 
 // Controllers
 use App\Http\Controllers\ProgramController;
+
+// Models
 use App\Models\Program;
+use App\User;
 
 class ProgramControllerTest extends TestCase
 {
@@ -41,6 +46,7 @@ class ProgramControllerTest extends TestCase
         $this->seed('PayPeriodTypeSeeder');
         $this->seed('OrganizationSeeder');
         $this->seed('RoleSeeder');
+        $this->seed('ProgramSeeder');
         $this->user = $this->createAdminUser();
         $this->actingAs($this->user);
     }
@@ -151,5 +157,31 @@ class ProgramControllerTest extends TestCase
 
         $response = $this->controller->delete($program);
         $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function test_program_controller_addUser()
+    {
+        $program = Program::all()->random();
+        $user = User::all()->random();
+
+        $request = [
+            'user' => $user,
+            'program' => $program
+        ];
+        
+        $request = new ProgramUserRequest($request);
+
+        $expectedResponse = [
+            "message" => 'User was added to ' . $program->display_name . '.'
+        ];
+
+        $this->utility
+            ->shouldReceive('addUser')
+            ->once()
+            ->with($request)
+            ->andReturn($expectedResponse);
+
+        $test = $this->controller->addUser($request);
+        dd($test);
     }
 }

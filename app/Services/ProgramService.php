@@ -117,4 +117,19 @@ class ProgramService implements ProgramContract
         }
         return ['message' => 'User was deleted from ' . $program->display_name . '.'];
     }
+
+    public function addUser($user, $program)
+    {
+        try {
+            UserProgram::create([
+                'id' => UUID::generate(),
+                'user_id' => $user->id,
+                'program_id' => $program->id,
+            ]);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+
+        return ['message' => 'User was added to ' . $program->display_name . '.'];
+    }
 }

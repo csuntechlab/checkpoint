@@ -19,4 +19,6 @@ interface ProgramContract
     public function delete(Program $program);
 
     public function removeUser(User $user, Program $program);
+
+    public function addUser($user, $program);
 }
