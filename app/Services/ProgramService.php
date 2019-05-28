@@ -10,15 +10,16 @@ use App\DomainValueObjects\UUIDGenerator\UUID;
 use App\Models\Program;
 
 //Exceptions
+use App\Exceptions\DuplicateName;
+use Illuminate\Database\QueryException;
 
 //Contracts
 use App\Contracts\ProgramContract;
-use Illuminate\Database\QueryException;
-use App\Exceptions\ProgramExceptions\DuplicateProgramName;
+
 
 class ProgramService implements ProgramContract
 {
-    private function generateName($displayName)
+    public function generateName($displayName)
     {
         $name = preg_replace("/[^a-z0-9_]+/i", "", $displayName);
         return strtolower($name);
@@ -31,7 +32,7 @@ class ProgramService implements ProgramContract
         $programId = UUID::generate();
 
         try {
-            $program = Program::create([
+            return Program::create([
                 'id' => $programId,
                 'organization_id' => $organizationId,
                 'name' => $name,
@@ -39,12 +40,10 @@ class ProgramService implements ProgramContract
             ]);
         } catch (\Exception $e) {
             if ($e instanceof QueryException) { // Handles duplicate
-                throw new DuplicateProgramName($displayName);
+                throw new DuplicateName($displayName);
             }
             throw $e;
         }
-
-        return $program;
     }
 
     public function allWithLocation($organizationId)
@@ -76,7 +75,7 @@ class ProgramService implements ProgramContract
                 $program->save();
             } catch (\Exception $e) {
                 if ($e instanceof QueryException) { // Handles duplicate
-                    throw new DuplicateProgramName($displayName);
+                    throw new DuplicateName($displayName);
                 }
                 throw $e;
             }
