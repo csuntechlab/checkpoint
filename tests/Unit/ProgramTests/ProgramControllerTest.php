@@ -14,6 +14,7 @@ use App\Http\Requests\ProgramUserRequest;
 
 // Models
 use App\Models\PayPeriodType;
+use App\Models\UserProgram;
 
 //Contracts
 use App\Contracts\ProgramContract;
@@ -47,7 +48,10 @@ class ProgramControllerTest extends TestCase
         $this->seed('OrganizationSeeder');
         $this->seed('RoleSeeder');
         $this->seed('ProgramSeeder');
-        $this->user = $this->createAdminUser();
+        $this->seed('UsersTableSeeder');
+        
+        // $this->user = $this->createAdminUser();
+        $this->user = \App\User::where('id', 1)->first();
         $this->actingAs($this->user);
     }
 
@@ -118,7 +122,7 @@ class ProgramControllerTest extends TestCase
     {
         $input = ['display_name' => 'display'];
         $request = new ProgramRequest($input);
-
+        
         $program = new Program();
 
 
@@ -161,16 +165,17 @@ class ProgramControllerTest extends TestCase
 
     public function test_program_controller_addUser()
     {
-        $program = Program::all()->random();
         $user = User::all()->random();
+        $program = Program::all()->random();
 
         $request = [
-            'user' => $user,
-            'program' => $program
+            'user_id' => $user->id,
+            'program_id' => $program->id,
+            'program_name' => $program->display_name
         ];
-        
-        $request = new ProgramUserRequest($request);
 
+        $request = new ProgramUserRequest($request);
+        
         $expectedResponse = [
             "message" => 'User was added to ' . $program->display_name . '.'
         ];
@@ -178,10 +183,60 @@ class ProgramControllerTest extends TestCase
         $this->utility
             ->shouldReceive('addUser')
             ->once()
-            ->with($request)
+            ->with(
+                $request['user_id'],
+                $request['program_id'],
+                $request['program_name']
+                )
             ->andReturn($expectedResponse);
 
-        $test = $this->controller->addUser($request);
-        dd($test);
+        $response = $this->controller->addUser($request);
+        $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function test_program_controller_addUser_http_call()
+    {
+        $user = User::all()->random();
+        $program = Program::all()->random();
+
+        $request = [
+            'user_id' => $user->id,
+            'program_id' => $program->id,
+            'program_name' => $program->display_name
+        ];
+        
+        $expectedResponse = [
+            "message" => 'User was added to ' . $program->display_name . '.'
+        ];
+
+        $token = $this->get_auth_token($this->user);
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => $token
+        ])->json('POST', '/api/program/add/user', $request);
+        $response = $response->getOriginalContent();
+        
+        $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function test_program_controller_removeUser()
+    {
+        $user = User::all()->random();
+        $program = Program::all()->random();
+
+        $expectedResponse = [
+            "message" => 'User was deleted from ' . $program->display_name . '.'
+        ];
+
+        $this->utility
+            ->shouldReceive('removeUser')
+            ->once()
+            ->with($user, $program)
+            ->andReturn($expectedResponse);
+
+        $response = $this->controller->removeUser($user, $program);
+        $this->assertEquals($expectedResponse, $response);
     }
 }

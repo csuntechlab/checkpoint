@@ -66,6 +66,6 @@ class ProgramController extends Controller
 
     public function addUser(ProgramUserRequest $request)
     {
-        return $this->programUtility->addUser($request['user'], $request['program']);
+        return $this->programUtility->addUser($request['user_id'], $request['program_id'], $request['program_name']);
     }
 }

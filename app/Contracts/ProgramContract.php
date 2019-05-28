@@ -20,5 +20,5 @@ interface ProgramContract
 
     public function removeUser(User $user, Program $program);
 
-    public function addUser($user, $program);
+    public function addUser($user_id, $program_id, $program_name);
 }

@@ -24,8 +24,9 @@ class ProgramUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'user' => 'required',
-            'program' => 'required'
+            'user_id' => 'required',
+            'program_id' => 'required',
+            'program_name' => 'required'
         ];
     }
 
@@ -33,7 +34,8 @@ class ProgramUserRequest extends FormRequest
     {
         return [
             'user.required' => 'user is required!',
-            'program.required' => 'program is required!'
+            'program.required' => 'program is required!',
+            'program_name.required' => "program is required!"
         ];
     }
 }

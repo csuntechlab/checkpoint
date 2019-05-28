@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserInvitationsTableSeeder::class);
         $this->call(TimeSheetSeeder::class);
         $this->call(TimeLogSeeder::class);
+        // $this->call(UserProgramSeeder::class);
     }
 }
