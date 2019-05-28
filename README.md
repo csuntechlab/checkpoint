@@ -1,8 +1,19 @@
 # Checkpoint
 
+> Built using the [Laravel](https://laravel.com) framework
+
 [![Build Status](https://travis-ci.com/csun-metalab/checkpoint.svg?branch=dev)](https://travis-ci.com/csun-metalab/checkpoint)
 
 ## Table of Contents
++ [Getting Started](#getting-started)
++ [Prerequisites](#prerequisites)
++ [Serving the application](#serving-the-application)
++ [Additional program set-up](#additional-program-set-up)
+  + [Seeding the application](#seeding-the-application)
++ [Development cycle commands](#development-cycle-commands)
+  + [Back end](#back-end)
++ [Bugs and issues](#bugs-and-issues)
++ [License](#license)
 
 ## Getting Started
 
@@ -76,5 +87,6 @@ composer dump
 If you discover a bug and or issue within the application, please create a JIRA ticket with the BUG prefix. In addition, please list the necessary steps to reproduce the bug in the description.
 
 ## License
+Checkpoint is open-sourced software licensed under the GNU General Public License v3+. A copy can be found in the `COPYING` file.
 
 The [Laravel](https://laravel.com/) framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).

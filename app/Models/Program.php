@@ -16,6 +16,7 @@ class Program extends Model
         'name',
         'pivot'
     ];
+
     protected $fillable = [
         'organization_id',
         'name',

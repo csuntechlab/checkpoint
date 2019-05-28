@@ -225,6 +225,9 @@ return [
         /** AdminSettings Service Provider */
         App\Providers\ApiProviders\Admin\AdminSettingsProvider::class,
 
+        /** Category Service Provider */
+        App\Providers\ApiProviders\CategoryServiceProvider::class,
+
         /*********** Model Repository Service Providers **************/
         App\Providers\ModelRepository\UserModelRepositoryServiceProvider::class,
 
