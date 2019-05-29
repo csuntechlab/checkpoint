@@ -196,7 +196,13 @@ class ProgramControllerTest extends TestCase
 
     public function test_program_controller_addUser_http_call()
     {
-        $user = User::all()->random();
+        $user = User::create([
+            'organization_id' => 'OrgId',
+            'name' => 'Anakin',
+            'email' => 'anakin@email.com',
+            'password' => 'password'
+        ]);
+
         $program = Program::all()->random();
 
         $request = [
