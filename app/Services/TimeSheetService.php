@@ -48,7 +48,7 @@ class TimeSheetService implements TimeSheetContract
     public function getTimeSheetsByOrganization($organization_id)
     {
         try {
-            $timeSheet = TimeSheet::getTimeSheetsByOrganization($organization_id)->get();
+            $timeSheet = TimeSheet::getTimeSheetsByOrganization($organization_id)->get()->toArray();
         } catch (\Exception $e) {
             throw new GetTimeSheetFailed();
         }

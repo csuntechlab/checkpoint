@@ -9,9 +9,7 @@ class TimeSheet extends Model
     public $incrementing = false;
     public $timestamps = false;
 
-    protected $hidden = [
-        'organization_id'
-    ];
+    protected $hidden = [];
 
     public function scopeGetTimeSheet($query, $date, $id)
     {
@@ -20,8 +18,9 @@ class TimeSheet extends Model
         ->where('end_date', '>=', $date);
     }
 
-    public function scopeGetTimeSheetByOrganization($query, $organizaiton_id)
+    public function scopeGetTimeSheetsByOrganization($query, $organizaiton_id)
     {
-        return $query->where('organization_id', $organizaiton_id);
+        return $query->select('id', 'organization_id', 'start_date', 'end_date')
+        ->where('organization_id', $organizaiton_id);
     }
 }

@@ -30,7 +30,7 @@ Route::middleware('auth:api')->post('/clock/in', 'ClockInController@clockIn');
 Route::middleware('auth:api')->post('/clock/out/{timeLogId}', 'ClockOutController@clockOut');
 Route::middleware('auth:api')->get('/timesheet', 'TimeSheetController@getTimeSheetByDate');
 Route::middleware('auth:api')->get('/current/timesheet', 'TimeSheetController@getCurrentTimeSheet');
-Route::middleware('auth:api')->get('/all/timesheets', 'TimeSheetController@getTimeSheetsByOrganization');
+Route::middleware('auth:api')->get('/all/timesheets/organization', 'TimeSheetController@getTimeSheetsByOrganization');
 
 // INVITE
 Route::middleware('auth:api')->post('/invite', 'UserInvitationController@inviteNewUser');

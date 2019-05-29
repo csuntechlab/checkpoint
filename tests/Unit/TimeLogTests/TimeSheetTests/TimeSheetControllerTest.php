@@ -164,11 +164,16 @@ class TimeSheetControllerTest extends TestCase
           'Accept' => 'application/json',
           'Content-Type' => 'application/x-ww-form-urlencoded',
           'Authorization' => $token
-      ])->json('GET', '/api/current/timesheet', $request);
+      ])->json('GET', '/api/all/timesheets/organization', $request);
 
       $response = $response->getOriginalContent();
 
-      $this->assertEquals($this->user->organization_id, $response->organization_id);
+      // if more than one entry, make sure they are from the same org
+      if(sizeOf($response) > 1){
+        $this->assertEquals($response[0]['organization_id'], $response[1]['organization_id']);
+      }
+
+      $this->assertEquals($this->user->organization_id, $response[0]['organization_id']);
   }
 
 }
