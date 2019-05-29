@@ -74,6 +74,28 @@ class TimeSheetControllerTest extends TestCase
     $this->assertEquals($expectedResponse, $response);
   }
 
+  public function test_getTimesheetsByOrganization()
+  {
+      $id = $this->user->organization_id;
+
+      $request = [
+        'organization_id' => $id
+      ];
+
+      $expectedResponse = [];
+
+      $this->retriever
+        ->shouldReceive('getTimeSheetsByOrganization')
+        ->with($request)
+        ->Once()
+        ->andReturn($expectedResponse);
+
+      $response = $this->retriever->getTimeSheetsByOrganization($request);
+
+      $this->assertEquals($expectedResponse, $response);
+      
+  }
+
   public function test_getTimeSheetByDate_http_call()
   {
       $request = [
@@ -128,6 +150,25 @@ class TimeSheetControllerTest extends TestCase
       $current_date = Carbon::parse($request['date']);
 
       $this->assertTrue($current_date->between($start_date, $end_date));
+  }
+
+  public function test_getTimeSheetsByOrganization_http()
+  {
+      $request = [
+        'organization_id' => $this->user->organization_id
+      ];
+
+      $token = $this->get_auth_token($this->user);
+
+      $response = $this->withHeaders([
+          'Accept' => 'application/json',
+          'Content-Type' => 'application/x-ww-form-urlencoded',
+          'Authorization' => $token
+      ])->json('GET', '/api/current/timesheet', $request);
+
+      $response = $response->getOriginalContent();
+
+      $this->assertEquals($this->user->organization_id, $response->organization_id);
   }
 
 }

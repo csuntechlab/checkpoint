@@ -20,7 +20,7 @@ class TimeSheetService implements TimeSheetContract
 {
     public function getTimeSheetByDate($date)
     {
-        try{
+        try {
             $id = Auth::User()->organization_id;
 
             $timeSheet = TimeSheet::getTimeSheet($date, $id)->firstOrFail();
@@ -33,11 +33,22 @@ class TimeSheetService implements TimeSheetContract
 
     public function getCurrentTimeSheet()
     {
-        try{
+        try {
             $id = Auth::User()->organization_id;
             $date = Carbon::now();
 
             $timeSheet = TimeSheet::getTimeSheet($date, $id)->firstOrFail();
+        } catch (\Exception $e) {
+            throw new GetTimeSheetFailed();
+        }
+
+        return $timeSheet;
+    }
+
+    public function getTimeSheetsByOrganization($organization_id)
+    {
+        try {
+            $timeSheet = TimeSheet::getTimeSheetsByOrganization($organization_id)->get();
         } catch (\Exception $e) {
             throw new GetTimeSheetFailed();
         }

@@ -19,4 +19,9 @@ class TimeSheet extends Model
         ->where('start_date', '<=', $date)
         ->where('end_date', '>=', $date);
     }
+
+    public function scopeGetTimeSheetByOrganization($query, $organizaiton_id)
+    {
+        return $query->where('organization_id', $organizaiton_id);
+    }
 }
