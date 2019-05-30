@@ -18,7 +18,7 @@ class Location
   private $address = null;
 
   public function __construct(
-    string $uuid = null,
+    UUID $uuid = null,
     GeoLocation $geoLocation = null
   ) {
     $this->uuid = $uuid;
@@ -27,7 +27,7 @@ class Location
   }
 
   public static function withAddress(
-    string $uuid = null,
+    UUID $uuid = null,
     GeoLocation $geoLocation = null,
     Address $address = null
   ) {

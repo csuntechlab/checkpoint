@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Exceptions\AuthExceptions;
+namespace App\Exceptions\OrganizationExceptions;
 
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class UnauthenticatedUser extends Exception
+class OrganizationCodedNotDefined extends Exception
 {
     public function __construct()
     {
@@ -14,13 +14,13 @@ class UnauthenticatedUser extends Exception
 
     /**
      * Render an exception into an HTTP response.
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function render()
     {
-        $message = 'Unauthenticated';
-        $status_code = 401;
+        $message = 'Organization code was not defined.';
+        $status_code = 409;
         return BuildResponse::build_response($message, $status_code);
     }
 }

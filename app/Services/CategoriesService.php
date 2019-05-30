@@ -72,6 +72,7 @@ class CategoriesService implements CategoriesContract
         try {
             $category->delete();
         } catch (\Exception $e) {
+            dd($e);
             throw $e;
         }
         return ['message' => 'Category was deleted.'];
