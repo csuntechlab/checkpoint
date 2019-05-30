@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Exceptions\AuthExceptions;
+namespace App\Exceptions\OrganizationExceptions;
 
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class UnauthenticatedUser extends Exception
+class OrganizationNotDefined extends Exception
 {
     public function __construct()
     {
@@ -19,8 +19,8 @@ class UnauthenticatedUser extends Exception
      */
     public function render()
     {
-        $message = 'Unauthenticated';
-        $status_code = 401;
+        $message = 'Organization was not defined.';
+        $status_code = 409;
         return BuildResponse::build_response($message, $status_code);
     }
 }

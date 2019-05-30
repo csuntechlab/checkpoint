@@ -30,7 +30,8 @@ class UserInvitationService implements UserInvitationContract
 
         $token = new DirapeToken();
         $token = $token->uniqueNumber('user_invitations', 'invite_code', 6);
-        $id = UUID::generate();
+        $id = new UUID('userInvitation');
+        $id = $id->toString;
         try {
             $userInvitation = UserInvitation::create([
                 'id' => $id,

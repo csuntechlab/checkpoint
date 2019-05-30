@@ -7,5 +7,5 @@ use App\Models\Program;
 
 interface LocationContract
 {
-    public function createLocation(Address $address, $longitude, $latitude, $radius, $organizationId);
+    public function update(Address $address, $longitude, $latitude, $radius, $organizationId);
 }

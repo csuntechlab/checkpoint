@@ -14,7 +14,7 @@ use App\Contracts\LocationContract;
 
 class LocationService implements LocationContract
 {
-    public function createLocation(
+    public function update(
         Address $address,
         $longitude,
         $latitude,
