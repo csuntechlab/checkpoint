@@ -141,7 +141,6 @@ class LocationControllerTest extends TestCase
       'Content-Type' => 'application/x-www-form-urlencoded',
       'Authorization' => $token
     ])->json('POST', '/api/create/location', $request)->getOriginalContent();
-
     $id = $response->id;
     $response = json_encode($response);
 

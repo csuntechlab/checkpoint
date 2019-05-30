@@ -29,7 +29,7 @@ class LocationController extends Controller
         $this->locationUtility = $locationContract;
     }
 
-    public function createLocation(LocationRequest $request, Project $project = null)
+    public function createLocation(LocationRequest $request, Program $program = null)
     {
         $user = Auth::user();
         $organizationId = $user->getOrganizationIdAuthorizeAdmin();
@@ -45,11 +45,11 @@ class LocationController extends Controller
             $request['zip']
         );
 
-        if ($project == null) {
+        if ($program == null) {
             return $this->locationUtility->createLocation($address, $longitude, $latitude, $radius, $organizationId);
         } else {
-            $user->authorizeProject($project);
-            return $this->locationUtility->createLocation($address, $longitude, $latitude, $radius, $project->id);
+            // $user->authorizeProject($program);
+            return $this->locationUtility->createLocation($address, $longitude, $latitude, $radius, $program->id);
         }
     }
 }
