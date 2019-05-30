@@ -23,9 +23,7 @@ $timeZone = 'America/Los_Angeles';
  */
 
 $factory->define(TimeLog::class, function (Faker $faker) {
-
-    $uuid = new UUID('log');
-    $user = User::all()->random();
+    $user = User::where('id', 1)->first();
     $orgId = $user->organization_id;
 
     $timeSheet = TimeSheet::where('organization_id', $orgId)->first();
