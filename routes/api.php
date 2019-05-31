@@ -54,3 +54,8 @@ Route::middleware('auth:api')->put('/program/update/{programId}', 'ProgramContro
 Route::middleware('auth:api')->delete('/program/delete/{programId}', 'ProgramController@delete');
 Route::middleware('auth:api')->post('/program/add/user', 'ProgramController@addUser');
 Route::middleware('auth:api')->delete('/program/remove/{userId}/{programId}', 'ProgramController@removeUser');
+// CATEGORY
+Route::middleware('auth:api')->get('/category/all', 'CategoriesController@allCategory');
+Route::middleware('auth:api')->post('/category/create', 'CategoriesController@createCategory');
+Route::middleware('auth:api')->put('/category/update/{categoryId}', 'CategoriesController@updateCategory');
+Route::middleware('auth:api')->delete('/category/delete/{categoryId}', 'CategoriesController@deleteCategory');

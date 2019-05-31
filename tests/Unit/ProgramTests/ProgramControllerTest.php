@@ -11,6 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProgramRequest;
 use App\Http\Requests\ProgramUserRequest;
+use App\Http\Requests\DisplayNameRequest;
 
 // Models
 use App\Models\PayPeriodType;
@@ -48,10 +49,10 @@ class ProgramControllerTest extends TestCase
         $this->seed('OrganizationSeeder');
         $this->seed('RoleSeeder');
         $this->seed('ProgramSeeder');
-        $this->seed('UsersTableSeeder');
+        $this->seed('UsersTableSeeder');// seeds also UserProgram table
         
-        // $this->user = $this->createAdminUser();
-        $this->user = \App\User::where('id', 1)->first();
+        $this->user = $this->createAdminUser();
+        // $this->user = \App\User::where('id', 1)->first();
         $this->actingAs($this->user);
     }
 
@@ -81,23 +82,23 @@ class ProgramControllerTest extends TestCase
     {
         $expectedResponse = [
             [
-                "id" => "31cfadf0-780b-11e9-9f9c-8f7e8c25eeca",
+                "id" => "id",
                 "display_name" => "ChecKpoint---",
                 "location" => []
             ],
             [
-                "id" => "b5b24100-7806-11e9-9d27-737f3f44a75c",
+                "id" => "id",
                 "display_name" => "Tiana Roberts",
                 "location" => [
                     [
-                        "id" => "b5b24100-7806-11e9-9d27-737f3f44a75c",
+                        "id" => "id",
                         "address" => "9061\\tLoyce Prairie\\tKoeppton\\tNevada\\t55935",
                         "lat" => "86.8767400000",
                         "lng" => "-152.9962850000",
                         "radius" => "47.00"
                     ],
                     [
-                        "id" => "b5b24100-7806-11e9-9d27-737f3f44a75c",
+                        "id" => "id",
                         "address" => "5263\\tSaige Mills\\tBreitenbergmouth\\tOhio\\t98666-2646",
                         "lat" => "18.8048100000",
                         "lng" => "173.4162610000",
@@ -121,9 +122,9 @@ class ProgramControllerTest extends TestCase
     public function test_program_controller_update()
     {
         $input = ['display_name' => 'display'];
-        $request = new ProgramRequest($input);
+        $request = new DisplayNameRequest($input);
         
-        $program = new Program();
+        $program = Program::where('organization_id', $this->user->organization_id)->first();
 
 
         $expectedResponse = [
@@ -145,7 +146,7 @@ class ProgramControllerTest extends TestCase
 
     public function test_program_controller_delete()
     {
-        $program = new Program();
+        $program = Program::where('organization_id', $this->user->organization_id)->first();
 
         $expectedResponse = [
             "message" => 'Program was deleted.',

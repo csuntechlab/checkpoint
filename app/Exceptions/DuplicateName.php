@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Exceptions\ProgramExceptions;
+namespace App\Exceptions;
 
 use Exception;
 use App\Exceptions\BuildResponse\BuildResponse;
 
-class DuplicateProgramName extends Exception
+class DuplicateName extends Exception
 {
     private $displayName;
 

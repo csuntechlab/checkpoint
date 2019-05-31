@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 // Request
 use App\Http\Requests\ProgramRequest;
 use App\Http\Requests\ProgramUserRequest;
+use App\Http\Requests\DisplayNameRequest;
+
 // Auth
 use Illuminate\Support\Facades\Auth;
 // Models
@@ -24,7 +26,7 @@ class ProgramController extends Controller
     public function all()
     {
         $user = Auth::user();
-        $organizationId = $user->organization_id;
+        $organizationId = $user->getOrganizationIdAuthorizeAdmin();
         return $this->programUtility->all($organizationId);
     }
 
@@ -45,17 +47,23 @@ class ProgramController extends Controller
     public function create(ProgramRequest $request)
     {
         $user = Auth::user();
-        $organizationId = $user->organization_id;
+        $organizationId = $user->getOrganizationIdAuthorizeAdmin();
         return $this->programUtility->create($organizationId, $request['display_name']);
     }
 
-    public function update(ProgramRequest $request, Program $program)
+    public function update(DisplayNameRequest $request, Program $program)
     {
+        $user = Auth::user();
+        $user->getOrganizationIdAuthorizeAdmin();
+        $user->authorizeProgram($program);
         return $this->programUtility->update($program, $request['display_name']);
     }
 
     public function delete(Program $program)
     {
+        $user = Auth::user();
+        $user->getOrganizationIdAuthorizeAdmin();
+        $user->authorizeProgram($program);
         return $this->programUtility->delete($program);
     }
 

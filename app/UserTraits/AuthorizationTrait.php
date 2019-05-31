@@ -11,6 +11,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use App\Exceptions\AuthExceptions\UnauthorizedUser;
 use App\Models\Program;
 use App\Models\Organization;
+use App\Models\Category;
 
 trait AuthorizationTrait
 {
@@ -50,6 +51,12 @@ trait AuthorizationTrait
     public function authorizeProgram(Program $program)
     {
         if ($this->organization_id !== $program->organization_id) throw new AuthorizationException();
+        return true;
+    }
+
+    public function authorizeCategory(Category $category)
+    {
+        if ($this->organization_id !== $category->organization_id) throw new AuthorizationException();
         return true;
     }
 }
