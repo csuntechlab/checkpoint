@@ -23,7 +23,7 @@ class OrganizationSeeder extends Seeder
     public function run(Faker $faker)
     {
 
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $organizationName = $faker->company;
             $streetNumber = (string)$faker->biasedNumberBetween($min = 0, $max = 9999);
             $streetName = $faker->streetName;
