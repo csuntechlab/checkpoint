@@ -32,4 +32,9 @@ class TimeSheetController extends Controller
     {
         return $this->timeSheetUtility->getCurrentTimeSheet();
     }
+
+    public function getTimeSheetsByOrganization(Request $request)
+    {
+        return $this->timeSheetUtility->getTimeSheetsByOrganization($request['organization_id']);
+    }
 }
