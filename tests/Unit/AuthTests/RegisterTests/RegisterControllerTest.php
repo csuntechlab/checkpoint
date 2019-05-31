@@ -71,7 +71,7 @@ class RegisterControllerTest extends TestCase
         $name = $userInvitation->name;
         $email = $userInvitation->email;
         $password = "tes3t@email.com";
-        $inviteCode = (int)($userInvitation->invite_code);
+        $inviteCode = ($userInvitation->invite_code);
 
         $input = [
             "name" => $name,
