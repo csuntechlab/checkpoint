@@ -8,17 +8,24 @@ use Mockery;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 // Requests
+use Illuminate\Http\Request;
+use App\Http\Requests\ProgramRequest;
+use App\Http\Requests\ProgramUserRequest;
 use App\Http\Requests\DisplayNameRequest;
 
 // Models
 use App\Models\PayPeriodType;
+use App\Models\UserProgram;
 
 //Contracts
 use App\Contracts\ProgramContract;
 
 // Controllers
 use App\Http\Controllers\ProgramController;
+
+// Models
 use App\Models\Program;
+use App\User;
 
 class ProgramControllerTest extends TestCase
 {
@@ -41,16 +48,18 @@ class ProgramControllerTest extends TestCase
         $this->seed('PayPeriodTypeSeeder');
         $this->seed('OrganizationSeeder');
         $this->seed('RoleSeeder');
-        $this->seed('UsersTableSeeder');
-        $this->seed('ProgramSeeder'); // seeds also UserProgram table
+        $this->seed('ProgramSeeder');
+        $this->seed('UsersTableSeeder');// seeds also UserProgram table
+        
         $this->user = $this->createAdminUser();
+        // $this->user = \App\User::where('id', 1)->first();
         $this->actingAs($this->user);
     }
 
     public function test_program_controller_create()
     {
         $input = ['display_name' => 'display'];
-        $request = new DisplayNameRequest($input);
+        $request = new ProgramRequest($input);
 
         $expectedResponse = [
             "id" => 'id',
@@ -114,7 +123,7 @@ class ProgramControllerTest extends TestCase
     {
         $input = ['display_name' => 'display'];
         $request = new DisplayNameRequest($input);
-
+        
         $program = Program::where('organization_id', $this->user->organization_id)->first();
 
 
@@ -152,6 +161,89 @@ class ProgramControllerTest extends TestCase
             ->andReturn($expectedResponse);
 
         $response = $this->controller->delete($program);
+        $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function test_program_controller_addUser()
+    {
+        $user = User::all()->random();
+        $program = Program::all()->random();
+
+        $request = [
+            'user_id' => $user->id,
+            'program_id' => $program->id,
+            'program_name' => $program->display_name
+        ];
+
+        $request = new ProgramUserRequest($request);
+        
+        $expectedResponse = [
+            "message" => 'User was added to ' . $program->display_name . '.'
+        ];
+
+        $this->utility
+            ->shouldReceive('addUser')
+            ->once()
+            ->with(
+                $request['user_id'],
+                $request['program_id'],
+                $request['program_name']
+                )
+            ->andReturn($expectedResponse);
+
+        $response = $this->controller->addUser($request);
+        $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function test_program_controller_addUser_http_call()
+    {
+        $user = User::create([
+            'organization_id' => 'OrgId',
+            'name' => 'Anakin',
+            'email' => 'anakin@email.com',
+            'password' => 'password'
+        ]);
+
+        $program = Program::all()->random();
+
+        $request = [
+            'user_id' => $user->id,
+            'program_id' => $program->id,
+            'program_name' => $program->display_name
+        ];
+        
+        $expectedResponse = [
+            "message" => 'User was added to ' . $program->display_name . '.'
+        ];
+
+        $token = $this->get_auth_token($this->user);
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => $token
+        ])->json('POST', '/api/program/add/user', $request);
+        $response = $response->getOriginalContent();
+        
+        $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function test_program_controller_removeUser()
+    {
+        $user = User::all()->random();
+        $program = Program::all()->random();
+
+        $expectedResponse = [
+            "message" => 'User was deleted from ' . $program->display_name . '.'
+        ];
+
+        $this->utility
+            ->shouldReceive('removeUser')
+            ->once()
+            ->with($user, $program)
+            ->andReturn($expectedResponse);
+
+        $response = $this->controller->removeUser($user, $program);
         $this->assertEquals($expectedResponse, $response);
     }
 }

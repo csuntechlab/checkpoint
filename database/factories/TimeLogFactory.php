@@ -18,10 +18,6 @@ use Carbon\Carbon;
 
 $timeZone = 'America/Los_Angeles';
 
-/**
- * Redo Time Log factory
- */
-
 $factory->define(TimeLog::class, function (Faker $faker) {
 
     $uuid = new UUID('log');

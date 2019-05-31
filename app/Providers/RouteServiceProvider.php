@@ -38,6 +38,10 @@ class RouteServiceProvider extends ServiceProvider
             return \App\Models\Program::where('id', $value)->firstOrFail();
         });
 
+        Route::bind('userId', function ($value) {
+            return \App\User::where('id', $value)->firstOrFail();
+        });
+        
         Route::bind('categoryId', function ($value) {
             return \App\Models\Category::where('id', $value)->firstOrFail();
         });
